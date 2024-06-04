@@ -19,6 +19,7 @@
                                 <input type="email" class="form-control" id="email" name="email" value="{{ $user->email }}" required>
                             </div>
                             <button type="submit" class="btn btn-primary">Editer</button>
+                            <a href="{{ route('admin.users.index') }}"><button class="btn btn-primary">Retour</button></a>
                         </form>
                     </div>
                 </div>

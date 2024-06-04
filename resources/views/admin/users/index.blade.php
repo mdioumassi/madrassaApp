@@ -14,8 +14,12 @@
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th>Civilité</th>
                                 <th>Nom</th>
+                                <th>Prénom</th>
                                 <th>Email</th>
+                                <th>Téléphone</th>
+                                <th>Type</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -23,8 +27,12 @@
                             @foreach ($users as $user)
                                 <tr>
                                     <th>{{ $user->id }}</th>
+                                    <td>{{ $user->civility }}</td>
                                     <td>{{ $user->name }}</td>
+                                    <td>{{ $user->lastname }}</td>
                                     <td>{{ $user->email }}</td>
+                                    <td>{{ $user->phone }}</td>
+                                    <td>{{ $user->type }}</td>
                                     <td>
                                         <a href="{{ route('admin.users.show', $user->id) }}" class="btn btn-primary">{{ _('View') }}</a>
                                         <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-warning">{{ _('Edit') }}</a>
