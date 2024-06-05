@@ -20,6 +20,9 @@ sail artisan make:factory ArticleFactory
 sail tinker (executer une commande)
 exemple: User::factory()->count(50)->hasArticles(6)→create();  
 
+sail artisan make:model Product --migration 
+sail artisan make:controller ProductController -model=Product 
+
 *** Sail Front
 sail artisan migrate 
 sail npm install 

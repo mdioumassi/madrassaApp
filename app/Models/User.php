@@ -24,6 +24,8 @@ class User extends Authenticatable
         'civility',
         'phone',
         'full_address',
+        'function',
+        'type',
     ];
 
     /**

@@ -7,8 +7,7 @@
                 <div class="card">
                     <div class="card-header">{{ __('Users') }}</div>
                     <div class="card-body">
-                        <a href="{{ route('admin.users.create') }}"><button class="btn btn-primary">Ajouter un
-                                utilisateur</button></a>
+                        <a href="{{ route('admin.users.create') }}"><button class="btn btn-primary">Ajouter un utilisateur</button></a>
                     </div>
                     <table class="table">
                         <thead>
@@ -20,6 +19,7 @@
                                 <th>Email</th>
                                 <th>Téléphone</th>
                                 <th>Type</th>
+                                <th>Fonction</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -33,6 +33,7 @@
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->phone }}</td>
                                     <td>{{ $user->type }}</td>
+                                    <td>{{ $user->function }}</td>
                                     <td>
                                         <a href="{{ route('admin.users.show', $user->id) }}" class="btn btn-primary">{{ _('View') }}</a>
                                         <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-warning">{{ _('Edit') }}</a>
