@@ -8,19 +8,20 @@
                     <div class="card-header">{{ __('Users') }}</div>
                     <div class="card-body">
                         <a href="{{ route('admin.users.create') }}"><button class="btn btn-primary">Ajouter un utilisateur</button></a>
+                        <a href="{{ route('admin.parents.list') }}"><button class="btn btn-success">Liste des parents</button></a>
+                        <a href="{{ route('admin.students.list') }}"><button class="btn btn-success">Liste des etudiants</button></a>
                     </div>
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Civilité</th>
-                                <th>Nom</th>
-                                <th>Prénom</th>
-                                <th>Email</th>
-                                <th>Téléphone</th>
-                                <th>Type</th>
-                                <th>Fonction</th>
-                                <th>Actions</th>
+                                <th class="bg-success text-light">#</th>
+                                <th class="bg-success text-light">Civilité</th>
+                                <th class="bg-success text-light">Nom</th>
+                                <th class="bg-success text-light">Prénom</th>
+                                <th class="bg-success text-light">Email</th>
+                                <th class="bg-success text-light">Téléphone</th>
+                                <th class="bg-success text-light">Type</th>
+                                <th class="bg-success text-light">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -33,7 +34,6 @@
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->phone }}</td>
                                     <td>{{ $user->type }}</td>
-                                    <td>{{ $user->function }}</td>
                                     <td>
                                         <a href="{{ route('admin.users.show', $user->id) }}" class="btn btn-primary">{{ _('View') }}</a>
                                         <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-warning">{{ _('Edit') }}</a>

@@ -1,18 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Enfant;
+use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class EnfantController extends Controller
+class StudentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function list()
     {
-        //
+        $students = User::where('type', 'student')->latest()->paginate(10);
+
+        return view('admin.users.students.list', compact('students'));
     }
 
     /**
@@ -34,7 +37,7 @@ class EnfantController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Enfant $enfant)
+    public function show(User $user)
     {
         //
     }
@@ -42,7 +45,7 @@ class EnfantController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Enfant $enfant)
+    public function edit(User $user)
     {
         //
     }
@@ -50,7 +53,7 @@ class EnfantController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Enfant $enfant)
+    public function update(Request $request, User $user)
     {
         //
     }
@@ -58,7 +61,7 @@ class EnfantController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Enfant $enfant)
+    public function destroy(User $user)
     {
         //
     }
