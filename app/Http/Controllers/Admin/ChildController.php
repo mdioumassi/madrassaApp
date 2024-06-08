@@ -3,11 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ChildStoreRequest;
+use App\Http\Requests\ChildUpdateRequest;
 use App\Models\Child;
-use Illuminate\Http\Request;
 
 class ChildController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -15,7 +21,7 @@ class ChildController extends Controller
     {
         $childs = Child::latest()->paginate(10);
 
-        return view('admin.childs.index', compact('childs'));
+        return view('admin.children.index', compact('childs'));
     }
 
     /**
@@ -23,15 +29,17 @@ class ChildController extends Controller
      */
     public function create()
     {
-        //
+        return view('children.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ChildStoreRequest $request)
     {
-        //
+        Child::create($request->validated());
+        return redirect()->route('children.index')
+                         ->with('success', 'Child created successfully.');
     }
 
     /**
@@ -39,7 +47,7 @@ class ChildController extends Controller
      */
     public function show(Child $child)
     {
-        //
+        return view('admin.children.show', compact('child'));
     }
 
     /**
@@ -47,15 +55,17 @@ class ChildController extends Controller
      */
     public function edit(Child $child)
     {
-        //
+        return view('admin.children.edit', compact('child'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Child $child)
+    public function update(ChildUpdateRequest $request, Child $child)
     {
-        //
+        $child->update($request->validated());
+        return redirect()->route('children.index')
+                         ->with('success', 'Child updated successfully.');
     }
 
     /**
@@ -63,6 +73,8 @@ class ChildController extends Controller
      */
     public function destroy(Child $child)
     {
-        //
+        $child->delete();
+        return redirect()->route('children.index')
+                         ->with('success', 'Child deleted successfully.');
     }
 }

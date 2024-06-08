@@ -2,7 +2,7 @@
 
 namespace App;
 
-enum CivilityList: string
+enum CivilitySelect: string
 {
     case Mr = 'Monsieur';
     case Mrs = 'Mademoiselle';

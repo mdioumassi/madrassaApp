@@ -8,7 +8,7 @@
                     <div class="card-header">{{ __('Liste des parents') }}</div>
                     <div class="card-body">
                         <a href="{{ route('admin.users.index') }}"><button class="btn btn-primary mb-3">Tous les utilisateurs</button></a>
-                        <a href="{{ route('childs.index') }}"><button class="btn btn-success mb-3">Liste des enfants</button></a>
+                        <a href="{{ route('children.index') }}"><button class="btn btn-success mb-3">Liste des enfants</button></a>
                         <table class="table">
                             <thead>
                                 <tr>
@@ -31,7 +31,7 @@
                                         <td>{{ $parent->email }}</td>
                                         <td>{{ $parent->phone }}</td>
                                         <td>{{ $parent->function }}</td>
-                                        <td><a href="{{route('parent.childs', $parent->id)}}">{{ $parent->children->count()}}</a></td>
+                                        <td><a href="{{route('parent.children', $parent->id)}}">{{ $parent->children->count()}} enfant.s</a></td>
                                         <td>
                                             <a href="{{ route('admin.users.show', $parent->id) }}"
                                                 class="btn btn-primary">{{ _('View') }}</a>

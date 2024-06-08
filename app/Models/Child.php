@@ -14,4 +14,18 @@ class Child extends Model
     {
         return $this->belongsTo(User::class, 'parent_id');
     }
+ 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'firstname',
+        'lastname',
+        'birthdate',
+        'genre',
+        'french_class',
+       // 'parent_id',
+    ];
 }

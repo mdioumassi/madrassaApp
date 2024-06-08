@@ -20,17 +20,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($childs as $child)
+                                @foreach ($children as $child)
                                     <tr>
                                         <td>{{ $child->genre }}</td>
                                         <td>{{ $child->firstname }}</td>
                                         <td>{{ $child->lastname }}</td>
                                         <td>{{ $child->birthdate }}</td>
-                                        <td>{{ $child->frenchClass }}</td>
+                                        <td>{{ $child->french_class }}</td>
                                         <td>
-                                            <a href="{{ route('enfants.show', $child->id) }}" class="btn btn-primary">{{ _('View') }}</a>
-                                            <a href="{{ route('enfants.edit', $child->id) }}" class="btn btn-warning">{{ _('Edit') }}</a>
-                                            <form action="{{ route('enfants.destroy', $child->id) }}" method="POST" class="d-inline">
+                                            <a href="{{ route('children.show', $child->id) }}" class="btn btn-primary">{{ _('View') }}</a>
+                                            <a href="{{ route('children.edit', $child->id) }}" class="btn btn-warning">{{ _('Edit') }}</a>
+                                            <form action="{{ route('children.destroy', $child->id) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">{{ _('Delete') }}</button>
@@ -40,7 +40,7 @@
                             </tbody>
                         </table>
                         <a href="{{ route('admin.parents.list') }}" class="btn btn-primary">{{ _('Liste des parents') }}</a>
-                        <a href="{{ route('childs.create') }}" class="btn btn-success">{{ _('Ajouter un enfant') }}</a>
+                       {{--  <a href="{{ route('children.create', $child->parent->id) }}" class="btn btn-success">{{ _('Ajouter un enfant') }}</a> --}}
                     </div>
                 </div>
             </div>

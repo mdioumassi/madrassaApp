@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Child;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ParentController extends Controller
 {
@@ -25,9 +27,15 @@ class ParentController extends Controller
 
     public function childsList($id)
     {
-       $parent = User::where('id', $id)->with('childs')->first();
-       $childs = $parent->childs;
+       $parent = User::where('id', $id)->with('children')->first();
+       $children = $parent->children;
         
-        return view('admin.users.parents.childs', compact('childs', 'parent'));
+        return view('admin.users.parents.children', compact('children', 'parent'));
+    }
+
+    public function addChild($parent_id)
+    {
+    
+
     }
 }

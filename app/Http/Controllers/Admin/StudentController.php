@@ -13,7 +13,7 @@ class StudentController extends Controller
      */
     public function list()
     {
-        $students = User::where('type', 'student')->latest()->paginate(10);
+        $students = User::where('type', 'etudiant(e)')->latest()->paginate(10);
 
         return view('admin.users.students.list', compact('students'));
     }
