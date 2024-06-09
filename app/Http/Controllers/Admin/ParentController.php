@@ -32,10 +32,4 @@ class ParentController extends Controller
         
         return view('admin.users.parents.children', compact('children', 'parent'));
     }
-
-    public function addChild($parent_id)
-    {
-    
-
-    }
 }

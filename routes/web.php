@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ChildController;
+use App\Http\Controllers\Admin\LevelCrudController;
 use App\Http\Controllers\Admin\ParentController;
 use App\Http\Controllers\Admin\StudentController;
+use App\Http\Controllers\Admin\SubjectCrudController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +38,25 @@ Route::prefix('admin')->group(function () {
         Route::put('/{child}', [ChildController::class, 'update'])->name('children.update');
         Route::delete('/{child}', [ChildController::class, 'destroy'])->name('children.destroy');
     });
+    Route::prefix('levels')->group(function () {
+        Route::get('/', [LevelCrudController::class, 'index'])->name('admin.levels.index');
+        Route::get('/create', [LevelCrudController::class, 'create'])->name('admin.levels.create');
+        Route::post('/store', [LevelCrudController::class, 'store'])->name('admin.levels.store');
+        Route::get('/{level}', [LevelCrudController::class, 'show'])->name('admin.levels.show');
+        Route::get('/{level}/edit', [LevelCrudController::class, 'edit'])->name('admin.levels.edit');
+        Route::put('/{level}', [LevelCrudController::class, 'update'])->name('admin.levels.update');
+        Route::delete('/{level}', [LevelCrudController::class, 'destroy'])->name('admin.levels.destroy');
+    });
+    Route::prefix('subjects')->group(function () {
+        Route::get('/levels/{id}/subjets', [SubjectCrudController::class, 'index'])->name('admin.levels.subjects.index');
+        Route::get('/level/{id}/subject/create', [SubjectCrudController::class, 'createLevelSubject'])->name('admin.subjects.create');
+        Route::post('/level/{id}/subject/store', [SubjectCrudController::class, 'storeLevelSubject'])->name('admin.levels.subjects.store');
+        Route::get('/{subject}', [SubjectCrudController::class, 'show'])->name('admin.subjects.show');
+        Route::get('/{subject}/edit', [SubjectCrudController::class, 'edit'])->name('admin.subjects.edit');
+        Route::put('/{subject}', [SubjectCrudController::class, 'update'])->name('admin.subjects.update');
+        Route::delete('/{subject}', [SubjectCrudController::class, 'destroy'])->name('admin.subjects.destroy');
+    });
+    Route::get('/levels/{id}/subjects', [LevelCrudController::class, 'subjectsList'])->name('level.subjects');
     Route::get('/parents', [ParentController::class, 'list'])->name('admin.parents.list');
     Route::get('/parents/{id}/children', [ParentController::class, 'childsList'])->name('parent.children');
     Route::get('/students', [StudentController::class, 'list'])->name('admin.students.list');

@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Subject>
  */
-class GenreSelectFactory extends Factory
+class SubjectFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,9 @@ class GenreSelectFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'label' => $this->faker->word(),
+            'slug' => $this->faker->slug(),
+            'description' => $this->faker->sentence()
         ];
     }
 }

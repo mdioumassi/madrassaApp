@@ -13,7 +13,7 @@
 
                             <div class="row mb-3">
                                 <label for="civility"
-                                    class="col-md-4 col-form-label text-md-end bg-success text-light">{{ __('Civility') }}</label>
+                                    class="col-md-4 col-form-label text-md-end ">{{ __('Civility') }}</label>
 
                                 <div class="col-md-6">
                                     <select id="civility" class="form-select @error('civility') is-invalid @enderror"
@@ -36,7 +36,7 @@
 
                             <div class="row mb-3">
                                 <label for="type"
-                                    class="col-md-4 col-form-label text-md-end bg-success text-light">{{ __('Type') }}</label>
+                                    class="col-md-4 col-form-label text-md-end ">{{ __('Type') }}</label>
 
                                 <div class="col-md-6">
                                     <select id="type" class="form-select @error('type') is-invalid @enderror"
@@ -57,7 +57,7 @@
 
                             <div class="row mb-3">
                                 <label for="name"
-                                    class="col-md-4 col-form-label text-md-end bg-success text-light">{{ __('Name') }}</label>
+                                    class="col-md-4 col-form-label text-md-end ">{{ __('Name') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="name" type="text"
@@ -74,7 +74,7 @@
 
                             <div class="row mb-3">
                                 <label for="lastname"
-                                    class="col-md-4 col-form-label text-md-end bg-success text-light">{{ __('Lastname') }}</label>
+                                    class="col-md-4 col-form-label text-md-end ">{{ __('Lastname') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="lastname" type="text"
@@ -91,7 +91,7 @@
 
                             <div class="row mb-3">
                                 <label for="function"
-                                    class="col-md-4 col-form-label text-md-end bg-success text-light">{{ __('Function') }}</label>
+                                    class="col-md-4 col-form-label text-md-end ">{{ __('Function') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="function" type="function"
@@ -108,7 +108,7 @@
 
                             <div class="row mb-3">
                                 <label for="phone"
-                                    class="col-md-4 col-form-label text-md-end bg-success text-light">{{ __('Phone') }}</label>
+                                    class="col-md-4 col-form-label text-md-end ">{{ __('Phone') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="phone" type="text"
@@ -125,7 +125,7 @@
 
                             <div class="row mb-3">
                                 <label for="full_address"
-                                    class="col-md-4 col-form-label text-md-end bg-success text-light">{{ __('Full Address') }}</label>
+                                    class="col-md-4 col-form-label text-md-end ">{{ __('Full Address') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="full_address" type="text"
