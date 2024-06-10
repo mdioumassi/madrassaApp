@@ -15,7 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('label');
             $table->string('slug');
-            $table->string('description');
+            $table->string('tarif');
+            $table->string('registration_fees');
+            $table->string('hours');
+            $table->text('comment')->nullable();
             $table->timestamps();
         });
     }

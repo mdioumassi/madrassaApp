@@ -14,7 +14,9 @@
                                 <tr>
                                     <th class="bg-success text-light">#</th>
                                     <th class="bg-success text-light">{{ _('Libelle') }}</th>
-                                    <th class="bg-success text-light">{{ _('Description') }}</th>
+                                    <th class="bg-success text-light">{{ _('Tarif') }}</th>
+                                    <th class="bg-success text-light">{{ _('Frais d\'inscription') }}</th>
+                                    <th class="bg-success text-light">{{ _('Horaires') }}</th>
                                     <th class="bg-success text-light">{{ _('Matières') }}</th>
                                     <th class="bg-success  text-light">{{ _('Actions') }}</th>
                                 </tr>
@@ -24,9 +26,12 @@
                                     <tr>
                                         <th>{{ $level->id }}</th>
                                         <td>{{ $level->label }}</td>
-                                        <td>{{ $level->description }}</td>
+                                        <td>{{ $level->tarif }}€/Année</td>
+                                        <td>{{ $level->registration_fees }}</td>
+                                        <td>{{ $level->hours }}</td>
                                         <td><a href="{{ route('level.subjects', $level->id) }}">{{ $level->subjects->count() }} matères</a></td>
                                         <td>
+                                            <a href="{{ route('admin.subjects.create', $level->id) }}" class="btn btn-primary">{{ _('Add Subject') }}</a>
                                             <a href="{{ route('admin.levels.show', $level->id) }}" class="btn btn-primary">{{ _('View') }}</a>
                                             <a href="{{ route('admin.levels.edit', $level->id) }}" class="btn btn-warning">{{ _('Edit') }}</a>
                                             <form action="{{ route('admin.levels.destroy', $level->id) }}" method="POST" class="d-inline">

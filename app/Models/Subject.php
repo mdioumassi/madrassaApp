@@ -22,7 +22,6 @@ class Subject extends Model
      */
     protected $fillable = [
         'label',
-        'slug',
-        'description',
+        'slug'
     ];
 }

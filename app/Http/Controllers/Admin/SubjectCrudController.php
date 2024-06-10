@@ -6,9 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Models\Level;
 use App\Models\Subject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
 
 class SubjectCrudController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      */
@@ -39,6 +46,9 @@ class SubjectCrudController extends Controller
     public function storeLevelSubject(Request $request, $id)
     {
         $level = Level::where('id', $id)->first();
+        $request->validate([
+            'label' => 'required|string|max:255'
+        ]);
         $level->subjects()->create($request->all());
         return redirect()->route('admin.levels.subjects.index', $level->id)
                          ->with('success', 'Subject created successfully.');
@@ -49,7 +59,7 @@ class SubjectCrudController extends Controller
      */
     public function show(Subject $subject)
     {
-        //
+
     }
 
     /**
@@ -57,7 +67,7 @@ class SubjectCrudController extends Controller
      */
     public function edit(Subject $subject)
     {
-        //
+
     }
 
     /**

@@ -14,7 +14,7 @@
                                 <tr>
                                     <th class="bg-success text-light">#</th>
                                     <th class="bg-success text-light">{{ _('Libelle') }}</th>
-                                    <th class="bg-success text-light">{{ _('Description') }}</th>
+                                    <th class="bg-success text-light">{{ _('Commentaire') }}</th>
                                     <th class="bg-success  text-light">{{ _('Actions') }}</th>
                                 </tr>
                             </thead>
@@ -23,7 +23,7 @@
                                     <tr>
                                         <th>{{ $subject->id }}</th>
                                         <td>{{ $subject->label }}</td>
-                                        <td>{{ $subject->description }}</td>
+                                        <td>{{ $subject->comment }}</td>
                                         <td>
                                             <a href="{{ route('admin.subjects.show', $subject->id) }}" class="btn btn-primary">{{ _('View') }}</a>
                                             <a href="{{ route('admin.subjects.edit', $subject->id) }}" class="btn btn-warning">{{ _('Edit') }}</a>

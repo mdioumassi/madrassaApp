@@ -22,78 +22,76 @@ class DatabaseSeeder extends Seeder
         //     SeedSubjects::class,
         // ]);
         DB::table('courses')->insert([
-            'label' => 'Arabe',
-            'slug' => 'arabe',
-            'description' => 'Cours d\'arabe',
+            'label' => 'Arabe pour Enfant',
+            'slug' => 'arabe-pour-enfant',
+            'is_child' => true,
+            'comment' => 'Cours d\'arabe pour enfant',
         ]);
 
         DB::table('courses')->insert([
-            'label' => 'Coran',
-            'slug' => 'coran',
-            'description' => 'Cours de coran',
+            'label' => 'Arabe pour Adulte',
+            'slug' => 'arabe-pour-adulte',
+            'is_adult' => true,
+            'comment' => 'Cours d\'arabe pour adulte',
         ]);
 
         DB::table('courses')->insert([
-            'label' => 'Islam',
-            'slug' => 'islam',
-            'description' => 'Cours d\'islam',
+            'label' => 'Coran pour Enfant',
+            'slug' => 'coran-pour-enfant',
+            'is_child' => true,
+            'comment' => 'Cours de coran pour enfant',
+        ]);
+
+        DB::table('courses')->insert([
+            'label' => 'Coran pour Adulte',
+            'slug' => 'coran-pour-adulte',
+            'is_adult' => true,
+            'comment' => 'Cours de coran pour adulte',
         ]);
 
         DB::table('levels')->insert([
-            'label' => 'Niveau0',
-            'slug' => 'niveau0',
-            'description' => 'Niveau débutant',
+            'label' => 'NIVEAU LANGUE ARABE 0/ 0 INTERMÉDIAIRE',
+            'slug' => 'niveau-langue-arabe-0-0-intermediaire',
+            'tarif' => '330',
+            'registration_fees' => '20€',
+            'hours' => '2h/semaine',
+            'comment' => 'Niveau débutant',
         ]);
 
         DB::table('levels')->insert([
-            'label' => 'Niveau1',
-            'slug' => 'niveau1',
-            'description' => 'Niveau intermédiaire',
+            'label' => 'NIVEAU 1/2 LANGUE ARABE',
+            'slug' => 'niveau-langue-arabe-1-2',
+            'tarif' => '330',
+            'registration_fees' => '20€',
+            'hours' => '3h/semaine',
+            'comment' => 'Niveau intermédiaire',
         ]);
 
         DB::table('levels')->insert([
-            'label' => 'Niveau2',
-            'slug' => 'niveau2',
-            'description' => 'Niveau avancé',
+            'label' => 'NIVEAU 3/4/5/6 LANGUE ARABE',
+            'slug' => 'niveau-langue-arabe-3-4-5-6',
+            'tarif' => '330',
+            'registration_fees' => '20€',
+            'hours' => '3h/semaine',
+            'comment' => 'Niveau avancé',
         ]);
-        $level1 = Level::first();
-        $level2 = Level::find(2);
-        $level3 = Level::find(3);
 
-       // $level2 = Level::find(2);
-        //$level3 = Level::find(3);
+        $level = Level::first();
 
         $course = Course::first();
         $course->levels()->attach(Level::first());
         $course->levels()->attach(Level::find(2));
 
-       // $level = Level::first();
-        $level1->subjects()->create([
-            'label' => 'Sujet0',
-            'slug' => 'sujet0',
-            'description' => 'Sujet débutant',
+    
+        $level->subjects()->create([
+            'label' => 'Conférence en français sur la nature de la langue arabe',
+            'comment' => 'Conférence en français sur la nature de la langue arabe',
         ]);
 
-        $level1->subjects()->create([
-            'label' => 'Sujet1',
-            'slug' => 'sujet1',
-            'description' => 'Sujet intermédiaire',
+        $level->subjects()->create([
+            'label' => 'Dialogues, grammaire et conjugaison; étude du livre 1',
+            'comment' => 'Dialogues, grammaire et conjugaison; étude du livre 1',
         ]);
-
-        $level2->subjects()->create([
-            'label' => 'Sujet2',
-            'slug' => 'sujet2',
-            'description' => 'Sujet avancé',
-        ]);
-
-        $level3->subjects()->create([
-            'label' => 'Sujet3',
-            'slug' => 'sujet3',
-            'description' => 'Sujet expert',
-        ]);
-  
-
-
 
     }
 }

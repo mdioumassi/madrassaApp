@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('subjects', function (Blueprint $table) {
             $table->id();
             $table->string('label');
-            $table->string('slug');
-            $table->string('description');
+            $table->text('comment')->nullable();
             $table->foreignIdFor(\App\Models\Level::class)
                 ->constrained()
                 ->cascadeOnDelete();

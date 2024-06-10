@@ -29,45 +29,10 @@ class Level extends Model
      */
     protected $fillable = [
         'label',
-        'description',
-        'slug'
+        'comment',
+        'slug',
+        'tarif',
+        'registration_fees',
+        'hours',
     ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'created_at',
-        'updated_at'
-    ];
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    // protected function casts(): array
-    // {
-    //     return [
-    //         'created_at' => 'datetime',
-    //         'updated_at' => 'datetime',
-    //     ];
-    // }
-
-    public function getRouteKeyName(): string
-    {
-        return 'slug';
-    }
-
-    public function getRouteKey(): string
-    {
-        return $this->slug;
-    }
-
-    public function setSlugAttribute($value): void
-    {
-        $this->attributes['slug'] = Str::slug($value);
-    }
 }

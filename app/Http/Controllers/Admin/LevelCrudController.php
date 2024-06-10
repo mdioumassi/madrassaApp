@@ -10,6 +10,11 @@ use Illuminate\Support\Str;
 
 class LevelCrudController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -47,6 +52,7 @@ class LevelCrudController extends Controller
     {
         $validatedData = $request->validated();
         $validatedData['slug'] = Str::slug($validatedData['slug'], '-');
+
         Level::create($validatedData);
         return redirect()->route('admin.levels.index')
                          ->with('success', 'Level created successfully.');
@@ -73,8 +79,11 @@ class LevelCrudController extends Controller
      */
     public function update(LevelUpdateRequest $request, Level $level)
     {
-        $level->update($request->validated());
-        return redirect()->route('levels.index')
+        $validatedData = $request->validated();
+        $validatedData['slug'] = Str::slug($validatedData['slug'], '-');
+
+        $level->update($validatedData);
+        return redirect()->route('admin.levels.index')
                          ->with('success', 'Level updated successfully.');
     }
 
@@ -84,7 +93,8 @@ class LevelCrudController extends Controller
     public function destroy(Level $level)
     {
         $level->delete();
-        return redirect()->route('levels.index')
+        
+        return redirect()->route('admin.levels.index')
                          ->with('success', 'Level deleted successfully.');
     }
 }

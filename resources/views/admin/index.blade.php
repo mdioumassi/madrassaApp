@@ -22,7 +22,9 @@
                             <div class="card">
                                 <div class="card-body">
                                   <h4 class="card-title">Card title</h4>
-                                  <p class="card-text">Some example text. Some example text.</p>
+                                  <div class="card-footer">
+                                    <a href="{{ route('admin.levels.index')}}"><button class="btn btn-outline-primary">Les niveaux</button></a>
+                                </div>
                                 </div>
                             </div>
                         </div>
