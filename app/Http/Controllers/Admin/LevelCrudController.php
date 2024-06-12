@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LevelStoreRequest;
 use App\Http\Requests\LevelUpdateRequest;
+use App\Models\Course;
 use App\Models\Level;
 use Illuminate\Support\Str;
 
@@ -48,16 +49,26 @@ class LevelCrudController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(LevelStoreRequest $request)
+    // public function store(LevelStoreRequest $request)
+    // {
+    //     $validatedData = $request->validated();
+    //     $validatedData['slug'] = Str::slug($validatedData['slug'], '-');
+
+    //     Level::create($validatedData);
+    //     return redirect()->route('admin.levels.index')
+    //                      ->with('success', 'Level created successfully.');
+    // }
+
+    public function storeLevelCourse(LevelStoreRequest $request, $id)
     {
+        $course = Course::where('id', $id)->first();
         $validatedData = $request->validated();
         $validatedData['slug'] = Str::slug($validatedData['slug'], '-');
-
-        Level::create($validatedData);
-        return redirect()->route('admin.levels.index')
+        $course->levels()->create($validatedData);
+        
+        return redirect()->route('admin.courses.levels.list', $course->id)
                          ->with('success', 'Level created successfully.');
     }
-
     /**
      * Display the specified resource.
      */
@@ -93,8 +104,15 @@ class LevelCrudController extends Controller
     public function destroy(Level $level)
     {
         $level->delete();
-        
+
         return redirect()->route('admin.levels.index')
                          ->with('success', 'Level deleted successfully.');
+    }
+
+    public function AdultLevels()
+    {
+        $levels = Level::where('label', 'adult')->get();
+
+        return view('admin.levels.adult', compact('levels'));
     }
 }

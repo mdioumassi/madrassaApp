@@ -5,7 +5,9 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">{{ $level->label }}</div>
+                    <div class="card-header">
+                        <a class="text-decoration-none fw-bold text-uppercase text-primary" href="{{ route('admin.levels.show', $level->id) }}">{{ $level->label }}</a>
+                    </div>
                     <div class="card-body">
                         <a href="{{ route('admin.subjects.create', $level->id) }}"><button class="btn btn-primary mb-3">Ajouter une matière</button></a>
                         <a href="{{ route('admin.levels.index' )}}"><button class="btn btn-success mb-3">Afficher les niveaux</button></a>

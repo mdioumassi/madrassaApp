@@ -21,35 +21,35 @@ class DatabaseSeeder extends Seeder
         //     SeedLevels::class,
         //     SeedSubjects::class,
         // ]);
-        DB::table('courses')->insert([
+        $arabe1 = DB::table('courses')->insert([
             'label' => 'Arabe pour Enfant',
             'slug' => 'arabe-pour-enfant',
-            'is_child' => true,
+           // 'is_child' => true,
             'comment' => 'Cours d\'arabe pour enfant',
         ]);
 
-        DB::table('courses')->insert([
+        $arabe2 = DB::table('courses')->insert([
             'label' => 'Arabe pour Adulte',
             'slug' => 'arabe-pour-adulte',
-            'is_adult' => true,
+            //'is_adult' => true,
             'comment' => 'Cours d\'arabe pour adulte',
         ]);
 
-        DB::table('courses')->insert([
+        $arabe3 = DB::table('courses')->insert([
             'label' => 'Coran pour Enfant',
             'slug' => 'coran-pour-enfant',
-            'is_child' => true,
+            //'is_child' => true,
             'comment' => 'Cours de coran pour enfant',
         ]);
 
         DB::table('courses')->insert([
             'label' => 'Coran pour Adulte',
             'slug' => 'coran-pour-adulte',
-            'is_adult' => true,
+           // 'is_adult' => true,
             'comment' => 'Cours de coran pour adulte',
         ]);
 
-        DB::table('levels')->insert([
+        $level_id1 = DB::table('levels')->insert([
             'label' => 'NIVEAU LANGUE ARABE 0/ 0 INTERMÉDIAIRE',
             'slug' => 'niveau-langue-arabe-0-0-intermediaire',
             'tarif' => '330',
@@ -58,7 +58,7 @@ class DatabaseSeeder extends Seeder
             'comment' => 'Niveau débutant',
         ]);
 
-        DB::table('levels')->insert([
+        $level_id2 = DB::table('levels')->insert([
             'label' => 'NIVEAU 1/2 LANGUE ARABE',
             'slug' => 'niveau-langue-arabe-1-2',
             'tarif' => '330',
@@ -67,7 +67,7 @@ class DatabaseSeeder extends Seeder
             'comment' => 'Niveau intermédiaire',
         ]);
 
-        DB::table('levels')->insert([
+        $level_id3 = DB::table('levels')->insert([
             'label' => 'NIVEAU 3/4/5/6 LANGUE ARABE',
             'slug' => 'niveau-langue-arabe-3-4-5-6',
             'tarif' => '330',
@@ -76,11 +76,8 @@ class DatabaseSeeder extends Seeder
             'comment' => 'Niveau avancé',
         ]);
 
-        $level = Level::first();
-
-        $course = Course::first();
-        $course->levels()->attach(Level::first());
-        $course->levels()->attach(Level::find(2));
+    
+        
 
     
         $level->subjects()->create([

@@ -5,29 +5,12 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="row">
-                        <div class="col">
-                            <div class="card mb-5">
-                                <div class="card-header">Niveaux Enfants</div>
-                                <div class="card-body">
-                                    <a href="{{ route('admin.levels.index')}}">Niveaux d'enseignements pour les enfants</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4"></div>
-                        <div class="col">
-                            <div class="card mb-5">
-                                <div class="card-header">Niveaux Adultes</div>
-                                <div class="card-body">
-                                    <a href="#">Les niveaux d'enseignements pour les adultes</a>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="card-header">
+                        <a class="text-decoration-none fw-bold text-uppercase text-primary" href="{{ route('admin.courses.show', $course->id) }}">{{ $course->label }}</a>
                     </div>
-                    <div class="card-header">{{ __('Les niveaux des cours') }}</div>
                     <div class="card-body">
-                        <a href="{{ route('admin.levels.create') }}"><button class="btn btn-primary mb-3">Ajouter un niveau</button></a>
-                        {{-- <a href="{{ route('admin.parents.list') }}"><button class="btn btn-primary mb-3">Liste des parents</button></a> --}}
+                        <a href="{{ route('admin.courses.add.levels', $course->id) }}"><button class="btn btn-primary mb-3">Ajouter un niveau de classe</button></a>
+                        <a href="{{ route('admin.courses.index' )}}"><button class="btn btn-success mb-3">Liste des cours</button></a>
                         <table class="table">
                             <thead>
                                 <tr>
@@ -36,7 +19,6 @@
                                     <th class="bg-success text-light">{{ _('Tarif') }}</th>
                                     <th class="bg-success text-light">{{ _('Frais d\'inscription') }}</th>
                                     <th class="bg-success text-light">{{ _('Horaires') }}</th>
-                                    <th class="bg-success text-light">{{ _('Matières') }}</th>
                                     <th class="bg-success  text-light">{{ _('Actions') }}</th>
                                 </tr>
                             </thead>
@@ -48,9 +30,7 @@
                                         <td>{{ $level->tarif }}€/Année</td>
                                         <td>{{ $level->registration_fees }}€</td>
                                         <td>{{ $level->hours }}h/semaines</td>
-                                        <td><a href="{{ route('level.subjects', $level->id) }}">{{ $level->subjects->count() }} matères</a></td>
                                         <td>
-                                            <a href="{{ route('admin.subjects.create', $level->id) }}" class="btn btn-primary">{{ _('Add Subject') }}</a>
                                             <a href="{{ route('admin.levels.show', $level->id) }}" class="btn btn-primary">{{ _('View') }}</a>
                                             <a href="{{ route('admin.levels.edit', $level->id) }}" class="btn btn-warning">{{ _('Edit') }}</a>
                                             <form action="{{ route('admin.levels.destroy', $level->id) }}" method="POST" class="d-inline">
@@ -64,7 +44,6 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        {!! $levels->links() !!}
                     </div>
                 </div>
             </div>

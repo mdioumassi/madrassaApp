@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class LevelFactory extends Factory
 {
+    protected $model = \App\Models\Level::class;
+    
     /**
      * Define the model's default state.
      *
@@ -17,9 +19,12 @@ class LevelFactory extends Factory
     public function definition(): array
     {
         return [
-            'label' => $this->faker->word(),
-            'slug' => $this->faker->slug(),
-            'description' => $this->faker->sentence()
+            'label' => $this->faker->sentence(3),
+            'comment' => $this->faker->paragraph,
+            'slug' => $this->faker->slug,
+            'tarif' => $this->faker->randomFloat(2, 0, 999),
+            'registration_fees' => $this->faker->randomFloat(2, 0, 999),
+            'hours' => $this->faker->randomNumber(2),
         ];
     }
 }

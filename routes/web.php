@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ChildController;
+use App\Http\Controllers\Admin\CourseCrudController;
 use App\Http\Controllers\Admin\LevelCrudController;
 use App\Http\Controllers\Admin\ParentController;
 use App\Http\Controllers\Admin\StudentController;
@@ -38,10 +39,22 @@ Route::prefix('admin')->group(function () {
         Route::put('/{child}', [ChildController::class, 'update'])->name('children.update');
         Route::delete('/{child}', [ChildController::class, 'destroy'])->name('children.destroy');
     });
+    Route::prefix('courses')->group(function () {
+        Route::get('/', [CourseCrudController::class, 'index'])->name('admin.courses.index');
+        Route::get('/create', [CourseCrudController::class, 'create'])->name('admin.courses.create');
+        Route::post('/store', [CourseCrudController::class, 'store'])->name('admin.courses.store');
+        Route::get('/{course}', [CourseCrudController::class, 'show'])->name('admin.courses.show');
+        Route::get('/{course}/edit', [CourseCrudController::class, 'edit'])->name('admin.courses.edit');
+        Route::put('/{course}', [CourseCrudController::class, 'update'])->name('admin.courses.update');
+        Route::delete('/{course}', [CourseCrudController::class, 'destroy'])->name('admin.courses.destroy');
+        Route::get('/{id}/level/list', [CourseCrudController::class, 'LevelsListByCourses'])->name('admin.courses.levels.list');
+        Route::get('/{id}/level/create', [CourseCrudController::class, 'createLevelsByCourses'])->name('admin.courses.add.levels');
+    });
     Route::prefix('levels')->group(function () {
+        // Route::get('/adult', [LevelCrudController::class, 'AdultLevels'])->name('admin.levels.adult');
         Route::get('/', [LevelCrudController::class, 'index'])->name('admin.levels.index');
         Route::get('/create', [LevelCrudController::class, 'create'])->name('admin.levels.create');
-        Route::post('/store', [LevelCrudController::class, 'store'])->name('admin.levels.store');
+        Route::post('/course/{id}/level/store', [LevelCrudController::class, 'storeLevelCourse'])->name('admin.courses.levels.store');
         Route::get('/{level}', [LevelCrudController::class, 'show'])->name('admin.levels.show');
         Route::get('/{level}/edit', [LevelCrudController::class, 'edit'])->name('admin.levels.edit');
         Route::put('/{level}', [LevelCrudController::class, 'update'])->name('admin.levels.update');
@@ -56,6 +69,7 @@ Route::prefix('admin')->group(function () {
         Route::put('/{subject}', [SubjectCrudController::class, 'update'])->name('admin.subjects.update');
         Route::delete('/{subject}', [SubjectCrudController::class, 'destroy'])->name('admin.subjects.destroy');
     });
+
     Route::get('/levels/{id}/subjects', [LevelCrudController::class, 'subjectsList'])->name('level.subjects');
     Route::get('/parents', [ParentController::class, 'list'])->name('admin.parents.list');
     Route::get('/parents/{id}/children', [ParentController::class, 'childsList'])->name('parent.children');

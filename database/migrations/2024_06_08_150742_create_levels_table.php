@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('registration_fees');
             $table->string('hours');
             $table->text('comment')->nullable();
+            $table->foreignIdFor(\App\Models\Course::class)->nullable();
             $table->timestamps();
         });
     }

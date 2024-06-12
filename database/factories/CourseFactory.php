@@ -5,11 +5,11 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Subject>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Course>
  */
-class SubjectFactory extends Factory
+class CourseFactory extends Factory
 {
-    protected $model = \App\Models\Subject::class;
+    protected $model = \App\Models\Course::class;
     
     /**
      * Define the model's default state.

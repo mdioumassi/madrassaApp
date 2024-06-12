@@ -16,8 +16,9 @@ return new class extends Migration
             $table->string('label');
             $table->string('slug');
             $table->text('comment')->nullable();
-            $table->boolean('is_child')->default(false)->nullable();
-            $table->boolean('is_adult')->default(false)->nullable();
+            $table->timestamps();
+            // $table->boolean('is_child')->default(false)->nullable();
+            // $table->boolean('is_adult')->default(false)->nullable();
         });
     }
 
