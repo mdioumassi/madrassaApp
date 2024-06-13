@@ -8,13 +8,12 @@
 
                     <div class="card-header">{{ __('Les niveaux des cours') }}</div>
                     <div class="card-body">
-
+                        {{-- <a href="{{ route('admin.courses.create')}}" class="btn btn-success mb-3">{{ _('Ajouter un cours') }}</a> --}}
                         <div class="d-grid gap-2 d-md-block mb-3">
                             @foreach ($courses as $course)
                                 <a href="{{ route('admin.courses.select.levels', $course->id) }}"><button class="btn btn-outline-primary" type="button">{{ $course->label }}</button></a>
                             @endforeach
                         </div>
-                        {{-- <a href="{{ route('admin.parents.list') }}"><button class="btn btn-primary mb-3">Liste des parents</button></a> --}}
                         <table class="table">
                             <thead>
                                 <tr>

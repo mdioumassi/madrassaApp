@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-header">{{ __('Liste des parents') }}</div>
                     <div class="card-body">
-                        <a href="{{ route('admin.users.index') }}"><button class="btn btn-primary mb-3">Tous les utilisateurs</button></a>
+                        {{-- <a href="{{ route('admin.users.index') }}"><button class="btn btn-primary mb-3">Tous les utilisateurs</button></a> --}}
                         <a href="{{ route('children.index') }}"><button class="btn btn-success mb-3">Liste des enfants</button></a>
                         <table class="table">
                             <thead>

@@ -15,7 +15,43 @@
                                     </div>
                                     <div class="card-footer">
                                         <a href="{{ route('admin.users.index') }}"><button
-                                                class="btn btn-outline-primary">Les utilisateurs</button></a>
+                                                class="btn btn-outline-primary">{{_('Les utilisateurs')}}</button></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <i class="fa-solid fa-people-roof" style='font-size:110px'></i>
+                                    </div>
+
+                                    <div class="card-footer">
+                                        <a href="{{ route('admin.parents.list') }}"><button
+                                                class="btn btn-outline-primary">{{ _('Les parents') }}</button></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <i class="fa-solid fa-children" style='font-size:110px'></i>
+                                    </div>
+
+                                    <div class="card-footer">
+                                        <a href="{{ route('children.index') }}"><button
+                                                class="btn btn-outline-primary">{{ _('Les enfants') }}</button></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <i class="fa-solid fa-book" style='font-size:110px'></i>
+                                    </div>
+
+                                    <div class="card-footer">
+                                        <a href="{{ route('admin.courses.index') }}"><button
+                                                class="btn btn-outline-primary">{{ _('Les cours') }}</button></a>
                                     </div>
                                 </div>
                             </div>
@@ -27,15 +63,7 @@
 
                                     <div class="card-footer">
                                         <a href="{{ route('admin.levels.index') }}"><button
-                                                class="btn btn-outline-primary">Les niveaux</button></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title">Card title</h4>
-                                        <p class="card-text">Some example text. Some example text.</p>
+                                                class="btn btn-outline-primary">{{ _('Les classes') }}</button></a>
                                     </div>
                                 </div>
                             </div>
