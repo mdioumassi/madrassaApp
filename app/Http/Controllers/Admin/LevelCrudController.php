@@ -21,9 +21,19 @@ class LevelCrudController extends Controller
      */
     public function index()
     {
-        $levels = Level::latest()->paginate(5);
+        $levels = Level::all();
 
-        return view('admin.levels.index', compact('levels'));
+        $courses = Course::all();
+
+        if ($courses->isEmpty()) {
+            return redirect()->route('admin.courses.create');
+        }
+
+        if ($levels->isEmpty()) {
+            return redirect()->route('admin.levels.create');
+        }
+
+        return view('admin.levels.index', compact('levels', 'courses'));
     }
 
     public function subjectsList($id)

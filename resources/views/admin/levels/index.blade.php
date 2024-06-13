@@ -5,28 +5,15 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="row">
-                        <div class="col">
-                            <div class="card mb-5">
-                                <div class="card-header">Niveaux Enfants</div>
-                                <div class="card-body">
-                                    <a href="{{ route('admin.levels.index')}}">Niveaux d'enseignements pour les enfants</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4"></div>
-                        <div class="col">
-                            <div class="card mb-5">
-                                <div class="card-header">Niveaux Adultes</div>
-                                <div class="card-body">
-                                    <a href="#">Les niveaux d'enseignements pour les adultes</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                     <div class="card-header">{{ __('Les niveaux des cours') }}</div>
                     <div class="card-body">
-                        <a href="{{ route('admin.levels.create') }}"><button class="btn btn-primary mb-3">Ajouter un niveau</button></a>
+
+                        <div class="d-grid gap-2 d-md-block mb-3">
+                            @foreach ($courses as $course)
+                                <a href="{{ route('admin.courses.select.levels', $course->id) }}"><button class="btn btn-outline-primary" type="button">{{ $course->label }}</button></a>
+                            @endforeach
+                        </div>
                         {{-- <a href="{{ route('admin.parents.list') }}"><button class="btn btn-primary mb-3">Liste des parents</button></a> --}}
                         <table class="table">
                             <thead>
@@ -48,12 +35,23 @@
                                         <td>{{ $level->tarif }}€/Année</td>
                                         <td>{{ $level->registration_fees }}€</td>
                                         <td>{{ $level->hours }}h/semaines</td>
-                                        <td><a href="{{ route('level.subjects', $level->id) }}">{{ $level->subjects->count() }} matères</a></td>
                                         <td>
-                                            <a href="{{ route('admin.subjects.create', $level->id) }}" class="btn btn-primary">{{ _('Add Subject') }}</a>
-                                            <a href="{{ route('admin.levels.show', $level->id) }}" class="btn btn-primary">{{ _('View') }}</a>
-                                            <a href="{{ route('admin.levels.edit', $level->id) }}" class="btn btn-warning">{{ _('Edit') }}</a>
-                                            <form action="{{ route('admin.levels.destroy', $level->id) }}" method="POST" class="d-inline">
+                                            @if($level->subjects->count() == 0)
+                                            {{ _('Aucune matière') }}
+                                            @else
+                                            <a href="{{ route('level.subjects', $level->id) }}">{{ $level->subjects->count() }}
+                                                matères</a>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('admin.subjects.create', $level->id) }}"
+                                                class="btn btn-primary">{{ _('Add Subject') }}</a>
+                                            <a href="{{ route('admin.levels.show', $level->id) }}"
+                                                class="btn btn-primary">{{ _('View') }}</a>
+                                            <a href="{{ route('admin.levels.edit', $level->id) }}"
+                                                class="btn btn-warning">{{ _('Edit') }}</a>
+                                            <form action="{{ route('admin.levels.destroy', $level->id) }}" method="POST"
+                                                class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger"
@@ -64,7 +62,6 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        {!! $levels->links() !!}
                     </div>
                 </div>
             </div>

@@ -5,9 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CourseStoreRequest;
 use App\Http\Requests\CourseUpdateRequest;
-use App\Http\Requests\LevelStoreRequest;
 use App\Models\Course;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class CourseCrudController extends Controller
@@ -29,6 +27,28 @@ class CourseCrudController extends Controller
         }
 
         return view('admin.courses.index', compact('courses'));
+    }
+
+    public function getLevelsByCourses()
+    {
+        $courses = Course::with('levels')->get();
+        $levels = $courses->pluck('levels')->flatten();
+
+        return view('admin.courses.levels.index', compact('levels'));
+    }
+
+    public function SelectLevelsByCourse($id)
+    {
+        $course = Course::where('id', $id)->with('levels')->first();
+        $levels = $course->levels;
+        $courses = Course::with('levels')->get();
+
+        if ($levels->isEmpty()) {
+            return redirect()->route('admin.courses.index')
+                             ->with('warning', 'No levels found for this course.');
+        }
+
+        return view('admin.levels.index', compact('levels', 'courses'));
     }
 
     public function createLevelsByCourses($id)

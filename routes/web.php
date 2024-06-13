@@ -41,6 +41,7 @@ Route::prefix('admin')->group(function () {
     });
     Route::prefix('courses')->group(function () {
         Route::get('/', [CourseCrudController::class, 'index'])->name('admin.courses.index');
+        Route::get('/levels', [CourseCrudController::class, 'getLevelsByCourses'])->name('admin.courses.levels.index');
         Route::get('/create', [CourseCrudController::class, 'create'])->name('admin.courses.create');
         Route::post('/store', [CourseCrudController::class, 'store'])->name('admin.courses.store');
         Route::get('/{course}', [CourseCrudController::class, 'show'])->name('admin.courses.show');
@@ -49,6 +50,8 @@ Route::prefix('admin')->group(function () {
         Route::delete('/{course}', [CourseCrudController::class, 'destroy'])->name('admin.courses.destroy');
         Route::get('/{id}/level/list', [CourseCrudController::class, 'LevelsListByCourses'])->name('admin.courses.levels.list');
         Route::get('/{id}/level/create', [CourseCrudController::class, 'createLevelsByCourses'])->name('admin.courses.add.levels');
+        
+        Route::get('/{id}/levels', [CourseCrudController::class, 'SelectLevelsByCourse'])->name('admin.courses.select.levels');
     });
     Route::prefix('levels')->group(function () {
         // Route::get('/adult', [LevelCrudController::class, 'AdultLevels'])->name('admin.levels.adult');

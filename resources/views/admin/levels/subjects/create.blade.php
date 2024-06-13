@@ -8,6 +8,8 @@
                     <div class="card-header">{{ __('Ajouter une matière') }}</div>
 
                     <div class="card-body">
+                        <h2 class="rounded mb-5 text-center bg-success text-light">{{ $level->label }}</h2>
+
                         <form method="POST" action="{{ route('admin.levels.subjects.store', $level->id) }}">
                             @csrf
 

@@ -13,9 +13,10 @@
                                     <thead> </thead>
                                     <tbody>
                                         <tr><th class="bg-success text-light">Label</th><td></td><td> {{ $level->label }} </td></tr>
-                                        <tr><th class="bg-success text-light">Tarif</th><td></td><td> {{ $level->tarif }} </td></tr>
-                                        <tr><th class="bg-success text-light">Frais d'inscription</th><td></td><td> {{ $level->registration_fees }} </td></tr>
-                                        <tr><th class="bg-success text-light">Horaires</th><td></td><td> {{ $level->hours }} </td></tr>
+                                        <tr><th class="bg-success text-light">Tarif</th><td></td><td> {{ $level->tarif }}€/année </td></tr>
+                                        <tr><th class="bg-success text-light">Frais d'inscription</th><td></td><td> {{ $level->registration_fees }}€ </td></tr>
+                                        <tr><th class="bg-success text-light">Horaires</th><td></td><td> {{ $level->hours }}h/semaines </td></tr>
+                                        <tr><th class="bg-success text-light">Matières</th><td></td><td> <a href="{{ route('level.subjects', $level->id)}}">{{ $level->subjects->count()}} Matières</a> </td></tr>
                                     </tbody>
                                 </table>
                             </div>

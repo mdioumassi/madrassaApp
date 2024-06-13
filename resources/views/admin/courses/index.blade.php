@@ -25,7 +25,15 @@
                                     <th>{{ $course->id }}</th>
                                     <td>{{ $course->label }}</td>
                                     <td>{{ $course->comment }}</td>
-                                    <td><a href="{{ route('admin.courses.levels.list', $course->id)}}">{{ $course->levels->count()}} Niveaux</a></td>
+                                    <td>
+                                        @if($course->levels->count() == 0)
+                                                {{ _('Aucune niveau') }}
+                                        @else
+                                        <a href="{{ route('admin.courses.levels.list', $course->id)}}">
+                                            {{ $course->levels->count()}} Niveaux
+                                        </a>
+                                        @endif
+                                    </td>
                                     <td>
                                         <a href="{{ route('admin.courses.add.levels', $course->id) }}" class="btn btn-primary">{{ _('Add Levels') }}</a>
                                         <a href="{{ route('admin.courses.show', $course->id) }}" class="btn btn-primary">{{ _('View') }}</a>
