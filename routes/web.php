@@ -4,8 +4,8 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ChildController;
 use App\Http\Controllers\Admin\CourseCrudController;
 use App\Http\Controllers\Admin\LevelCrudController;
-use App\Http\Controllers\Admin\ParentController;
-use App\Http\Controllers\Admin\StudentController;
+use App\Http\Controllers\Admin\ParentCrudController;
+use App\Http\Controllers\Admin\AdultCrudController;
 use App\Http\Controllers\Admin\SubjectCrudController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -74,9 +74,7 @@ Route::prefix('admin')->group(function () {
     });
 
     Route::get('/levels/{id}/subjects', [LevelCrudController::class, 'subjectsList'])->name('level.subjects');
-    Route::get('/parents', [ParentController::class, 'list'])->name('admin.parents.list');
-    Route::get('/parents/{id}/children', [ParentController::class, 'childsList'])->name('parent.children');
-    Route::get('/students', [StudentController::class, 'list'])->name('admin.students.list');
-  //  Route::resource('children', ChildController::class);
-    //Route::get('/children/create/{parent_id}', [ChildController::class, 'create'])->name('parent.children.create');
+    Route::get('/parents', [ParentCrudController::class, 'list'])->name('admin.parents.list');
+    Route::get('/parents/{id}/children', [ParentCrudController::class, 'childsList'])->name('parent.children');
+    Route::get('/adults', [AdultCrudController::class, 'list'])->name('admin.students.list');
 });

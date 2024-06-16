@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class ParentController extends Controller
+class ParentCrudController extends Controller
 {
     public function __construct()
     {
@@ -20,9 +20,9 @@ class ParentController extends Controller
      */
     public function list()
     {
-        $parents = User::where('type', 'parent')->latest()->paginate(8);
+        $users = User::where('type', 'parent')->latest()->paginate(8);
         
-        return view('admin.users.parents.list', compact('parents'));
+        return view('admin.users.index', compact('users'));
     }
 
     public function childsList($id)

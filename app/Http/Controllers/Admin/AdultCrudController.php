@@ -6,16 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class StudentController extends Controller
+class AdultCrudController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function list()
     {
-        $students = User::where('type', 'etudiant(e)')->latest()->paginate(10);
+        $users = User::where('type', 'etudiant(e)')->latest()->paginate(10);
 
-        return view('admin.users.students.list', compact('students'));
+        return view('admin.users.index', compact('users'));
     }
 
     /**

@@ -27,12 +27,14 @@
                                 </table>
                             </div>
                             <div class="col-md-6">
-                                <h4>Enfants</h4>
-                                <ul>
-                                    @foreach ($user->children as $child)
-                                        <li>{{ $child->name }} {{ $child->lastname }}</li>
-                                    @endforeach
-                                </ul>
+                                @if($user->children->count() > 0)
+                                    <h4>Enfants</h4>
+                                    <ul>
+                                        @foreach ($user->children as $child)
+                                            <li>{{ $child->firstname }} {{ $child->lastname }}</li>
+                                        @endforeach
+                                    </ul>
+                                @endif
                             </div>
                         </div>
                         <a href="{{ route('admin.users.edit', $user->id) }}"><button class="btn btn-primary">Editer</button></a>

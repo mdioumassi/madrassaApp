@@ -28,8 +28,10 @@
                                         <td>{{ $child->birthdate }}</td>
                                         <td>{{ $child->french_class }}</td>
                                         <td>
-                                            <a href="{{ route('children.show', $child->id) }}" class="btn btn-primary">{{ _('View') }}</a>
-                                            <a href="{{ route('children.edit', $child->id) }}" class="btn btn-warning">{{ _('Edit') }}</a>
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                            data-bs-target="#modal-view-detail-child{{ $child->id }}">{{ _('View') }}</button>
+                                        <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                            data-bs-target="#modal-view-edit-child{{ $child->id }}">{{ _('Edit') }}</button>
                                             <form action="{{ route('children.destroy', $child->id) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
@@ -46,4 +48,8 @@
             </div>
         </div>
     </div>
+    @foreach($children as $child)
+        @include('admin.children._modal.child-show', ['child' => $child])
+        @include('admin.children._modal.child-edit', ['child' => $child])
+    @endforeach
 @endsection
