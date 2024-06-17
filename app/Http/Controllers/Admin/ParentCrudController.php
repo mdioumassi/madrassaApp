@@ -22,7 +22,7 @@ class ParentCrudController extends Controller
     {
         $users = User::where('type', 'parent')->latest()->paginate(8);
         
-        return view('admin.users.index', compact('users'));
+        return view('admin.users.parents.list', compact('users'));
     }
 
     public function childsList($id)

@@ -1,4 +1,3 @@
-{{-- @foreach ($childs as $child) --}}
 <x-modal id="modal-view-detail-child{{$child->id}}">
     <x-slot name="title">{{ $child->firstname }} {{ $child->lastname }}</x-slot>
     <x-slot name="body">
@@ -45,4 +44,3 @@
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">{{_('Fermer') }}</button>
     </x-slot>
 </x-modal>
-{{-- @endforeach --}}

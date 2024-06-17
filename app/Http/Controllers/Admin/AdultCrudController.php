@@ -15,7 +15,7 @@ class AdultCrudController extends Controller
     {
         $users = User::where('type', 'etudiant(e)')->latest()->paginate(10);
 
-        return view('admin.users.index', compact('users'));
+        return view('admin.users.adults.list', compact('users'));
     }
 
     /**

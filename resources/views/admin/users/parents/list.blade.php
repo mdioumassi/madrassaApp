@@ -7,15 +7,14 @@
                 <div class="card">
                     <div class="card-header">{{ __('Users') }}</div>
                     <div class="card-body">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#modal-create-users">{{ _('Ajouter un utilisateur') }}</button>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-create-users">{{ _('Ajouter un utilisateur') }}</button>
                     </div>
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
-                            <a href="{{ route('admin.users.index') }}" aria-current="page" class="nav-link active" >{{_('Tous les utulisateurs')}}</a>
+                            <a href="{{ route('admin.users.index') }}" aria-current="page" class="nav-link" >{{_('Tous les utulisateurs')}}</a>
                           </li>
                         <li class="nav-item">
-                          <a href="{{ route('admin.parents.list') }}" aria-current="page" class="nav-link" >{{_('Liste des parents')}}</a>
+                          <a href="{{ route('admin.parents.list') }}" aria-current="page" class="nav-link active" >{{_('Liste des parents')}}</a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="{{ route('admin.students.list') }}">{{_('Liste des adultes')}}</a>
@@ -29,7 +28,6 @@
                                 <th class="bg-success text-light">Prénom</th>
                                 <th class="bg-success text-light">Email</th>
                                 <th class="bg-success text-light">Téléphone</th>
-                                <th class="bg-success text-light">Type</th>
                                 <th class="bg-success text-light">Enfants</th>
                                 <th class="bg-success text-light">Actions</th>
                             </tr>
@@ -42,7 +40,6 @@
                                     <td>{{ $user->lastname }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->phone }}</td>
-                                    <td>{{$user->type}}</td>
                                     @if ($user->children->count() > 0)
                                         <td><a href="{{ route('parent.children', $user->id) }}">{{ $user->children->count() }}
                                                 enfant.s</a>
@@ -53,7 +50,6 @@
                                     <td>
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                         data-bs-target="#modal-show-users{{$user->id}}">{{ _('view') }}</button>
-                                        {{-- <a href="{{ route('admin.users.show', $user->id) }}" class="btn btn-primary">{{ _('View') }}</a> --}}
                                         <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-warning">{{ _('Edit') }}</a>
                                         <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST"
                                             class="d-inline">
