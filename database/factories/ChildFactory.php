@@ -22,7 +22,7 @@ class ChildFactory extends Factory
             'firstname' => fake()->name(),
             'lastname' => fake()->name(),
             'birthdate' => fake()->date(),
-            'genre' => fake()->randomElement(['M', 'F']),
+            'genre' => fake()->randomElement(['Garçon', 'Fille']),
             'french_class' => fake()->randomElement(['CP', 'CE1', 'CE2', 'CM1', 'CM2']),
         ];
     }

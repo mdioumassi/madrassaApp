@@ -23,6 +23,11 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @if ($children->count() == 0)
+                                    <tr>
+                                        <td colspan="8" class="text-center">Aucun enfant trouvé</td>
+                                    </tr>
+                                @endif
                                 @foreach ($children as $child)
                                     <tr>
                                         <th>{{ $child->id }}</th>

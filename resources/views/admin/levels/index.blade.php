@@ -27,6 +27,11 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @if ($levels->count() == 0)
+                                    <tr>
+                                        <td colspan="7" class="text-center">{{ _('Aucun niveau trouvé') }}</td>
+                                    </tr>
+                                @endif
                                 @foreach ($levels as $level)
                                     <tr>
                                         <th>{{ $level->id }}</th>

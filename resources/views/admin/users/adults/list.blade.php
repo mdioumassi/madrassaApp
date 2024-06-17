@@ -8,19 +8,22 @@
                     <div class="card-header">{{ __('Users: liste des etudiants') }}</div>
                     <div class="card-body">
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#modal-create-users">{{ _('Ajouter un utilisateur') }}</button>
+                            data-bs-target="#modal-create-users">{{ _('Ajouter un utilisateur') }}</button>
                     </div>
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
-                            <a href="{{ route('admin.users.index') }}" aria-current="page" class="nav-link" >{{_('Tous les utulisateurs')}}</a>
-                          </li>
-                        <li class="nav-item">
-                          <a href="{{ route('admin.parents.list') }}" aria-current="page" class="nav-link" >{{_('Liste des parents')}}</a>
+                            <a href="{{ route('admin.users.index') }}" aria-current="page"
+                                class="nav-link">{{ _('Tous les utulisateurs') }}</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link active" href="{{ route('admin.students.list') }}">{{_('Liste des adultes')}}</a>
+                            <a href="{{ route('admin.parents.list') }}" aria-current="page"
+                                class="nav-link">{{ _('Liste des parents') }}</a>
                         </li>
-                      </ul>
+                        <li class="nav-item">
+                            <a class="nav-link active"
+                                href="{{ route('admin.students.list') }}">{{ _('Liste des adultes') }}</a>
+                        </li>
+                    </ul>
                     <table class="table mt-2">
                         <thead>
                             <tr>
@@ -33,6 +36,11 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @if ($users->count() == 0)
+                                <tr>
+                                    <td colspan="7" class="text-center">Aucun utilisateur trouvé</td>
+                                </tr>
+                            @endif
                             @foreach ($users as $user)
                                 <tr>
                                     <td>{{ $user->civility }}</td>
@@ -42,8 +50,9 @@
                                     <td>{{ $user->phone }}</td>
                                     <td>
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#modal-show-users{{$user->id}}">{{ _('view') }}</button>
-                                        <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-warning">{{ _('Edit') }}</a>
+                                            data-bs-target="#modal-show-users{{ $user->id }}">{{ _('View') }}</button>
+                                        <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                            data-bs-target="#modal-edit-users{{ $user->id }}">{{ _('Edit') }}</button>
                                         <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST"
                                             class="d-inline">
                                             @csrf
@@ -63,4 +72,5 @@
     </div>
     @include('admin.users._modal.create-users')
     @include('admin.users._modal.show-users', ['users' => $users])
+    @include('admin.users._modal.edit-users', ['users' => $users])
 @endsection

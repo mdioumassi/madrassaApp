@@ -20,7 +20,7 @@ class LevelFactory extends Factory
     {
         return [
             'label' => $this->faker->sentence(3),
-            'comment' => $this->faker->paragraph,
+            'comment' => $this->faker->paragraph(1),
             'slug' => $this->faker->slug,
             'tarif' => $this->faker->randomFloat(2, 0, 999),
             'registration_fees' => $this->faker->randomFloat(2, 0, 999),

@@ -43,18 +43,18 @@
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->phone }}</td>
                                     <td>{{$user->type}}</td>
-                                    @if ($user->children->count() > 0)
-                                        <td><a href="{{ route('parent.children', $user->id) }}">{{ $user->children->count() }}
-                                                enfant.s</a>
-                                            </td>
+                                    @if ($user->type== 'parent' && $user->children->count() > 0)
+                                        <td>
+                                            <a href="{{ route('parent.children', $user->id) }}">{{ $user->children->count() }} enfant.s</a>
+                                        </td>
                                     @else
                                         <td>0 enfant</td>
                                     @endif
                                     <td>
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#modal-show-users{{$user->id}}">{{ _('view') }}</button>
-                                        {{-- <a href="{{ route('admin.users.show', $user->id) }}" class="btn btn-primary">{{ _('View') }}</a> --}}
-                                        <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-warning">{{ _('Edit') }}</a>
+                                        data-bs-target="#modal-show-users{{$user->id}}">{{ _('View') }}</button>
+                                        <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                        data-bs-target="#modal-edit-users{{$user->id}}">{{ _('Edit') }}</button>
                                         <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST"
                                             class="d-inline">
                                             @csrf
@@ -74,4 +74,5 @@
     </div>
     @include('admin.users._modal.create-users')
     @include('admin.users._modal.show-users', ['users' => $users])
+    @include('admin.users._modal.edit-users', ['users' => $users])
 @endsection

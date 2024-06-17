@@ -25,14 +25,6 @@ class LevelCrudController extends Controller
 
         $courses = Course::all();
 
-        if ($courses->isEmpty()) {
-            return redirect()->route('admin.courses.create');
-        }
-
-        if ($levels->isEmpty()) {
-            return redirect()->route('admin.levels.create');
-        }
-
         return view('admin.levels.index', compact('levels', 'courses'));
     }
 

@@ -14,7 +14,7 @@
                             <tr>
                                 <th class="bg-success text-light">#</th>
                                 <th class="bg-success text-light">{{ _('Label') }}</th>
-                                <th class="bg-success text-light">{{ _('Comment') }}</th>
+                                {{-- <th class="bg-success text-light">{{ _('Comment') }}</th> --}}
                                 <th class="bg-success text-light">{{ _('Classe') }}</th>
                                 <th class="bg-success text-light">{{ _('Actions') }}</th>
                             </tr>
@@ -24,7 +24,7 @@
                                 <tr>
                                     <th>{{ $course->id }}</th>
                                     <td>{{ $course->label }}</td>
-                                    <td>{{ $course->comment }}</td>
+                                    {{-- <td>{{ $course->comment }}</td> --}}
                                     <td>
                                         @if($course->levels->count() == 0)
                                                 {{ _('Aucune niveau') }}

@@ -46,7 +46,7 @@
                         <td></td>
                         <td> {{ $user->full_address }} </td>
                     </tr>
-                    @if ($user->children->count() > 0)
+                    @if ($user->type =='parent' && $user->children->count() > 0)
                         <tr>
                             <th class="bg-success text-light">Enfants</th>
                             <td></td>
