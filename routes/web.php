@@ -37,6 +37,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/', [ChildController::class, 'index'])->name('children.index');
         Route::get('/create', [ChildController::class, 'create'])->name('children.create');
         Route::post('/store', [ChildController::class, 'store'])->name('children.store');
+        Route::post('/parent/{id}/child/store', [ChildController::class, 'storeChildByParent'])->name('child.parent.store');
         Route::get('/{child}', [ChildController::class, 'show'])->name('children.show');
         Route::get('/{child}/edit', [ChildController::class, 'edit'])->name('children.edit');
         Route::put('/{child}', [ChildController::class, 'update'])->name('children.update');

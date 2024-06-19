@@ -5,9 +5,9 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">{{ __('Mes enfants') }}</div>
+                    <div class="card-header"><span class="bg-success py-2 px-3 text-light rounded">Parent:</span> {{ $parent->lastname }} {{ $parent->name }}</div>
                     <div class="card-body">
-                        <h1>{{ $parent->lastname }} {{ $parent->name }}</h1>
+
                         <table class="table">
                             <thead>
                                 <tr>
@@ -42,7 +42,8 @@
                             </tbody>
                         </table>
                         <a href="{{ route('admin.parents.list') }}" class="btn btn-primary">{{ _('Liste des parents') }}</a>
-                       {{--  <a href="{{ route('children.create', $child->parent->id) }}" class="btn btn-success">{{ _('Ajouter un enfant') }}</a> --}}
+                       <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-add-parent-child{{ $child->parent->id }}">{{ _('Ajouter un enfant') }}</button>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -51,5 +52,6 @@
     @foreach($children as $child)
         @include('admin.children._modal.child-show', ['child' => $child])
         @include('admin.children._modal.child-edit', ['child' => $child])
+        @include('admin.children._modal.child-add-in-parent', ['user' => $child->parent])
     @endforeach
 @endsection

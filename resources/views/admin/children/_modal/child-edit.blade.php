@@ -1,4 +1,5 @@
     <x-modal id="modal-view-edit-child{{ $child->id }}">
+        <x-slot name="size">modal-lg</x-slot>
         <x-slot name="title">{{ $child->firstname }} {{ $child->lastname }}</x-slot>
         <x-slot name="body">
             <form method="POST" action="{{ route('children.update', $child->id) }}">

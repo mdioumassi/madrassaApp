@@ -7,22 +7,26 @@
                 <div class="card">
                     <div class="card-header">{{ __('Users') }}</div>
                     <div class="card-body">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-create-users">{{ _('Ajouter un utilisateur') }}</button>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#modal-create-users">{{ _('Ajouter un utilisateur') }}</button>
                     </div>
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
-                            <a href="{{ route('admin.users.index') }}" aria-current="page" class="nav-link" >{{_('Tous les utulisateurs')}}</a>
-                          </li>
-                        <li class="nav-item">
-                          <a href="{{ route('admin.parents.list') }}" aria-current="page" class="nav-link active" >{{_('Liste des parents')}}</a>
+                            <a href="{{ route('admin.users.index') }}" aria-current="page"
+                                class="nav-link">{{ _('Tous les utulisateurs') }}</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" href="{{ route('admin.students.list') }}">{{_('Liste des adultes')}}</a>
+                            <a href="{{ route('admin.parents.list') }}" aria-current="page"
+                                class="nav-link active">{{ _('Liste des parents') }}</a>
                         </li>
-                      </ul>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.students.list') }}">{{ _('Liste des adultes') }}</a>
+                        </li>
+                    </ul>
                     <table class="table mt-2">
                         <thead>
                             <tr>
+                                <th class="bg-success text-light">ID</th>
                                 <th class="bg-success text-light">Civilité</th>
                                 <th class="bg-success text-light">Nom</th>
                                 <th class="bg-success text-light">Prénom</th>
@@ -33,13 +37,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if($users->count() == 0)
+                            @if ($users->count() == 0)
                                 <tr>
                                     <td colspan="7" class="text-center">Aucun utilisateur trouvé</td>
                                 </tr>
                             @endif
                             @foreach ($users as $user)
                                 <tr>
+                                    <td>{{ $user->id }}</td>
                                     <td>{{ $user->civility }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->lastname }}</td>
@@ -48,15 +53,17 @@
                                     @if ($user->type == 'parent' && $user->children->count() > 0)
                                         <td><a href="{{ route('parent.children', $user->id) }}">{{ $user->children->count() }}
                                                 enfant.s</a>
-                                            </td>
+                                        </td>
                                     @else
                                         <td>0 enfant</td>
                                     @endif
                                     <td>
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#modal-show-users{{$user->id}}">{{ _('View') }}</button>
+                                            data-bs-target="#modal-add-parent-child{{ $user->id }}">{{ _('Add child') }}</button>
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                            data-bs-target="#modal-show-users{{ $user->id }}">{{ _('View') }}</button>
                                         <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                                        data-bs-target="#modal-edit-users{{$user->id}}">{{ _('Edit') }}</button>
+                                            data-bs-target="#modal-edit-users{{ $user->id }}">{{ _('Edit') }}</button>
                                         <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST"
                                             class="d-inline">
                                             @csrf
@@ -75,6 +82,9 @@
         </div>
     </div>
     @include('admin.users._modal.create-users')
-    @include('admin.users._modal.show-users', ['users' => $users])
-    @include('admin.users._modal.edit-users', ['users' => $users])
+    @foreach ($users as $user)
+        @include('admin.users._modal.show-users', ['user' => $user])
+        @include('admin.users._modal.edit-users', ['user' => $user])
+        @include('admin.children._modal.child-add-in-parent', ['user' => $user])
+    @endforeach
 @endsection

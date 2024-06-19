@@ -1,4 +1,5 @@
 <x-modal id="modal-view-detail-child{{$child->id}}">
+    <x-slot name="size">modal-lg</x-slot>
     <x-slot name="title">{{ $child->firstname }} {{ $child->lastname }}</x-slot>
     <x-slot name="body">
         <table class="table">

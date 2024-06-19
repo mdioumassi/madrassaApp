@@ -43,7 +43,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col">
+                            {{-- <div class="col">
                                 <div class="card">
                                     <div class="card-body">
                                         <i class="fa-solid fa-book" style='font-size:110px'></i>
@@ -54,7 +54,7 @@
                                                 class="btn btn-outline-primary">{{ _('Les cours') }}</button></a>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col">
                                 <div class="card">
                                     <div class="card-body">
@@ -63,7 +63,7 @@
 
                                     <div class="card-footer">
                                         <a href="{{ route('admin.levels.index') }}"><button
-                                                class="btn btn-outline-primary">{{ _('Les classes') }}</button></a>
+                                                class="btn btn-outline-primary">{{ _('Cours & classes') }}</button></a>
                                     </div>
                                 </div>
                             </div>

@@ -73,6 +73,9 @@
         </div>
     </div>
     @include('admin.users._modal.create-users')
-    @include('admin.users._modal.show-users', ['users' => $users])
-    @include('admin.users._modal.edit-users', ['users' => $users])
+    @foreach ($users as $user)
+        @include('admin.users._modal.show-users', ['user' => $user])
+        @include('admin.users._modal.edit-users', ['user' => $user])
+        @include('admin.children._modal.child-add-in-parent', ['user' => $user])
+    @endforeach
 @endsection

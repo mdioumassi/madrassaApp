@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ChildStoreRequest;
 use App\Http\Requests\ChildUpdateRequest;
 use App\Models\Child;
+use App\Models\User;
 
 class ChildController extends Controller
 {
@@ -30,6 +31,18 @@ class ChildController extends Controller
     public function create()
     {
         return view('children.create');
+    }
+
+    /**
+     * route name: child.parent.store
+     */
+    public function storeChildByParent(ChildStoreRequest $request, $id)
+    {   
+        $parent = User::where('id', $id)->first();
+        $parent->children()->create($request->validated());
+
+             return redirect()->route('parent.children', $id)
+                         ->with('success', 'Child created successfully.');
     }
 
     /**

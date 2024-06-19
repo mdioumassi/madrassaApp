@@ -36,8 +36,10 @@
                                         <td>{{ $child->lastname }}</td>
                                         <td>{{ $child->birthdate }}</td>
                                         <td>{{ $child->french_class }}</td>
-                                        <td><a
-                                                href="{{ route('admin.users.show', $child->parent->id) }}">{{ $child->parent->name }}</a>
+                                        <td>
+                                            @if($child->parent->type == 'parent')
+                                                <a href="{{ route('admin.users.show', $child->parent->id) }}">{{ $child->parent->name }}</a>
+                                            @endif
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
