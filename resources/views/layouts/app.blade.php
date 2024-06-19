@@ -34,6 +34,21 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ _('Dashboard') }}
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('admin.users.index') }}">{{_('Users')}}</a>
+                                <a class="dropdown-item" href="{{ route('admin.parents.list')}}">{{_('Parents')}}</a>
+                                <a class="dropdown-item" href="{{ route('children.index') }}">{{_('Children')}}</a>
+                                <a class="dropdown-item" href="{{ route('admin.courses.index') }}">{{_('Courses')}}</a>
+                                <a class="dropdown-item" href="{{ route('admin.levels.index') }}">{{_('Levels')}}</a>
+
+                            </div>
+                        </li>
 
                     </ul>
 
@@ -69,7 +84,9 @@
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
+                                    <a class="dropdown-item" href="{{ route('dashboard') }}">{{_('Dashboard')}}</a>
                                 </div>
+                               
                             </li>
                         @endguest
                     </ul>

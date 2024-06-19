@@ -20,7 +20,7 @@ class CourseCrudController extends Controller
      */
     public function index()
     {
-        $courses = Course::latest()->paginate(5);
+        $courses = Course::latest()->paginate(8);
 
         if ($courses->isEmpty()) {
             return redirect()->route('admin.courses.create');
@@ -37,23 +37,37 @@ class CourseCrudController extends Controller
         return view('admin.courses.levels.index', compact('levels'));
     }
 
-    public function SelectLevelsByCourse($id)
+    // public function SelectLevelsByCourse($keywords)
+    // {
+    //     $course = Course::where('keywords', $keywords)->with('levels')->first();
+    //     $levels = $course->levels;
+    //     $courses = Course::with('levels')->get();
+
+    //     if ($levels->isEmpty()) {
+    //         return redirect()->route('admin.courses.index')
+    //                          ->with('warning', 'No levels found for this course.');
+    //     }
+
+    //     return view('admin.levels.index', compact('levels', 'courses'));
+    // }
+
+    public function SelectLevelsByKeyword($keyword)
     {
-        $course = Course::where('id', $id)->with('levels')->first();
+        $course = Course::where('keywords', $keyword)->with('levels')->first();
         $levels = $course->levels;
-        $courses = Course::with('levels')->get();
 
-        if ($levels->isEmpty()) {
-            return redirect()->route('admin.courses.index')
-                             ->with('warning', 'No levels found for this course.');
-        }
-
-        return view('admin.levels.index', compact('levels', 'courses'));
+        return view('admin.courses.types.'.$keyword, compact('levels'));
     }
 
     public function createLevelsByCourses($id)
     {
          $course = Course::where('id', $id)->with('levels')->first();
+            return view('admin.courses.levels.create', compact('course'));
+    }
+
+    public function createLevelsByKeywords($keyword)
+    {
+         $course = Course::where('keywords', $keyword)->with('levels')->first();
             return view('admin.courses.levels.create', compact('course'));
     }
 
@@ -83,8 +97,6 @@ class CourseCrudController extends Controller
     public function store(CourseStoreRequest $request)
     {
         $validatedData = $request->validated();
-        $validatedData['slug'] = Str::slug($validatedData['slug'], '-');
-
         Course::create($validatedData);
         return redirect()->route('admin.courses.index')
                          ->with('success', 'Course created successfully.');

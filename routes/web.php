@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ParentCrudController;
 use App\Http\Controllers\Admin\AdultCrudController;
 use App\Http\Controllers\Admin\SubjectCrudController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,8 @@ Route::get('/', function () {
 
 
 Auth::routes();
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
@@ -50,14 +53,15 @@ Route::prefix('admin')->group(function () {
         Route::delete('/{course}', [CourseCrudController::class, 'destroy'])->name('admin.courses.destroy');
         Route::get('/{id}/level/list', [CourseCrudController::class, 'LevelsListByCourses'])->name('admin.courses.levels.list');
         Route::get('/{id}/level/create', [CourseCrudController::class, 'createLevelsByCourses'])->name('admin.courses.add.levels');
-        
-        Route::get('/{id}/levels', [CourseCrudController::class, 'SelectLevelsByCourse'])->name('admin.courses.select.levels');
+        Route::get('/key/{keyword}/level/create', [CourseCrudController::class, 'createLevelsByKeywords'])->name('admin.courses.levels.create');
+        Route::get('/{keyword}/levels', [CourseCrudController::class, 'SelectLevelsByKeyword'])->name('admin.courses.select.levels.keyword');
     });
     Route::prefix('levels')->group(function () {
         // Route::get('/adult', [LevelCrudController::class, 'AdultLevels'])->name('admin.levels.adult');
         Route::get('/', [LevelCrudController::class, 'index'])->name('admin.levels.index');
         Route::get('/create', [LevelCrudController::class, 'create'])->name('admin.levels.create');
         Route::post('/course/{id}/level/store', [LevelCrudController::class, 'storeLevelCourse'])->name('admin.courses.levels.store');
+        Route::post('/course/keyword/{keyword}/level/store', [LevelCrudController::class, 'storeLevelByCourseKeywords'])->name('admin.courses.keywords.levels.store');
         Route::get('/{level}', [LevelCrudController::class, 'show'])->name('admin.levels.show');
         Route::get('/{level}/edit', [LevelCrudController::class, 'edit'])->name('admin.levels.edit');
         Route::put('/{level}', [LevelCrudController::class, 'update'])->name('admin.levels.update');

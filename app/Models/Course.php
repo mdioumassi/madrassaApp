@@ -22,9 +22,8 @@ class Course extends Model
      */
     protected $fillable = [
         'label',
-        'slug',
         'comment',
-        // 'is_child',
-        // 'is_adult'
     ];
+
+
 }

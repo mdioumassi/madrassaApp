@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -14,12 +15,16 @@ return new class extends Migration
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
             $table->string('label');
-            $table->string('slug');
+            $table->string('keywords')->unique()->nullable();
             $table->text('comment')->nullable();
             $table->timestamps();
-            // $table->boolean('is_child')->default(false)->nullable();
-            // $table->boolean('is_adult')->default(false)->nullable();
         });
+        DB::table('courses')->insert([
+            ['label' => 'Cours d\'arabe enfant', 'keywords' => 'arabe-enfant'],
+            ['label' => 'Cours d\'arabe adulte', 'keywords' => 'arabe-adulte'],
+            ['label' => 'Cours de coran enfant', 'keywords' => 'coran-enfant'],
+            ['label' => 'Cours de coran adulte', 'keywords' => 'coran-adulte'],
+        ]);
     }
 
     /**

@@ -71,6 +71,20 @@ class LevelCrudController extends Controller
         return redirect()->route('admin.courses.levels.list', $course->id)
                          ->with('success', 'Level created successfully.');
     }
+
+    /**
+     * admin.courses.keywords.levels.store
+     */
+    public function storeLevelByCourseKeywords(LevelStoreRequest $request, $keyword)
+    {
+        $course = Course::where('keywords', $keyword)->first();
+        $validatedData = $request->validated();
+        $validatedData['slug'] = Str::slug($validatedData['slug'], '-');
+        $course->levels()->create($validatedData);
+        
+        return redirect()->route('admin.courses.select.levels.keyword', $keyword);
+    }
+    
     /**
      * Display the specified resource.
      */
