@@ -16,7 +16,8 @@ class CourseCrudController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * route: /admin/courses
+     * name: admin.courses.index
      */
     public function index()
     {
@@ -29,6 +30,10 @@ class CourseCrudController extends Controller
         return view('admin.courses.index', compact('courses'));
     }
 
+    /**
+     * route: /admin/courses/levels
+     * name: admin.courses.levels.index
+     */
     public function getLevelsByCourses()
     {
         $courses = Course::with('levels')->get();
@@ -37,20 +42,10 @@ class CourseCrudController extends Controller
         return view('admin.courses.levels.index', compact('levels'));
     }
 
-    // public function SelectLevelsByCourse($keywords)
-    // {
-    //     $course = Course::where('keywords', $keywords)->with('levels')->first();
-    //     $levels = $course->levels;
-    //     $courses = Course::with('levels')->get();
-
-    //     if ($levels->isEmpty()) {
-    //         return redirect()->route('admin.courses.index')
-    //                          ->with('warning', 'No levels found for this course.');
-    //     }
-
-    //     return view('admin.levels.index', compact('levels', 'courses'));
-    // }
-
+    /**
+     * route: /admin/courses/key/{keyword}/levels
+     * name: admin.courses.select.levels.keyword
+     */
     public function SelectLevelsByKeyword($keyword)
     {
         $course = Course::where('keywords', $keyword)->with('levels')->first();
@@ -59,18 +54,30 @@ class CourseCrudController extends Controller
         return view('admin.courses.types.'.$keyword, compact('levels'));
     }
 
+    /**
+     * route: /admin/courses/{id}/level/create
+     * name: admin.courses.add.levels
+     */
     public function createLevelsByCourses($id)
     {
          $course = Course::where('id', $id)->with('levels')->first();
             return view('admin.courses.levels.create', compact('course'));
     }
 
+    /**
+     * route: /admin/courses/key/{keyword}/level/create
+     * name: admin.courses.levels.create
+     */
     public function createLevelsByKeywords($keyword)
     {
          $course = Course::where('keywords', $keyword)->with('levels')->first();
             return view('admin.courses.levels.create', compact('course'));
     }
 
+    /**
+     * route: /admin/courses/{id}/level/list
+     * name: admin.courses.levels.list
+     */
     public function LevelsListByCourses($id)
     {
         $course = Course::where('id', $id)->with('levels')->first();

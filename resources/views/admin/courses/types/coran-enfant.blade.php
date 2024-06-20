@@ -2,6 +2,11 @@
 
 @section('content')
     <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ _('Dashboard') }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('dashboard.course-and-levels') }}">{{ _('Cours & Niveaux') }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ _('Cours de coran enfant') }}</li>
+        </ol>
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">

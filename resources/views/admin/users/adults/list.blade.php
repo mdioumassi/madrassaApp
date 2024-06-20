@@ -2,26 +2,36 @@
 
 @section('content')
     <div class="container">
+        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{{route('dashboard')}}">{{_('Dashboard')}}</a></li>
+              <li class="breadcrumb-item"><a href="{{route('admin.users.index')}}">{{_('Utilisateurs')}}</a></li>
+              <li class="breadcrumb-item active" aria-current="page">{{_('Adultes')}}</li>
+            </ol>
+          </nav>
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">{{ __('Users: liste des etudiants') }}</div>
+                    <div class="card-header"><span class="bg-success py-2 px-3 text-light rounded">Utilisateurs:</span> {{ __('Adultes') }}</div>
                     <div class="card-body">
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#modal-create-users">{{ _('Ajouter un utilisateur') }}</button>
+                            data-bs-target="#modal-create-users">{{ _('Ajouter un adulte') }}</button>
                     </div>
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
                             <a href="{{ route('admin.users.index') }}" aria-current="page"
-                                class="nav-link">{{ _('Tous les utulisateurs') }}</a>
+                                class="nav-link">{{ _('Utilisateurs') }}</a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('admin.parents.list') }}" aria-current="page"
-                                class="nav-link">{{ _('Liste des parents') }}</a>
+                                class="nav-link">{{ _('Parents') }}</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active"
-                                href="{{ route('admin.students.list') }}">{{ _('Liste des adultes') }}</a>
+                                href="{{ route('admin.students.list') }}">{{ _('Adultes') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.teachers.list') }}">{{_('Professeurs')}}</a>
                         </li>
                     </ul>
                     <table class="table mt-2">

@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\LevelCrudController;
 use App\Http\Controllers\Admin\ParentCrudController;
 use App\Http\Controllers\Admin\AdultCrudController;
 use App\Http\Controllers\Admin\SubjectCrudController;
+use App\Http\Controllers\Admin\TeacherCrudController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Auth;
@@ -21,6 +22,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/dashboard/course-and-levels', [DashboardController::class, 'CoursesAndLevels'])->name('dashboard.course-and-levels');
 
 Route::prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
@@ -82,4 +84,5 @@ Route::prefix('admin')->group(function () {
     Route::get('/parents', [ParentCrudController::class, 'list'])->name('admin.parents.list');
     Route::get('/parents/{id}/children', [ParentCrudController::class, 'childsList'])->name('parent.children');
     Route::get('/adults', [AdultCrudController::class, 'list'])->name('admin.students.list');
+    Route::get('/teachers', [TeacherCrudController::class, 'list'])->name('admin.teachers.list');
 });

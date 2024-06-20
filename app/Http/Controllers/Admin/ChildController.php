@@ -16,7 +16,8 @@ class ChildController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * route: /admin/children
+     * name: children.index
      */
     public function index()
     {
@@ -26,7 +27,8 @@ class ChildController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * route: /admin/children/create
+     * name: children.create
      */
     public function create()
     {
@@ -34,7 +36,8 @@ class ChildController extends Controller
     }
 
     /**
-     * route name: child.parent.store
+     * route: /admin/children/parent/{id}/child/store
+     * name: child.parent.store
      */
     public function storeChildByParent(ChildStoreRequest $request, $id)
     {   
@@ -46,7 +49,8 @@ class ChildController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * route: /admin/children/store
+     * name: children.store
      */
     public function store(ChildStoreRequest $request)
     {
@@ -56,7 +60,8 @@ class ChildController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * route: /admin/children/{child}
+     * name: children.show
      */
     public function show(Child $child)
     {
@@ -64,7 +69,8 @@ class ChildController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * route: /admin/children/{child}/edit
+     * name: children.edit
      */
     public function edit(Child $child)
     {
@@ -72,7 +78,8 @@ class ChildController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * route: /admin/children/{child}
+     * name: children.update
      */
     public function update(ChildUpdateRequest $request, Child $child)
     {
@@ -82,7 +89,8 @@ class ChildController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * route: /admin/children/{child}
+     * name: children.destroy
      */
     public function destroy(Child $child)
     {
