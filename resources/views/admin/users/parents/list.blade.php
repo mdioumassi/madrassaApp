@@ -63,7 +63,8 @@
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->phone }}</td>
                                     @if ($user->type == 'parent' && $user->children->count() > 0)
-                                        <td><a href="{{ route('parent.children', $user->id) }}">{{ $user->children->count() }}
+                                        <td>
+                                           <a href="{{ route('parent.children', $user->id) }}"> <span class="w3-badge">{{ $user->children->count() }}</span>
                                                 enfant.s</a>
                                         </td>
                                     @else

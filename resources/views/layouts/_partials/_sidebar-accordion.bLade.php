@@ -1,4 +1,4 @@
-<div class="w3-sidebar w3-bar-block bg-white" style="width:210px;">
+<div class="w3-sidebar w3-bar-block bg-white mt-4" style="width:210px;">
     <a href="{{route('dashboard')}}" class="w3-bar-item w3-button">{{ _('Dashbord') }}</a>
     <button class="w3-button w3-block w3-left-align" onclick="myAccFunc()">
         {{_('Ulisateurs')}} <i class="fa fa-caret-down"></i>

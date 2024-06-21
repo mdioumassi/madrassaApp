@@ -4,7 +4,8 @@
     <div class="container">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ _('Dashboard') }}</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('dashboard.course-and-levels') }}">{{ _('Cours & Niveaux') }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('dashboard.course-and-levels') }}">{{ _('Cours & Niveaux') }}</a>
+            </li>
             <li class="breadcrumb-item active" aria-current="page">{{ _('Cours d\'arabe enfant') }}</li>
         </ol>
         <div class="row justify-content-center">
@@ -14,13 +15,9 @@
                     <div class="card-body">
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
-                                <a href="{{ route('admin.levels.index') }}" aria-current="page"
-                                    class="nav-link">{{ _('Tous les niveaux') }}</a>
-                            </li>
-                            <li class="nav-item">
                                 <a href="{{ route('admin.courses.select.levels.keyword', 'arabe-enfant') }}"
                                     aria-current="page"
-                                    class="nav-link active bg-warning">{{ _('Cours d\'arabe pour enfant') }}</a>
+                                    class="nav-link active w3-green">{{ _('Cours d\'arabe pour enfant') }}</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link"
@@ -35,7 +32,7 @@
                                     href="{{ route('admin.courses.select.levels.keyword', 'coran-adulte') }}">{{ _('Cours de coran pour adulte') }}</a>
                             </li>
                         </ul>
-                        <button type="button" class="btn btn-warning mb-2 mt-2" data-bs-toggle="modal"
+                        <button type="button" class="btn w3-teal mb-2 mt-2" data-bs-toggle="modal"
                             data-bs-target="#modal-create-course-level" style="width: 15%">
                             {{ _('Ajouter un niveau') }}
                         </button>
@@ -43,7 +40,6 @@
                         <table class="table mt-2">
                             <thead>
                                 <tr>
-                                    <th class="bg-success text-light">#</th>
                                     <th class="bg-success text-light">{{ _('Libelle') }}</th>
                                     <th class="bg-success text-light">{{ _('Tarif') }}</th>
                                     <th class="bg-success text-light">{{ _('Frais d\'inscription') }}</th>
@@ -60,7 +56,7 @@
                             <tbody>
                                 @foreach ($levels as $level)
                                     <tr>
-                                        <th>{{ $level->id }}</th>
+
                                         <td>{{ $level->label }}</td>
                                         <td>{{ $level->tarif }}€/Année</td>
                                         <td>{{ $level->registration_fees }}€</td>
@@ -69,17 +65,18 @@
                                             @if ($level->subjects->count() == 0)
                                                 {{ _('0 matière') }}
                                             @else
-                                                <a href="{{ route('level.subjects', $level->id) }}">{{ $level->subjects->count() }}
+                                                <a href="{{ route('level.subjects', $level->id) }}">
+                                                    <span class="w3-badge">{{ $level->subjects->count() }}</span>
                                                     matères</a>
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{ route('admin.subjects.create', $level->id) }}"
-                                                class="btn btn-primary">{{ _('Add Subject') }}</a>
-                                            <a href="{{ route('admin.levels.show', $level->id) }}"
-                                                class="btn btn-primary">{{ _('View') }}</a>
-                                            <a href="{{ route('admin.levels.edit', $level->id) }}"
-                                                class="btn btn-warning">{{ _('Edit') }}</a>
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                data-bs-target="#add-subject-modal{{ $level->id }}">{{ _('Add Subject') }}</button>
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                data-bs-target="#show-level-modal">{{ _('View') }}</button>
+                                            <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                                data-bs-target="#edit-level-modal">{{ _('Edit') }}</button>
                                             <form action="{{ route('admin.levels.destroy', $level->id) }}" method="POST"
                                                 class="d-inline">
                                                 @csrf
@@ -98,4 +95,9 @@
         </div>
     </div>
     @include('admin.courses._modals.create-course-level', ['keyword' => 'arabe-enfant'])
+    @foreach ($levels as $level)
+        @include('admin.levels._modals.add-subject-modal', ['level' => $level])
+        @include('admin.levels._modals.edit-level-modal', ['level' => $level])
+        @include('admin.levels._modals.show-level-modal', ['level' => $level])
+    @endforeach
 @endsection
