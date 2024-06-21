@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -18,7 +19,12 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboard.index');
+        $users = User::all();
+        $parents = User::where('type', 'parent')->get();
+        $adultes = User::where('type', 'adulte')->get();
+        $teachers = User::where('type', 'professeur')->get();
+
+        return view('dashboard.index', compact('users', 'parents', 'adultes', 'teachers'));
     }
 
     /**
@@ -30,4 +36,6 @@ class DashboardController extends Controller
         $courses = Course::all();
         return view('dashboard.courses-and-levels', compact('courses'));
     }
+
+
 }

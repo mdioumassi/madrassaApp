@@ -16,7 +16,8 @@ class ParentCrudController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * route:  admin.parents.index
+     * name:   admin.parents.list
      */
     public function list()
     {

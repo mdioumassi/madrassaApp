@@ -5,7 +5,18 @@
             <div class="col">
                 <div class="card">
                     <div class="card-body">
-                        <i class='fas fa-users' style='font-size:110px'></i>
+                        <div class="row">
+                            <div class="col">
+                                <i class='w3-text-khaki fas fa-users' style='font-size:110px'></i>
+                            </div>
+                            <div class="col">
+                                <span></span>
+                                <button type="button" class="btn btn-primary">
+                                    <span class="badge bg-danger">{{ $users->count() }}</span>
+                                    {{ _('Utilisateurs') }}
+                                </button>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-footer">
                         <a href="{{ route('admin.users.index') }}"><button
@@ -16,7 +27,19 @@
             <div class="col">
                 <div class="card">
                     <div class="card-body">
-                        <i class='fa-solid fa-user' style='font-size:110px'></i>
+                        <div class="row">
+                            <div class="col">
+                                <i class='w3-text-khaki fa-solid fa-user' style='font-size:110px'></i>
+                            </div>
+                            <div class="col">
+                                <span></span>
+                                <button type="button" class="btn btn-primary">
+                                    <span class="badge bg-danger">{{ $parents->count() }}</span>
+                                    {{ _('Parents') }}
+                                </button>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="card-footer">
                         <a href="{{ route('admin.parents.list') }}"><button
@@ -27,7 +50,18 @@
             <div class="col">
                 <div class="card">
                     <div class="card-body">
-                        <i class='fa-solid fa-user' style='font-size:110px'></i>
+                        <div class="row">
+                            <div class="col">
+                                <i class='w3-text-khaki fa-solid fa-user' style='font-size:110px'></i>
+                            </div>
+                            <div class="col">
+                                <span></span>
+                                <button type="button" class="btn btn-primary">
+                                    <span class="badge bg-danger">{{ $adultes->count() }}</span>
+                                    {{ _('Adultes') }}
+                                </button>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-footer">
                         <a href="{{ route('admin.students.list') }}"><button
@@ -38,7 +72,18 @@
             <div class="col">
                 <div class="card">
                     <div class="card-body">
-                        <i class='fa-solid fa-user' style='font-size:110px'></i>
+                        <div class="row">
+                            <div class="col">
+                                <i class='w3-text-khaki fa-solid fa-user' style='font-size:110px'></i>
+                            </div>
+                            <div class="col">
+                                <span></span>
+                                <button type="button" class="btn btn-primary">
+                                    <span class="badge bg-danger">{{ $teachers->count() }}</span>
+                                    {{ _('Professeurs') }}
+                                </button>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-footer">
                         <a href="{{ route('admin.teachers.list') }}"><button

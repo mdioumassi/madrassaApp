@@ -24,6 +24,7 @@ Auth::routes();
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/dashboard/course-and-levels', [DashboardController::class, 'CoursesAndLevels'])->name('dashboard.course-and-levels');
 
+
 Route::prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
     Route::prefix('users')->group(function () {

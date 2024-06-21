@@ -11,7 +11,19 @@
                             <div class="col">
                                 <div class="card">
                                     <div class="card-body">
-                                        <i class="fa-solid fa-children" style='font-size:110px'></i>
+                                        <div class="row">
+                                            <div class="col">
+                                                <i class="w3-text-light-green fa-solid fa-children" style='font-size:110px'></i>
+                                            </div>
+                                            <div class="col">
+                                                <span></span>
+                                                <button type="button" class="btn btn-primary">
+                                                    <span class="badge bg-danger">NB</span>
+                                                    {{ _('Enfants') }}
+                                                </button>
+                                            </div>
+                                        </div>
+
                                     </div>
 
                                     <div class="card-footer">
@@ -23,7 +35,7 @@
                             <div class="col">
                                 <div class="card">
                                     <div class="card-body">
-                                        <i class="fa-solid fa-book" style='font-size:110px'></i>
+                                        <i class="w3-text-teal fa-solid fa-book" style='font-size:110px'></i>
                                     </div>
 
                                     <div class="card-footer">

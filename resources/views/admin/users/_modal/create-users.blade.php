@@ -30,7 +30,8 @@
                 <div class="col-md-6">
                     <select id="type" class="form-select @error('type') is-invalid @enderror" name="type">
                         <option value="parent">Parent</option>
-                        <option value="etudiant(e)">Etudiant(e)</option>
+                        <option value="adulte">Adulte</option>
+                        <option value="professeur">Professeur</option>
                     </select>
 
                     @error('type')

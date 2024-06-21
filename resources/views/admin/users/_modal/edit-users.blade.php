@@ -35,8 +35,8 @@
                     <select id="type" class="form-select @error('type') is-invalid @enderror" name="type">
                         <option value="parent" @if ($user->type == 'parent') selected @endif>Parent
                         </option>
-                        <option value="etudiant(e)" @if ($user->type == 'etudiant(e)') selected @endif>
-                            Etudiant(e)</option>
+                        <option value="adulte" @if ($user->type == 'adulte') selected @endif>Adulte</option>
+                        <option value="professeur" @if ($user->type == 'professeur') selected @endif>Professeur</option>
                     </select>
 
                     @error('type')

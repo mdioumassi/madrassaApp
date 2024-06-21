@@ -22,7 +22,7 @@
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col">
-                                                    <i class="fa-solid fa-book" style='font-size:110px'></i>
+                                                    <i class="w3-text-teal fa-solid fa-book" style='font-size:110px'></i>
                                                 </div>
                                                 <div class="col">
                                                     <span></span>

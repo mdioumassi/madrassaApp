@@ -17,7 +17,7 @@ class TeacherCrudController extends Controller
      */
     public function list()
     {
-        $users = User::where('type', 'etudiant(e)')->latest()->paginate(10);
+        $users = User::where('type', 'professeur')->latest()->paginate(10);
 
         return view('admin.users.teachers.list', compact('users'));
     }

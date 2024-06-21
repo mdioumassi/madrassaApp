@@ -41,10 +41,10 @@
                                 <div class="col-md-6">
                                     <select id="type" class="form-select @error('type') is-invalid @enderror"
                                         name="type">
-                                        <option value="Parent" @if ($user->type == 'Parent') selected @endif>Parent
+                                        <option value="Parent" @if ($user->type == 'parent') selected @endif>Parent
                                         </option>
-                                        <option value="Etudiant" @if ($user->type == 'Etudiant') selected @endif>
-                                            Etudiant(e)</option>
+                                        <option value="etudiant" @if ($user->type == 'adulte') selected @endif>Adulte</option>
+                                        <option value="professeur" @if ($user->type == 'professeur') selected @endif>Professeur</option>
                                     </select>
 
                                     @error('type')
