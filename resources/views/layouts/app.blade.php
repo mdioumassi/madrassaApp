@@ -19,7 +19,8 @@
 </head>
 
 <body>
-    <div id="app">
+    @include('layouts._partials._sidebar-accordion')
+    <div id="app" style="margin-left: 162px">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -33,25 +34,6 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ _('Dashboard') }}
-                            </a>
-
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('admin.users.index') }}">{{_('Users')}}</a>
-                                <a class="dropdown-item" href="{{ route('admin.parents.list')}}">{{_('Parents')}}</a>
-                                <a class="dropdown-item" href="{{ route('children.index') }}">{{_('Children')}}</a>
-                                <a class="dropdown-item" href="{{ route('admin.courses.index') }}">{{_('Courses')}}</a>
-                                <a class="dropdown-item" href="{{ route('admin.levels.index') }}">{{_('Levels')}}</a>
-
-                            </div>
-                        </li>
-
-                    </ul>
-
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
@@ -98,6 +80,7 @@
             @yield('content')
         </main>
     </div>
+    @vite('resources/js/app.js')
 </body>
 
 </html>
