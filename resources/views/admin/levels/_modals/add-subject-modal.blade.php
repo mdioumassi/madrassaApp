@@ -1,5 +1,5 @@
 <x-modal id="add-subject-modal{{$level->id}}">
-    <x-slot name="title">{{ _('Ajouter une matière')}}</x-slot>
+    <x-slot name="title">{{ $level->label }}</x-slot>
     <x-slot name="size">modal-lg</x-slot>
     <x-slot name="body">
         <form method="POST" action="{{ route('admin.levels.subjects.store', $level->id) }}">

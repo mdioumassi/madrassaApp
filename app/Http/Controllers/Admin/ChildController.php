@@ -21,7 +21,9 @@ class ChildController extends Controller
      */
     public function index()
     {
-        $children = Child::latest()->paginate(10);
+        // $children = Child::latest()->paginate(15);
+       $children = Child::with('parent')->latest()->paginate(8);
+      
 
         return view('admin.children.index', compact('children'));
     }

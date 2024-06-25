@@ -82,9 +82,10 @@ class LevelCrudController extends Controller
         $validatedData['slug'] = Str::slug($validatedData['slug'], '-');
         $course->levels()->create($validatedData);
         
-        return redirect()->route('admin.courses.select.levels.keyword', $keyword);
+        return redirect()->route('admin.courses.select.levels.keyword', $keyword)
+                         ->with('success', 'Level created successfully.');
     }
-    
+                
     /**
      * Display the specified resource.
      */
