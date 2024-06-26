@@ -32,6 +32,8 @@
                         <option value="parent">Parent</option>
                         <option value="adulte">Adulte</option>
                         <option value="professeur">Professeur</option>
+                        <option value="admin">Admin</option>
+                        <option value="webmaster">Webmaster</option>
                     </select>
 
                     @error('type')
@@ -146,7 +148,27 @@
                 <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
 
                 <div class="col-md-6">
-                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" autocomplete="new-password">
+                    <input id="password-confirm" type="password" class="form-control" name="confirm-password" autocomplete="new-password">
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="roles" class="col-md-4 col-form-label text-md-end">{{ __('Roles') }}</label>
+
+                <div class="col-md-6">
+                    <select id="roles" class="form-select @error('roles') is-invalid @enderror" name="roles[]" multiple>
+                        @foreach ($roles as $value => $label)
+                        <option value="{{ $value }}">
+                            {{ $label }}
+                        </option>
+                     @endforeach
+                    </select>
+
+                    @error('roles')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
             </div>
 
