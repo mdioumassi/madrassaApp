@@ -20,9 +20,13 @@
                 <div class="card">
                     <div class="card-header">{{ __('Liste des enfants') }}</div>
                     <div class="card-body">
-                        <a href="{{ route('admin.parents.list') }}"><button class="btn btn-primary mb-3"><i
+                        {{-- <a href="{{ route('admin.parents.list') }}"><button class="btn btn-primary mb-3"><i
                                     class='fas fa-user-friends'></i> Liste des
-                                parents</button></a>
+                                parents</button></a> --}}
+                        <div class="pull-right mb-3">
+                            <a class="btn btn-success" href="{{ route('children.create') }}"><i class="fa fa-plus"></i>
+                                {{ _('Ajouter un enfant') }}</a>
+                        </div>
                         <table class="table">
                             <thead>
                                 <tr>

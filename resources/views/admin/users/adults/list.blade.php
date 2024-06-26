@@ -68,17 +68,24 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                            data-bs-target="#modal-show-users{{ $user->id }}"><i class="fa-solid fa-list"></i> {{ _('View') }}</button>
-                                        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                                            data-bs-target="#modal-edit-users{{ $user->id }}"><i class="fa-solid fa-pen-to-square"></i> {{ _('Edit') }}</button>
-                                        <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST"
-                                            class="d-inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm"
-                                                onclick="return confirm('Are you sure?')"><i class="fa-solid fa-trash"></i> {{ _('Delete') }}</button>
-                                        </form>
+                                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                            data-bs-target="#modal-show-users{{ $user->id }}"><i
+                                                class="fa-solid fa-list"></i> {{ _('View') }}</button>
+                                        @can('user-edit')
+                                            <a class="btn btn-warning btn-sm"
+                                                href="{{ route('admin.users.edit', $user->id) }}"><i
+                                                    class="fa-solid fa-pen-to-square"></i> {{ _('Edit') }}</a>
+                                        @endcan
+                                        @can('user-delete')
+                                            <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST"
+                                                class="d-inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm"
+                                                    onclick="return confirm('Are you sure?')"><i class="fa-solid fa-trash"></i>
+                                                    {{ _('Delete') }}</button>
+                                            </form>
+                                        @endcan
                                     </td>
                                 </tr>
                             @endforeach

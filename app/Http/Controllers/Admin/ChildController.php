@@ -13,6 +13,11 @@ class ChildController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+
+        $this->middleware('permission:child-list|child-create|child-edit|child-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:child-create', ['only' => ['create','store']]);
+        $this->middleware('permission:child-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:child-delete', ['only' => ['destroy']]);
     }
 
     /**
@@ -21,7 +26,6 @@ class ChildController extends Controller
      */
     public function index()
     {
-        // $children = Child::latest()->paginate(15);
        $children = Child::with('parent')->latest()->paginate(8);
       
 
