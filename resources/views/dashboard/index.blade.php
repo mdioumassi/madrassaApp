@@ -41,6 +41,19 @@
                             <div class="col">
                                 <div class="card">
                                     <div class="card-body">
+                                        <i class='fas fa-user-edit' style='font-size:110px'></i>
+                                    </div>
+
+                                    <div class="card-footer">
+                                        <a href="{{ route('user.profile') }}">
+                                            <button class="btn btn-outline-primary">{{ _('Mon profil') }}</button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-body">
                                         <i class="w3-text-teal fa-solid fa-book" style='font-size:110px'></i>
                                     </div>
 

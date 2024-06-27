@@ -31,7 +31,6 @@ class Level extends Model
     protected $fillable = [
         'label',
         'comment',
-        'slug',
         'tarif',
         'registration_fees',
         'hours',

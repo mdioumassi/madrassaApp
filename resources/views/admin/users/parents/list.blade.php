@@ -73,7 +73,7 @@
                                             @endforeach
                                         @endif
                                     </td>
-                                    @if ($user->type == 'parent' && $user->children->count() > 0)
+                                    @if ($user->type->value == 'parent' && $user->children->count() > 0)
                                         <td>
                                             <a href="{{ route('parent.children', $user->id) }}"> <span
                                                     class="w3-badge">{{ $user->children->count() }}</span>

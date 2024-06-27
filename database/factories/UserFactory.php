@@ -2,9 +2,12 @@
 
 namespace Database\Factories;
 
+use App\Enums\CivilitySelect;
+use App\Enums\TypeUserSelect;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Mockery\Matcher\Type;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -26,11 +29,11 @@ class UserFactory extends Factory
         return [
             'name' => fake()->name(),
             'lastname' => fake()->name(),
-            'civility' => fake()->randomElement(['Mr', 'Mme', 'Mlle']),
+            'civility' => fake()->randomElement(CivilitySelect::cases())->value,
             'phone' => fake()->phoneNumber(),
             'full_address' => fake()->address(),
             'function' => fake()->jobTitle(),
-            'type' => fake()->randomElement(['parent', 'adulte', 'professeur']),
+            'type' => fake()->randomElement(TypeUserSelect::cases())->value,
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),

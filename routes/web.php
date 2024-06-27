@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\SubjectCrudController;
 use App\Http\Controllers\Admin\TeacherCrudController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,8 @@ Route::group(['middleware' => ['auth']], function() {
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/dashboard/course-and-levels', [DashboardController::class, 'CoursesAndLevels'])->name('dashboard.course-and-levels');
 
+Route::get('/profile', [ProfileController::class, 'index'])->name('user.profile');
+Route::post('/profile', [ProfileController::class, 'store'])->name('user.profile.store');
 
 Route::prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');

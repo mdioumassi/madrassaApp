@@ -7,6 +7,7 @@ use App\Http\Requests\ChildStoreRequest;
 use App\Http\Requests\ChildUpdateRequest;
 use App\Models\Child;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class ChildController extends Controller
 {
@@ -47,7 +48,26 @@ class ChildController extends Controller
      */
     public function storeChildByParent(ChildStoreRequest $request, $id)
     {   
+
+        // $request->validate([
+        //     'firstname' => ['required', 'string', 'max:255'],
+        //     'lastname' => ['required', 'string', 'max:255'],
+        //     'birthdate' => ['required', 'date'],
+        //     'genre' => ['required', 'string', 'max:10'],
+        //     'french_class' => ['required', 'string', 'max:255'],
+        //     'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        // ]);
+        // $input = $request->all();
+        // if ($request->hasFile('photo')) {
+        //     $photoName = time() . '.' . $request->photo->extension();
+        //     $request->photo->move(public_path('photos'), $photoName);
+
+        //     $input['photo'] = $photoName;
+        // } else {
+        //     unset($input['photo']);
+        // }
         $parent = User::where('id', $id)->first();
+
         $parent->children()->create($request->validated());
 
              return redirect()->route('parent.children', $id)

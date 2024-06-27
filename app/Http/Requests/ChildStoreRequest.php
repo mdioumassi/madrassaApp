@@ -25,8 +25,9 @@ class ChildStoreRequest extends FormRequest
             'firstname' => ['required', 'string', 'max:255'],
             'lastname' => ['required', 'string', 'max:255'],
             'birthdate' => ['required', 'date'],
-            'genre' => ['required', 'string', 'max:1'],
+            'genre' => ['required', 'string', 'max:10'],
             'french_class' => ['required', 'string', 'max:255'],
+            'photo' => 'image'
         ];
     }
 }

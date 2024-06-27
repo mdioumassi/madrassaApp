@@ -3,10 +3,14 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Enums\CivilitySelect;
+use App\Enums\TypeUserSelect;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Mockery\Matcher\Type;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -34,6 +38,7 @@ class User extends Authenticatable
         'full_address',
         'function',
         'type',
+        'avatar',
     ];
 
     /**
@@ -56,6 +61,8 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'civilily' => CivilitySelect::class,
+            'type' => TypeUserSelect::class,
         ];
     }
 }
