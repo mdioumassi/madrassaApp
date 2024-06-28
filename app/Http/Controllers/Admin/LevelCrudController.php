@@ -48,19 +48,6 @@ class LevelCrudController extends Controller
         return view('admin.levels.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    // public function store(LevelStoreRequest $request)
-    // {
-    //     $validatedData = $request->validated();
-    //     $validatedData['slug'] = Str::slug($validatedData['slug'], '-');
-
-    //     Level::create($validatedData);
-    //     return redirect()->route('admin.levels.index')
-    //                      ->with('success', 'Level created successfully.');
-    // }
-
     public function storeLevelCourse(LevelStoreRequest $request, $id)
     {
         $course = Course::where('id', $id)->first();
@@ -79,7 +66,6 @@ class LevelCrudController extends Controller
     {
         $course = Course::where('keywords', $keyword)->first();
         $validatedData = $request->validated();
-        $validatedData['slug'] = Str::slug($validatedData['slug'], '-');
         $course->levels()->create($validatedData);
         
         return redirect()->route('admin.courses.select.levels.keyword', $keyword)
@@ -108,8 +94,6 @@ class LevelCrudController extends Controller
     public function update(LevelUpdateRequest $request, Level $level)
     {
         $validatedData = $request->validated();
-        $validatedData['slug'] = Str::slug($validatedData['slug'], '-');
-
         $level->update($validatedData);
         return redirect()->route('admin.levels.index')
                          ->with('success', 'Level updated successfully.');

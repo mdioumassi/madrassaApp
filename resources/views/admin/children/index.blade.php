@@ -23,11 +23,11 @@
                         {{-- <a href="{{ route('admin.parents.list') }}"><button class="btn btn-primary mb-3"><i
                                     class='fas fa-user-friends'></i> Liste des
                                 parents</button></a> --}}
-                        <div class="pull-right mb-3">
+                        {{-- <div class="pull-right mb-3">
                             <a class="btn btn-success" href="{{ route('children.create') }}"><i class="fa fa-plus"></i>
                                 {{ _('Ajouter un enfant') }}</a>
-                        </div>
-                        <table class="table">
+                        </div> --}}
+                        <table class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th class="bg-success text-light">Genre</th>
@@ -53,7 +53,7 @@
                                         <td>{{ $child->birthdate }}</td>
                                         <td>{{ $child->french_class }}</td>
                                         <td>
-                                            @if ($child->parent->type == 'parent')
+                                            @if ($child->parent->type->value == 'parent')
                                                 <a
                                                     href="{{ route('admin.users.show', $child->parent->id) }}">{{ $child->parent->name }}</a>
                                             @endif

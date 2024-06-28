@@ -9,8 +9,8 @@
 
                 <div class="col-md-6">
                     <select id="genre" class="form-select @error('genre') is-invalid @enderror" name="genre">
-                        <option value="G">Garçon</option>
-                        <option value="F">Fille</option>
+                        <option value="garçon">Garçon</option>
+                        <option value="fille">Fille</option>
                     </select>
 
                     @error('genre')
@@ -25,9 +25,8 @@
                 <label for="firstname" class="col-md-4 col-form-label text-md-end">{{ __('Prénom') }}</label>
 
                 <div class="col-md-6">
-                    <input id="firstname" type="text"
-                        class="form-control @error('firstname') is-invalid @enderror" name="firstname" required
-                        autocomplete="firstname" autofocus>
+                    <input id="firstname" type="text" class="form-control @error('firstname') is-invalid @enderror"
+                        name="firstname" autocomplete="firstname" autofocus>
 
                     @error('firstname')
                         <span class="invalid-feedback" role="alert">
@@ -41,9 +40,8 @@
                 <label for="lastname" class="col-md-4 col-form-label text-md-end">{{ __('Nom') }}</label>
 
                 <div class="col-md-6">
-                    <input id="lastname" type="text"
-                        class="form-control @error('lastname') is-invalid @enderror" name="lastname" required
-                        autocomplete="lastname" autofocus>
+                    <input id="lastname" type="text" class="form-control @error('lastname') is-invalid @enderror"
+                        name="lastname" autocomplete="lastname" autofocus>
 
                     @error('lastname')
                         <span class="invalid-feedback" role="alert">
@@ -54,13 +52,11 @@
             </div>
 
             <div class="row mb-3">
-                <label for="birthdate"
-                    class="col-md-4 col-form-label text-md-end">{{ __('Date de naissance') }}</label>
+                <label for="birthdate" class="col-md-4 col-form-label text-md-end">{{ __('Date de naissance') }}</label>
 
                 <div class="col-md-6">
-                    <input id="birthdate" type="date"
-                        class="form-control @error('birthdate') is-invalid @enderror" name="birthdate" required
-                        autocomplete="birthdate" autofocus>
+                    <input id="birthdate" type="date" class="form-control @error('birthdate') is-invalid @enderror"
+                        name="birthdate" autocomplete="birthdate" autofocus>
 
                     @error('birthdate')
                         <span class="invalid-feedback" role="alert">
@@ -77,7 +73,7 @@
                 <div class="col-md-6">
                     <input id="french_class" type="text"
                         class="form-control @error('french_class') is-invalid @enderror" name="french_class"
-                        required autocomplete="french_class" autofocus>
+                        autocomplete="french_class" autofocus>
 
                     @error('french_class')
                         <span class="invalid-feedback" role="alert">
@@ -86,6 +82,20 @@
                     @enderror
                 </div>
             </div>
+            {{-- <div class="row mb-3">
+                <label for="photo" class="col-md-4 col-form-label text-md-end">Photo: </label>
+
+                <div class="col-md-6">
+                    <input id="photo" type="file" class="form-control @error('photo') is-invalid @enderror"
+                        name="photo" value="{{ old('photo') }}" autocomplete="photo">
+
+                    @error('photo')
+                        <span role="alert" class="text-danger">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div> --}}
 
             <div class="row mb-0">
                 <div class="col-md-6 offset-md-4">

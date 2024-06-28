@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\GenreSelect;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -26,6 +27,13 @@ class Child extends Model
         'birthdate',
         'genre',
         'french_class',
-       // 'parent_id',
+        'photo'
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'genre' => GenreSelect::class
+        ];
+    }
 }

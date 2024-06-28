@@ -23,7 +23,6 @@ class LevelUpdateRequest extends FormRequest
     {
         return [
             'label' => ['required', 'string', 'max:255'],
-            'slug' => ['required', 'string', 'max:255'],
             'tarif' => ['required', 'string', 'max:255'],
             'registration_fees' => ['required', 'string', 'max:255'],
             'hours' => ['required', 'string', 'max:255'],

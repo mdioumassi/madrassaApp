@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\CivilityList;
+use App\TypeUserSelect;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Enum;
 
