@@ -54,6 +54,8 @@
                                 </li>
                             @endif
                         @else
+                        <li><a class="nav-link" href="{{ route('admin.users.index') }}">Gestion des utilisateurs</a></li>
+                        <li><a class="nav-link" href="{{ route('roles.index') }}">Gestion des rôles</a></li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

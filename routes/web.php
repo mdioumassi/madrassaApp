@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CourseCrudController;
 use App\Http\Controllers\Admin\LevelCrudController;
 use App\Http\Controllers\Admin\ParentCrudController;
 use App\Http\Controllers\Admin\AdultCrudController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SubjectCrudController;
 use App\Http\Controllers\Admin\TeacherCrudController;
 use App\Http\Controllers\Admin\UserController;
@@ -20,6 +21,10 @@ Route::get('/', function () {
 
 
 Auth::routes();
+
+Route::group(['middleware' => ['auth']], function() {
+    Route::resource('roles', RoleController::class);
+});
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/dashboard/course-and-levels', [DashboardController::class, 'CoursesAndLevels'])->name('dashboard.course-and-levels');

@@ -14,8 +14,9 @@
                 <div class="card">
                     <div class="card-header"><span class="bg-success py-2 px-3 text-light rounded"><i class='far fa-user-circle'></i> Utilisateurs:</span> {{ __('Professeurs') }}</div>
                     <div class="card-body">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#modal-create-users"><i class="fa fa-plus"></i> {{ _('Ajouter un professeur') }}</button>
+                        <div class="pull-right">
+                            <a class="btn btn-success mb-2" href="{{ route('admin.users.create') }}"><i class="fa fa-plus"></i> {{_("Ajouter un utlisateur")}}</a>
+                        </div>
                     </div>
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
@@ -42,6 +43,7 @@
                                 <th class="bg-success text-light">Prénom</th>
                                 <th class="bg-success text-light">Email</th>
                                 <th class="bg-success text-light">Téléphone</th>
+                                <th class="bg-success text-light">Roles</th>
                                 <th class="bg-success text-light">Actions</th>
                             </tr>
                         </thead>
@@ -58,6 +60,13 @@
                                     <td>{{ $user->lastname }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->phone }}</td>
+                                    <td>
+                                        @if (!empty($user->getRoleNames()))
+                                            @foreach ($user->getRoleNames() as $v)
+                                                <label class="badge bg-success">{{ $v }}</label>
+                                            @endforeach
+                                        @endif
+                                    </td>
                                     <td>
                                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                             data-bs-target="#modal-show-users{{ $user->id }}"><i class="fa-solid fa-list"></i> {{ _('View') }}</button>
@@ -80,7 +89,7 @@
             </div>
         </div>
     </div>
-    @include('admin.users._modal.create-users')
+    {{-- @include('admin.users._modal.create-users') --}}
     @foreach ($users as $user)
         @include('admin.users._modal.show-users', ['user' => $user])
         @include('admin.users._modal.edit-users', ['user' => $user])
