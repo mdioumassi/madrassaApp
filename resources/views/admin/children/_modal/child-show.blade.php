@@ -31,11 +31,11 @@
                     <td> {{ $child->french_class }} </td>
                 </tr>
                 <tr>
-                    <th class="bg-success text-light">Parent</th>
+                    {{-- <th class="bg-success text-light">Parent</th>
                     <td></td>
                     <td> <a
                             href="{{ route('admin.users.show', $child->parent->id) }}">{{ $child->parent->name }}</a>
-                    </td>
+                    </td> --}}
                 </tr>
             </tbody>
         </table>

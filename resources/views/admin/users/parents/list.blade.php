@@ -13,11 +13,13 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header"><span class="bg-success py-2 px-3 text-light rounded"><i class='far fa-user-circle'></i> Utilisateurs</span>
+                    <div class="card-header"><span class="bg-success py-2 px-3 text-light rounded"><i
+                                class='far fa-user-circle'></i> Utilisateurs</span>
                         {{ __('Parents') }}</div>
                     <div class="card-body">
                         <div class="pull-right">
-                            <a class="btn btn-success mb-2" href="{{ route('admin.users.create') }}"><i class="fa fa-plus"></i> {{_("Ajouter un utlisateur")}}</a>
+                            <a class="btn btn-success mb-2" href="{{ route('admin.users.create') }}"><i
+                                    class="fa fa-plus"></i> {{ _('Ajouter un utlisateur') }}</a>
                         </div>
                     </div>
                     <ul class="nav nav-tabs">
@@ -73,7 +75,8 @@
                                     </td>
                                     @if ($user->type == 'parent' && $user->children->count() > 0)
                                         <td>
-                                           <a href="{{ route('parent.children', $user->id) }}"> <span class="w3-badge">{{ $user->children->count() }}</span>
+                                            <a href="{{ route('parent.children', $user->id) }}"> <span
+                                                    class="w3-badge">{{ $user->children->count() }}</span>
                                                 enfant.s</a>
                                         </td>
                                     @else
@@ -81,18 +84,26 @@
                                     @endif
                                     <td>
                                         <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
-                                            data-bs-target="#modal-add-parent-child{{ $user->id }}"><i class="fa fa-plus"></i> {{ _('Add child') }}</button>
+                                            data-bs-target="#modal-add-parent-child{{ $user->id }}"><i
+                                                class="fa fa-plus"></i> {{ _('Add child') }}</button>
                                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                            data-bs-target="#modal-show-users{{ $user->id }}"><i class="fa-solid fa-list"></i> {{ _('View') }}</button>
-                                        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                                            data-bs-target="#modal-edit-users{{ $user->id }}"><i class="fa-solid fa-pen-to-square"></i> {{ _('Edit') }}</button>
-                                        <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST"
-                                            class="d-inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm"
-                                                onclick="return confirm('Are you sure?')"><i class="fa-solid fa-trash"></i> {{ _('Delete') }}</button>
-                                        </form>
+                                            data-bs-target="#modal-show-users{{ $user->id }}"><i
+                                                class="fa-solid fa-list"></i> {{ _('View') }}</button>
+                                        @can('user-edit')
+                                            <a class="btn btn-warning btn-sm"
+                                                href="{{ route('admin.users.edit', $user->id) }}"><i
+                                                    class="fa-solid fa-pen-to-square"></i> {{ _('Edit') }}</a>
+                                        @endcan
+                                        @can('user-delete')
+                                            <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST"
+                                                class="d-inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm"
+                                                    onclick="return confirm('Are you sure?')"><i class="fa-solid fa-trash"></i>
+                                                    {{ _('Delete') }}</button>
+                                            </form>
+                                        @endcan
                                     </td>
                                 </tr>
                             @endforeach
