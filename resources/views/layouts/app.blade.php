@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Madrassa') }}</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
@@ -19,12 +19,16 @@
 </head>
 
 <body>
-    @include('layouts._partials._sidebar-accordion')
-    <div id="app" style="margin-left: 162px">
+    @guest
+    @else
+        @include('layouts._partials._sidebar-accordion')
+    @endguest
+
+    <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    {{ config('app.name', 'Madrassa') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -66,9 +70,9 @@
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
-                                    <a class="dropdown-item" href="{{ route('dashboard') }}">{{_('Dashboard')}}</a>
+                                    <a class="dropdown-item" href="{{ route('dashboard') }}">{{ _('Dashboard') }}</a>
                                 </div>
-                               
+
                             </li>
                         @endguest
                     </ul>

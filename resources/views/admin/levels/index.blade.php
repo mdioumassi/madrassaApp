@@ -53,17 +53,16 @@
                                             @if($level->subjects->count() == 0)
                                             {{ _('Aucune matière') }}
                                             @else
-                                            <a href="{{ route('level.subjects', $level->id) }}">{{ $level->subjects->count() }}
-                                                matères</a>
+                                            <a href="{{ route('level.subjects', $level->id) }}">{{ $level->subjects->count() }} matères</a>
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{ route('admin.subjects.create', $level->id) }}"
-                                                class="btn btn-primary">{{ _('Add Subject') }}</a>
-                                            <a href="{{ route('admin.levels.show', $level->id) }}"
-                                                class="btn btn-primary">{{ _('View') }}</a>
-                                            <a href="{{ route('admin.levels.edit', $level->id) }}"
-                                                class="btn btn-warning">{{ _('Edit') }}</a>
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                            data-bs-target="#add-subject-modal{{$level->id}}">{{ _('Add Subject') }}</button>
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                            data-bs-target="#show-level-modal">{{ _('View') }}</button>
+                                            <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                            data-bs-target="#edit-level-modal">{{ _('Edit') }}</button>
                                             <form action="{{ route('admin.levels.destroy', $level->id) }}" method="POST"
                                                 class="d-inline">
                                                 @csrf
@@ -81,4 +80,9 @@
             </div>
         </div>
     </div>
+    @foreach ($levels as $level)
+        @include('admin.levels._modals.add-subject-modal', ['level' => $level])
+        @include('admin.levels._modals.edit-level-modal', ['level' => $level])
+        @include('admin.levels._modals.show-level-modal', ['level' => $level])
+    @endforeach  
 @endsection
