@@ -13,11 +13,11 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header"><span class="bg-success py-2 px-3 text-light rounded">Utilisateurs</span>
+                    <div class="card-header"><span class="bg-success py-2 px-3 text-light rounded"><i class='far fa-user-circle'></i> Utilisateurs</span>
                         {{ __('Parents') }}</div>
                     <div class="card-body">
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#modal-create-users">{{ _('Ajouter un parent') }}</button>
+                            data-bs-target="#modal-create-users"><i class="fa fa-plus"></i> {{ _('Ajouter un parent') }}</button>
                     </div>
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
@@ -35,7 +35,7 @@
                             <a class="nav-link" href="{{ route('admin.teachers.list') }}">{{ _('Professeurs') }}</a>
                         </li>
                     </ul>
-                    <table class="table mt-2">
+                    <table class="table table-bordered mt-2">
                         <thead>
                             <tr>
                                 <th class="bg-success text-light">ID</th>
@@ -71,18 +71,18 @@
                                         <td>0 enfant</td>
                                     @endif
                                     <td>
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#modal-add-parent-child{{ $user->id }}">{{ _('Add child') }}</button>
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#modal-show-users{{ $user->id }}">{{ _('View') }}</button>
-                                        <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                                            data-bs-target="#modal-edit-users{{ $user->id }}">{{ _('Edit') }}</button>
+                                        <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
+                                            data-bs-target="#modal-add-parent-child{{ $user->id }}"><i class="fa fa-plus"></i> {{ _('Add child') }}</button>
+                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                            data-bs-target="#modal-show-users{{ $user->id }}"><i class="fa-solid fa-list"></i> {{ _('View') }}</button>
+                                        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                            data-bs-target="#modal-edit-users{{ $user->id }}"><i class="fa-solid fa-pen-to-square"></i> {{ _('Edit') }}</button>
                                         <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST"
                                             class="d-inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger"
-                                                onclick="return confirm('Are you sure?')">{{ _('Delete') }}</button>
+                                            <button type="submit" class="btn btn-danger btn-sm"
+                                                onclick="return confirm('Are you sure?')"><i class="fa-solid fa-trash"></i> {{ _('Delete') }}</button>
                                         </form>
                                     </td>
                                 </tr>

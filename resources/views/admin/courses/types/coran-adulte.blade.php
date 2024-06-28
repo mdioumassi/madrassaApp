@@ -2,6 +2,11 @@
 
 @section('content')
     <div class="container">
+        @session('success')
+            <div class="alert alert-success" role="alert">
+                {{ $value }}
+            </div>
+        @endsession
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ _('Dashboard') }}</a></li>
             <li class="breadcrumb-item"><a href="{{ route('dashboard.course-and-levels') }}">{{ _('Cours & Niveaux') }}</a>
@@ -11,9 +16,13 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header text-uppercase">{{ __('Cours de coran pour adulte') }}</div>
+                    <div class="card-header text-uppercase  w3-light-blue">{{ __('Cours de coran pour adulte') }}</div>
                     <div class="card-body">
                         <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.levels.index') }}" aria-current="page"
+                                    class="nav-link">{{ _('Tous les niveaux') }}</a>
+                            </li>
                             <li class="nav-item">
                                 <a href="{{ route('admin.courses.select.levels.keyword', 'arabe-enfant') }}"
                                     aria-current="page" class="nav-link ">{{ _('Cours d\'arabe pour enfant') }}</a>
@@ -27,23 +36,21 @@
                                     href="{{ route('admin.courses.select.levels.keyword', 'coran-enfant') }}">{{ _('Cours de coran pour enfant') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active w3-green"
+                                <a class="nav-link active w3-light-blue"
                                     href="{{ route('admin.courses.select.levels.keyword', 'coran-adulte') }}">{{ _('Cours de coran pour adulte') }}</a>
                             </li>
                         </ul>
-                        <button type="button" class="btn w3-teal mb-2 mt-2" data-bs-toggle="modal"
-                            data-bs-target="#modal-create-course-level" style="width: 15%">
-                            {{ _('Ajouter un niveau') }}
-                        </button>
+                        <button class="w3-button w3-xlarge w3-circle w3-light-blue w3-card-4 w3-margin"data-bs-toggle="modal"
+                        data-bs-target="#modal-create-course-level" >+</button>
                         <table class="table mt-2">
                             <thead>
                                 <tr>
-                                    <th class="bg-success text-light">{{ _('Libelle') }}</th>
-                                    <th class="bg-success text-light">{{ _('Tarif') }}</th>
-                                    <th class="bg-success text-light">{{ _('Frais d\'inscription') }}</th>
-                                    <th class="bg-success text-light">{{ _('Horaires') }}</th>
-                                    <th class="bg-success text-light">{{ _('Matières') }}</th>
-                                    <th class="bg-success  text-light">{{ _('Actions') }}</th>
+                                    <th class="w3-light-blue text-light">{{ _('Libelle') }}</th>
+                                    <th class="w3-light-blue text-light">{{ _('Tarif') }}</th>
+                                    <th class="w3-light-blue text-light">{{ _('Frais d\'inscription') }}</th>
+                                    <th class="w3-light-blue text-light">{{ _('Horaires') }}</th>
+                                    <th class="w3-light-blue text-light">{{ _('Matières') }}</th>
+                                    <th class="w3-light-blue  text-light">{{ _('Actions') }}</th>
                                 </tr>
                             </thead>
                             @if ($levels->count() == 0)
