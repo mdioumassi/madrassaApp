@@ -28,11 +28,23 @@ class ParentCrudController extends Controller
         return view('admin.users.parents.list', compact('users', 'roles'));
     }
 
+    /**
+     * route: /parents/{id}/children
+     * name:  parents.children
+     */
     public function childsList($id)
     {
        $parent = User::where('id', $id)->with('children')->first();
        $children = $parent->children;
         
-        return view('admin.users.parents.children', compact('children', 'parent'));
+        return view('admin.users.parents.children-list', compact('children', 'parent'));
+    }
+
+    public function childsGrille($id)
+    {
+       $parent = User::where('id', $id)->with('children')->first();
+       $children = $parent->children;
+        
+        return view('admin.users.parents.children-grille', compact('children', 'parent'));
     }
 }

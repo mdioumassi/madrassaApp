@@ -32,7 +32,7 @@
                                                 class="btn btn-outline-primary">{{ _('Les enfants') }}</button></a>
                                         @endif
                                         @if(auth()->user()->hasRole('Parent'))
-                                        <a href="{{ route('parent.children', auth()->user()->id) }}"><button
+                                        <a href="{{ route('parent.children.grille', auth()->user()->id) }}"><button
                                                 class="btn btn-outline-primary">{{ _('Mes enfants') }}</button></a>
                                         @endif
                                     </div>
@@ -51,6 +51,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @if(auth()->user()->hasRole('Admin'))
                             <div class="col">
                                 <div class="card">
                                     <div class="card-body">
@@ -64,6 +65,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
                         </div>
                     </div>
                 </div>

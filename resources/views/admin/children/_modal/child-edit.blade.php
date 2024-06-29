@@ -87,12 +87,17 @@
                         @enderror
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">{{ _('Editer') }}</button>
+
+                <div class="row mb-0">
+                    <div class="col-md-6 offset-md-4">
+                        <button type="submit" class="btn btn-primary">
+                            {{ __('Modifier') }}
+                        </button>
+                    </div>
+                </div>
             </form>
         </x-slot>
         <x-slot name="footer">
-
-            {{-- <a href="{{ route('children.edit', $child->id) }}"><button class="btn btn-primary">{{ _('Editer') }}</button></a> --}}
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">{{ _('Fermer') }}</button>
         </x-slot>
     </x-modal>

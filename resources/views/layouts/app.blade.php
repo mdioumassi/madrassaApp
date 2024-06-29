@@ -19,10 +19,10 @@
 </head>
 
 <body>
-    @guest
+    {{-- @guest
     @else
         @include('layouts._partials._sidebar-accordion')
-    @endguest
+    @endguest --}}
 
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">

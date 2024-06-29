@@ -75,7 +75,7 @@
                                     </td>
                                     @if ($user->type->value == 'parent' && $user->children->count() > 0)
                                         <td>
-                                            <a href="{{ route('parent.children', $user->id) }}"> <span
+                                            <a href="{{ route('parent.children.list', $user->id) }}"> <span
                                                     class="w3-badge">{{ $user->children->count() }}</span>
                                                 enfant.s</a>
                                         </td>

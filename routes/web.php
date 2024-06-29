@@ -11,14 +11,15 @@ use App\Http\Controllers\Admin\SubjectCrudController;
 use App\Http\Controllers\Admin\TeacherCrudController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
 Auth::routes();
@@ -91,7 +92,8 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/levels/{id}/subjects', [LevelCrudController::class, 'subjectsList'])->name('level.subjects');
     Route::get('/parents', [ParentCrudController::class, 'list'])->name('admin.parents.list');
-    Route::get('/parents/{id}/children', [ParentCrudController::class, 'childsList'])->name('parent.children');
+    Route::get('/parents/{id}/children/list', [ParentCrudController::class, 'childsList'])->name('parent.children.list');
+    Route::get('/parents/{id}/children/grille', [ParentCrudController::class, 'childsGrille'])->name('parent.children.grille');
     Route::get('/adults', [AdultCrudController::class, 'list'])->name('admin.students.list');
     Route::get('/teachers', [TeacherCrudController::class, 'list'])->name('admin.teachers.list');
 });
