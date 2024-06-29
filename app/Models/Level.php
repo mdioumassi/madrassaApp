@@ -23,6 +23,11 @@ class Level extends Model
         return $this->hasMany(Subject::class);
     }
 
+    public function teatcher(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'teatcher_id');
+    }
+
     /**
      * The attributes that are mass assignable.
      *

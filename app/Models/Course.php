@@ -15,6 +15,11 @@ class Course extends Model
         return $this->hasMany(Level::class);
     }
 
+    public function Teatcher(): HasMany
+    {
+        return $this->hasMany(User::class);
+    }
+
     /**
      * The attributes that are mass assignable.
      *

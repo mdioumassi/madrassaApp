@@ -15,6 +15,11 @@ class Child extends Model
     {
         return $this->belongsTo(User::class, 'parent_id');
     }
+
+    public function registration(): BelongsTo
+    {
+        return $this->belongsTo(Registration::class, 'child_id');
+    }
  
     /**
      * The attributes that are mass assignable.
@@ -26,8 +31,7 @@ class Child extends Model
         'lastname',
         'birthdate',
         'genre',
-        'french_class',
-        'photo'
+        'french_class'
     ];
 
     protected function casts(): array

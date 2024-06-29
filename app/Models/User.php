@@ -23,6 +23,16 @@ class User extends Authenticatable
         return $this->hasMany(Child::class, 'parent_id');
     }
 
+    public function levels() : HasMany
+    {
+        return $this->hasMany(Level::class, 'teatcher_id');
+    }
+
+    public function registrations() : HasMany
+    {
+        return $this->hasMany(Registration::class, 'adult_id');
+    }
+
     /**
      * The attributes that are mass assignable.
      *
