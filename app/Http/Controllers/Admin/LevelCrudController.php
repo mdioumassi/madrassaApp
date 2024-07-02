@@ -91,6 +91,19 @@ class LevelCrudController extends Controller
     }
 
     /**
+     * route: /admin/levels/course/{keyword}/update
+     * name: admin.levels.update.keyword
+     */
+    public function updateLevelByKeywords($keyword, LevelUpdateRequest $request)
+    {
+        $course = Course::where('keywords', $keyword)->first();
+        $validatedData = $request->validated();
+        $course->levels()->update($validatedData);
+        
+        return redirect()->route('admin.courses.select.levels.keyword', $keyword)
+                         ->with('success', 'Level updated successfully.');
+    }
+    /**
      * Update the specified resource in storage.
      */
     public function update(LevelUpdateRequest $request, Level $level)

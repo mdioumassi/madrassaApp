@@ -41,7 +41,7 @@
                             </li>
                         </ul>
                         <button class="w3-button w3-xlarge w3-circle w3-blue w3-card-4 w3-margin"data-bs-toggle="modal"
-                        data-bs-target="#modal-create-course-level" >+</button>
+                            data-bs-target="#modal-create-course-level">+</button>
                         <table class="table table-bordered mt-2">
                             <thead>
                                 <tr>
@@ -76,8 +76,10 @@
                                             @endif
                                         </td>
                                         <td>
-                                            @if ($level->teacher)                                
-                                                {{ $level->teacher->name }} {{ $level->teacher->lastname }}
+                                            @if ($level->teacher)
+                                                <button class="btn btn-link" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-show-users{{ $level->teacher->id }}">
+                                                    {{ $level->teacher->name }} {{ $level->teacher->lastname }} </button>
                                             @else
                                                 <span class="badge bg-danger">Pas de professeur</span>
                                             @endif
@@ -115,7 +117,8 @@
     ])
     @foreach ($levels as $level)
         @include('admin.levels._modals.add-subject-modal', ['level' => $level])
-        @include('admin.levels._modals.edit-level-modal', ['level' => $level])
+        @include('admin.levels._modals.edit-level-modal', ['level' => $level, 'keyword' => 'arabe-adulte'])
         @include('admin.levels._modals.show-level-modal', ['level' => $level])
+        @include('admin.users._modal.show-users', ['user' => $level->teacher])
     @endforeach
 @endsection

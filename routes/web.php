@@ -78,6 +78,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/{level}', [LevelCrudController::class, 'show'])->name('admin.levels.show');
         Route::get('/{level}/edit', [LevelCrudController::class, 'edit'])->name('admin.levels.edit');
         Route::put('/{level}', [LevelCrudController::class, 'update'])->name('admin.levels.update');
+        Route::put('/course/{keyword}/update', [LevelCrudController::class, 'updateLevelByKeywords'])->name('admin.levels.update.keyword');
         Route::delete('/{level}', [LevelCrudController::class, 'destroy'])->name('admin.levels.destroy');
     });
     Route::prefix('subjects')->group(function () {

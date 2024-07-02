@@ -41,7 +41,7 @@
                             </li>
                         </ul>
                         <button class="w3-button w3-xlarge w3-circle w3-cyan w3-card-4 w3-margin"data-bs-toggle="modal"
-                        data-bs-target="#modal-create-course-level">+</button>
+                            data-bs-target="#modal-create-course-level">+</button>
                         <table class="table mt-2">
                             <thead>
                                 <tr>
@@ -68,7 +68,7 @@
                                         <td>{{ $level->hours }}h/semaines</td>
                                         <td>
                                             @if ($level->subjects->count() == 0)
-                                                {{ _('Aucune matière') }}
+                                                {{ _('0 matière') }}
                                             @else
                                                 <a href="{{ route('level.subjects', $level->id) }}">
                                                     <span class="w3-badge">{{ $level->subjects->count() }}</span>
@@ -76,8 +76,10 @@
                                             @endif
                                         </td>
                                         <td>
-                                            @if ($level->teacher)                                
-                                                {{ $level->teacher->name }} {{ $level->teacher->lastname }}
+                                            @if ($level->teacher)
+                                                <button class="btn btn-link" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-show-users{{ $level->teacher->id }}">
+                                                    {{ $level->teacher->name }} {{ $level->teacher->lastname }} </button>
                                             @else
                                                 <span class="badge bg-danger">Pas de professeur</span>
                                             @endif
@@ -111,11 +113,12 @@
     </div>
     @include('admin.courses._modals.create-course-level', [
         'keyword' => 'coran-enfant',
-        'teachers' => $teachers
+        'teachers' => $teachers,
     ])
     @foreach ($levels as $level)
         @include('admin.levels._modals.add-subject-modal', ['level' => $level])
-        @include('admin.levels._modals.edit-level-modal', ['level' => $level])
+        @include('admin.levels._modals.edit-level-modal', ['level' => $level, 'keyword' => 'coran-enfant'])
         @include('admin.levels._modals.show-level-modal', ['level' => $level])
+        @include('admin.users._modal.show-users', ['user' => $level->teacher])
     @endforeach
 @endsection

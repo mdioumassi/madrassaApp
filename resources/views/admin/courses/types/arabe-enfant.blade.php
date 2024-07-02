@@ -79,19 +79,17 @@
                                         </td>
                                         <td>
                                             @if ($level->teacher)
-                                                {{ $level->teacher->name }} {{ $level->teacher->lastname }}
+                                            <button class="btn btn-link" data-bs-toggle="modal"
+                                            data-bs-target="#modal-show-users{{ $level->teacher->id }}"> {{ $level->teacher->name }} {{ $level->teacher->lastname }} </button>
                                             @else
                                                 <span class="badge bg-danger">Pas de professeur</span>
                                             @endif
                                         </td>
                                         <td>
-                                            <button class="btn btn-info btn-sm" data-bs-toggle="modal"
-                                                data-bs-target="#add-subject-modal{{ $level->id }}">{{ _('Add Subject') }}</button>
-                                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                                data-bs-target="#show-level-modal{{ $level->id }}"><i
+                                            <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#add-subject-modal{{ $level->id }}">{{ _('Add Subject') }}</button>
+                                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#show-level-modal{{ $level->id }}"><i
                                                     class="fa-solid fa-list"></i> {{ _('View') }}</button>
-                                            <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                                                data-bs-target="#edit-level-modal{{ $level->id }}"><i
+                                            <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#edit-level-modal{{ $level->id }}"><i
                                                     class="fa-solid fa-pen-to-square"></i> {{ _('Edit') }}</button>
                                             <form action="{{ route('admin.levels.destroy', $level->id) }}" method="POST"
                                                 class="d-inline">
@@ -115,11 +113,13 @@
         'keyword' => 'arabe-enfant',
         'teachers' => $teachers,
     ])
+
     @if ($levels->count() > 0)
     @foreach($levels as $level)
         @include('admin.levels._modals.add-subject-modal', ['level' => $level])
-        @include('admin.levels._modals.edit-level-modal', ['level' => $level])
+        @include('admin.levels._modals.edit-level-modal', ['level' => $level, 'keyword' => 'arabe-enfant'])
         @include('admin.levels._modals.show-level-modal', ['levels' => $level])
+        @include('admin.users._modal.show-users', ['user' => $level->teacher])
     @endforeach
     @endif
 @endsection
