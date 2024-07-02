@@ -7,6 +7,7 @@ use App\Http\Requests\LevelStoreRequest;
 use App\Http\Requests\LevelUpdateRequest;
 use App\Models\Course;
 use App\Models\Level;
+use App\Models\User;
 use Illuminate\Support\Str;
 
 class LevelCrudController extends Controller
@@ -60,7 +61,8 @@ class LevelCrudController extends Controller
     }
 
     /**
-     * admin.courses.keywords.levels.store
+     * route: /admin/courses/key/{keyword}/level/create
+     * name: admin.courses.levels.create
      */
     public function storeLevelByCourseKeywords(LevelStoreRequest $request, $keyword)
     {

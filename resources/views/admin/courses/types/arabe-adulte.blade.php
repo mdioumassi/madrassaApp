@@ -50,6 +50,7 @@
                                     <th class="w3-blue text-light">{{ _('Frais d\'inscription') }}</th>
                                     <th class="w3-blue text-light">{{ _('Horaires') }}</th>
                                     <th class="w3-blue text-light">{{ _('Matières') }}</th>
+                                    <th class="w3-blue text-light">{{ _('Professeur') }}</th>
                                     <th class="w3-blue  text-light">{{ _('Actions') }}</th>
                                 </tr>
                             </thead>
@@ -75,18 +76,28 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                            @if ($level->teacher)                                
+                                                {{ $level->teacher->name }} {{ $level->teacher->lastname }}
+                                            @else
+                                                <span class="badge bg-danger">Pas de professeur</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-info btn-sm" data-bs-toggle="modal"
                                                 data-bs-target="#add-subject-modal{{ $level->id }}">{{ _('Add Subject') }}</button>
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                data-bs-target="#show-level-modal">{{ _('View') }}</button>
-                                            <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                                                data-bs-target="#edit-level-modal">{{ _('Edit') }}</button>
+                                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                                data-bs-target="#show-level-modal{{ $level->id }}"><i
+                                                    class="fa-solid fa-list"></i> {{ _('View') }}</button>
+                                            <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                                data-bs-target="#edit-level-modal{{ $level->id }}"><i
+                                                    class="fa-solid fa-pen-to-square"></i> {{ _('Edit') }}</button>
                                             <form action="{{ route('admin.levels.destroy', $level->id) }}" method="POST"
                                                 class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger"
-                                                    onclick="return confirm('Are you sure?')">{{ _('Delete') }}</button>
+                                                <button type="submit" class="btn btn-danger btn-sm"
+                                                    onclick="return confirm('Are you sure?')"><i
+                                                        class="fa-solid fa-trash"></i> {{ _('Delete') }}</button>
                                             </form>
                                         </td>
                                     </tr>
@@ -98,7 +109,10 @@
             </div>
         </div>
     </div>
-    @include('admin.courses._modals.create-course-level', ['keyword' => 'arabe-adulte'])
+    @include('admin.courses._modals.create-course-level', [
+        'keyword' => 'arabe-adulte',
+        'teachers' => $teachers,
+    ])
     @foreach ($levels as $level)
         @include('admin.levels._modals.add-subject-modal', ['level' => $level])
         @include('admin.levels._modals.edit-level-modal', ['level' => $level])

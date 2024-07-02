@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CourseStoreRequest;
 use App\Http\Requests\CourseUpdateRequest;
 use App\Models\Course;
+use App\Models\User;
 use Illuminate\Support\Str;
 
 class CourseCrudController extends Controller
@@ -50,8 +51,13 @@ class CourseCrudController extends Controller
     {
         $course = Course::where('keywords', $keyword)->with('levels')->first();
         $levels = $course->levels;
+        $teachers = User::where('type', 'professeur')->get();
+        if ($teachers->isEmpty()) {
+            return redirect()->route('admin.courses.index')
+                             ->with('warning', 'No teachers found for this course.');
+        }
 
-        return view('admin.courses.types.'.$keyword, compact('levels'));
+        return view('admin.courses.types.'.$keyword, compact('levels', 'teachers'));
     }
 
     /**

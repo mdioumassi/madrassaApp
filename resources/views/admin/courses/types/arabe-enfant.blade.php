@@ -41,8 +41,8 @@
                                     href="{{ route('admin.courses.select.levels.keyword', 'coran-adulte') }}">{{ _('Cours de coran pour adulte') }}</a>
                             </li>
                         </ul>
-                        <button class="w3-button w3-xlarge w3-circle w3-indigo w3-card-4 w3-margin"data-bs-toggle="modal"
-                        data-bs-target="#modal-create-course-level" >+</button>
+                        <button class="w3-button w3-xlarge w3-circle w3-indigo w3-card-4 w3-margin" data-bs-toggle="modal"
+                            data-bs-target="#modal-create-course-level">+</button>
 
                         <table class="table table-bordered mt-2">
                             <thead>
@@ -52,6 +52,7 @@
                                     <th class="w3-indigo text-light">{{ _('Frais d\'inscription') }}</th>
                                     <th class="w3-indigo text-light">{{ _('Horaires') }}</th>
                                     <th class="w3-indigo text-light">{{ _('Matières') }}</th>
+                                    <th class="w3-indigo text-light">{{ _('Professeur') }}</th>
                                     <th class="w3-indigo  text-light">{{ _('Actions') }}</th>
                                 </tr>
                             </thead>
@@ -63,7 +64,6 @@
                             <tbody>
                                 @foreach ($levels as $level)
                                     <tr>
-
                                         <td>{{ $level->label }}</td>
                                         <td>{{ $level->tarif }}€/Année</td>
                                         <td>{{ $level->registration_fees }}€</td>
@@ -78,12 +78,19 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
+                                            @if ($level->teacher)
+                                                {{ $level->teacher->name }} {{ $level->teacher->lastname }}
+                                            @else
+                                                <span class="badge bg-danger">Pas de professeur</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-info btn-sm" data-bs-toggle="modal"
                                                 data-bs-target="#add-subject-modal{{ $level->id }}">{{ _('Add Subject') }}</button>
-                                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                                 data-bs-target="#show-level-modal{{ $level->id }}"><i
                                                     class="fa-solid fa-list"></i> {{ _('View') }}</button>
-                                            <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                            <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                                 data-bs-target="#edit-level-modal{{ $level->id }}"><i
                                                     class="fa-solid fa-pen-to-square"></i> {{ _('Edit') }}</button>
                                             <form action="{{ route('admin.levels.destroy', $level->id) }}" method="POST"
@@ -104,10 +111,15 @@
             </div>
         </div>
     </div>
-    @include('admin.courses._modals.create-course-level', ['keyword' => 'arabe-enfant'])
-    @foreach ($levels as $level)
+    @include('admin.courses._modals.create-course-level', [
+        'keyword' => 'arabe-enfant',
+        'teachers' => $teachers,
+    ])
+    @if ($levels->count() > 0)
+    @foreach($levels as $level)
         @include('admin.levels._modals.add-subject-modal', ['level' => $level])
         @include('admin.levels._modals.edit-level-modal', ['level' => $level])
-        @include('admin.levels._modals.show-level-modal', ['level' => $level])
+        @include('admin.levels._modals.show-level-modal', ['levels' => $level])
     @endforeach
+    @endif
 @endsection

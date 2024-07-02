@@ -25,7 +25,7 @@ class User extends Authenticatable
 
     public function levels() : HasMany
     {
-        return $this->hasMany(Level::class, 'teatcher_id');
+        return $this->hasMany(Level::class, 'teacher_id');
     }
 
     public function registrations() : HasMany

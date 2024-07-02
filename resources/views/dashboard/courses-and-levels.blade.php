@@ -17,29 +17,36 @@
                     <div class="card-body">
                         <div class="row">
                             @foreach ($courses as $course)
-                                <div class="col">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <i class="w3-text-teal fa-solid fa-book" style='font-size:110px'></i>
-                                                </div>
-                                                <div class="col">
-                                                    <span></span>
-                                                    <button type="button" class="btn btn-primary">
-                                                        <span class="badge bg-danger">{{ $course->levels->count() }}</span>
-                                                        Niveaux
-                                                    </button>
+                                @if (!empty($course->keywords))
+                                    <div class="col-md-4 mb-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <i class="w3-text-teal fa-solid fa-book"
+                                                            style='font-size:110px'></i>
+                                                    </div>
+                                                    <div class="col">
+                                                        <span></span>
+                                                        <button type="button" class="btn btn-primary">
+                                                            <span
+                                                                class="badge bg-danger">{{ $course->levels->count() }}</span>
+                                                            Niveaux
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <div class="card-footer">
-                                            <a href="{{ route('admin.courses.select.levels.keyword', $course->keywords) }}"><button
-                                                    class="btn btn-outline-primary">{{ $course->label }}</button></a>
+                                            <div class="card-footer">
+
+                                                <a
+                                                    href="{{ route('admin.courses.select.levels.keyword', $course->keywords) }}"><button
+                                                        class="btn btn-outline-primary">{{ $course->label }}</button></a>
+
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endif
                             @endforeach
                         </div>
                     </div>

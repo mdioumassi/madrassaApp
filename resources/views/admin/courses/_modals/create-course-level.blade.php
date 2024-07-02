@@ -98,6 +98,28 @@
             </div>
 
             <div class="row mb-3">
+                <label for="teacher_id"
+                    class="col-md-4 col-form-label text-md-end">{{ __('Professeur') }}</label>
+
+                <div class="col-md-6">
+                    <select id="teacher_id" class="form-select @error('teacher_id') is-invalid @enderror"
+                        name="teacher_id" autocomplete="teacher_id">
+                        <option value="">Choisir un professeur</option>
+                        @foreach ($teachers as $teacher)
+                            <option value="{{ $teacher->id }}">{{ $teacher->name }} {{ $teacher->lastname }}</option>
+                        @endforeach
+                    </select>
+
+                    @error('teacher_id')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>
+            
+
+            <div class="row mb-3">
                 <div class="col-md offset-md-4">
                     <button type="submit" class="btn btn-primary">
                         {{ __('Ajouter') }}

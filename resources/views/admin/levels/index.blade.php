@@ -48,6 +48,7 @@
                                     <th class="w3-green text-light">{{ _('Frais d\'inscription') }}</th>
                                     <th class="w3-green text-light">{{ _('Horaires') }}</th>
                                     <th class="w3-green text-light">{{ _('Matières') }}</th>
+                                    <th class="w3-green text-light">{{ _('Professeur') }}</th>
                                     <th class="w3-green  text-light">{{ _('Actions') }}</th>
                                 </tr>
                             </thead>
@@ -71,6 +72,12 @@
                                                         class="w3-badge">{{ $level->subjects->count() }}</span> matères</a>
                                             @endif
                                         </td>
+                                        <td>
+                                            @if ($level->teacher)                                
+                                                {{ $level->teacher->name }} {{ $level->teacher->lastname }}
+                                            @else
+                                                <span class="badge bg-danger">Pas de professeur</span>
+                                            @endif
                                         <td>
                                             <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
                                                 data-bs-target="#add-subject-modal{{ $level->id }}">{{ _('Add Subject') }}</button>

@@ -9,26 +9,23 @@
         @endsession
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ _('Dashboard') }}</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('dashboard.course-and-levels') }}">{{ _('Cours & Niveaux') }}</a>
-            </li>
-            <li class="breadcrumb-item active" aria-current="page">{{ $level->label }}</li>
+            <li class="breadcrumb-item"><a href="{{ route('dashboard.course-and-levels') }}">{{ _('Cours & Niveaux') }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.courses.select.levels.keyword', $level->course->keywords) }}">{{$level->course->label}}</a></li>
+            <li class="breadcrumb-item"><a  href="{{ route('admin.levels.show', $level->id) }}">{{ $level->label }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ _('Matières') }}</li>
         </ol>
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">
-                        <a class="text-decoration-none fw-bold text-uppercase text-primary"
-                            href="{{ route('admin.levels.show', $level->id) }}">{{ $level->label }}</a>
+                    <div class="card-header"><span class="bg-success py-2 px-3 text-light rounded">Nveau:</span> {{ $level->label }}
                     </div>
                     <div class="card-body">
-                        <a href="{{ route('admin.subjects.create', $level->id) }}"><button
-                                class="btn btn-primary mb-3">Ajouter une matière</button></a>
-                        <a href="{{ route('admin.levels.index') }}"><button class="btn btn-success mb-3">Afficher les
-                                niveaux</button></a>
+                        <a href="{{ route('admin.subjects.create', $level->id) }}"><button class="btn btn-primary mb-3">Ajouter une matière</button></a>
+                        {{-- <a href="{{ route('admin.levels.index') }}"><button class="btn btn-success mb-3">Afficher les
+                                niveaux</button></a> --}}
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th class="bg-success text-light">#</th>
                                     <th class="bg-success text-light">{{ _('Libelle') }}</th>
                                     <th class="bg-success text-light">{{ _('Commentaire') }}</th>
                                     <th class="bg-success  text-light">{{ _('Actions') }}</th>
@@ -37,20 +34,15 @@
                             <tbody>
                                 @foreach ($subjects as $subject)
                                     <tr>
-                                        <th>{{ $subject->id }}</th>
                                         <td>{{ $subject->label }}</td>
                                         <td>{{ $subject->comment }}</td>
                                         <td>
-                                            <a href="{{ route('admin.subjects.show', $subject->id) }}"
-                                                class="btn btn-primary">{{ _('View') }}</a>
-                                            <a href="{{ route('admin.subjects.edit', $subject->id) }}"
-                                                class="btn btn-warning">{{ _('Edit') }}</a>
-                                            <form action="{{ route('admin.subjects.destroy', $subject->id) }}"
-                                                method="POST" class="d-inline">
+                                            <a href="{{ route('admin.subjects.show', $subject->id) }}" class="btn btn-primary">{{ _('View') }}</a>
+                                            <a href="{{ route('admin.subjects.edit', $subject->id) }}" class="btn btn-warning">{{ _('Edit') }}</a>
+                                            <form action="{{ route('admin.subjects.destroy', $subject->id) }}"  method="POST" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger"
-                                                    onclick="return confirm('Are you sure?')">{{ _('Delete') }}</button>
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">{{ _('Delete') }}</button>
                                             </form>
                                         </td>
                                     </tr>

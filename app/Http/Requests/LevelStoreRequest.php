@@ -26,6 +26,8 @@ class LevelStoreRequest extends FormRequest
             'tarif' => ['required', 'string', 'max:255'],
             'registration_fees' => ['required', 'string', 'max:255'],
             'hours' => ['required', 'string', 'max:255'],
+            'comment' => ['nullable', 'string'],
+            'teacher_id' => ['nullable', 'exists:users,id'],
         ];
     }
 }

@@ -19,12 +19,12 @@ class LevelFactory extends Factory
     public function definition(): array
     {
         return [
-            'label' => $this->faker->sentence(3),
+            'label' => 'Niveau ' . $this->faker->randomElement(['débutant', 'intermédiaire', 'avancé']),
             'comment' => $this->faker->paragraph(1),
             'tarif' => $this->faker->randomFloat(2, 0, 999),
             'registration_fees' => $this->faker->randomFloat(2, 0, 999),
             'hours' => $this->faker->randomNumber(2),
-            //'teatcher_id' => \App\Models\User::factory(),
+            'teacher_id' => \App\Models\User::factory(),
         ];
     }
 }

@@ -23,9 +23,9 @@ class Level extends Model
         return $this->hasMany(Subject::class);
     }
 
-    public function teatcher(): BelongsTo
+    public function teacher(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'teatcher_id');
+        return $this->belongsTo(User::class);
     }
 
     /**
@@ -39,5 +39,6 @@ class Level extends Model
         'tarif',
         'registration_fees',
         'hours',
+        'teacher_id',
     ];
 }
