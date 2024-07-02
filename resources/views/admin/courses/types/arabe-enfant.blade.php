@@ -73,8 +73,8 @@
                                                 0 matière
                                             @else
                                                 <a href="{{ route('level.subjects', $level->id) }}">
-                                                    <span class="w3-badge">{{ $level->subjects->count() }}</span>
-                                                    matères</a>
+                                                    <span class="badge w3-black">{{ $level->subjects->count() }} matères</span>
+                                                    </a>
                                             @endif
                                         </td>
                                         <td>

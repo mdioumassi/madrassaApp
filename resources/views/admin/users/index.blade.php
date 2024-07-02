@@ -59,6 +59,7 @@
                                 <th class="bg-success text-light">Téléphone</th>
                                 <th class="bg-success text-light">Type</th>
                                 <th class="bg-success text-light">Roles</th>
+                                <th class="bg-success text-light">Classes</th>
                                 <th class="bg-success text-light">Actions</th>
                             </tr>
                         </thead>
@@ -76,6 +77,13 @@
                                             @foreach ($user->getRoleNames() as $v)
                                                 <label class="badge bg-success">{{ $v }}</label>
                                             @endforeach
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($user->type->value == 'professeur' && $user->levels()->count() > 0)
+                                            <a href="{{route('admin.teachers.levels.list', $user->id)}}">
+                                                <span class="badge w3-black">{{$user->levels()->count()}} niveaux</span>
+                                            </a>
                                         @endif
                                     </td>
                                     <td>

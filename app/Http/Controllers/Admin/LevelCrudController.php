@@ -18,7 +18,8 @@ class LevelCrudController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * route: /admin/levels
+     * name: admin.levels.index
      */
     public function index()
     {
@@ -29,10 +30,15 @@ class LevelCrudController extends Controller
         return view('admin.levels.index', compact('levels', 'courses'));
     }
 
+    /**
+     * route: /admin/levels/course/{id}/list
+     * name: level.subjects
+     */
     public function subjectsList($id)
     {
         $level = Level::where('id', $id)->with('subjects')->first();
         $subjects = $level->subjects;
+
         if ($subjects->isEmpty()) {
             return redirect()->route('admin.levels.index')
                              ->with('warning', 'No subjects found for this level.');
@@ -49,6 +55,10 @@ class LevelCrudController extends Controller
         return view('admin.levels.create');
     }
 
+    /**
+     * route: /admin/levels/course/{id}/create
+     * name: admin.levels.create.course
+     */
     public function storeLevelCourse(LevelStoreRequest $request, $id)
     {
         $course = Course::where('id', $id)->first();
@@ -75,7 +85,8 @@ class LevelCrudController extends Controller
     }
                 
     /**
-     * Display the specified resource.
+     * route: /admin/levels
+     * name: admin.levels.index
      */
     public function show(Level $level)
     {

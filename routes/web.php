@@ -44,6 +44,8 @@ Route::prefix('admin')->group(function () {
         Route::get('/{user}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
         Route::put('/{user}', [UserController::class, 'update'])->name('admin.users.update');
         Route::delete('/{user}', [UserController::class, 'destroy'])->name('admin.users.destroy');
+
+        Route::get('/{id}/levels', [UserController::class, 'getTeacherlevelsList'])->name('admin.teachers.levels.list');
     });
     Route::prefix('children')->group(function () {
         Route::get('/', [ChildController::class, 'index'])->name('children.index');
@@ -70,7 +72,6 @@ Route::prefix('admin')->group(function () {
         Route::get('/{keyword}/levels', [CourseCrudController::class, 'SelectLevelsByKeyword'])->name('admin.courses.select.levels.keyword');
     });
     Route::prefix('levels')->group(function () {
-        // Route::get('/adult', [LevelCrudController::class, 'AdultLevels'])->name('admin.levels.adult');
         Route::get('/', [LevelCrudController::class, 'index'])->name('admin.levels.index');
         Route::get('/create', [LevelCrudController::class, 'create'])->name('admin.levels.create');
         Route::post('/course/{id}/level/store', [LevelCrudController::class, 'storeLevelCourse'])->name('admin.courses.levels.store');
