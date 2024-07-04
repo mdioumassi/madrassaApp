@@ -71,16 +71,18 @@
                                             @foreach ($user->getRoleNames() as $v)
                                                 <label class="badge bg-success">{{ $v }}</label>
                                             @endforeach
+                                            @else
+                                            <label class="badge bg-danger">Aucun rôle</label>
                                         @endif
                                     </td>
                                     @if ($user->type->value == 'parent' && $user->children->count() > 0)
                                         <td>
                                             <a href="{{ route('parent.children.list', $user->id) }}"> <span
-                                                    class="w3-badge">{{ $user->children->count() }}</span>
-                                                enfant.s</a>
+                                                    class="badge w3-black">{{ $user->children->count() }} enfant.s</span>
+                                                </a>
                                         </td>
                                     @else
-                                        <td>0 enfant</td>
+                                        <td><span class="badge w3-black">0 enfant</span></td>
                                     @endif
                                     <td>
                                         <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"

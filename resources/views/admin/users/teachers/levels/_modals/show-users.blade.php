@@ -50,18 +50,8 @@
                         <th class="bg-success text-light">Enfants</th>
                         <td></td>
                         <td>
-                            <a href="{{ route('parent.children.list', $user->id) }}">{{ $user->children->count() }}
+                            <a href="{{ route('parent.children', $user->id) }}">{{ $user->children->count() }}
                                 Enfants</a>
-                        </td>
-                    </tr>
-                @endif
-                @if ($user->type->value =='professeur' && $user->levels->count() > 0)
-                    <tr>
-                        <th class="bg-success text-light">Niveaux</th>
-                        <td></td>
-                        <td>
-                            <a href="{{route('admin.teachers.levels.list', $user->id)}}">{{ $user->levels->count() }}
-                                Niveaux</a>
                         </td>
                     </tr>
                 @endif

@@ -1,21 +1,15 @@
-@php
-    $teachers = App\Models\User::where('type', 'professeur')->get();
-@endphp
-
-<x-modal id="edit-level-modal{{$level->id}}">
-    <x-slot name="title">{{ $level->label }}</x-slot>
+<x-modal id="modal-create-level">
+    <x-slot name="title">{{ _('Ajouter un niveau')}}</x-slot>
     <x-slot name="size">modal-lg</x-slot>
     <x-slot name="body">
-        <form method="POST" action="{{ route('admin.levels.update', $level->id) }}">
+        <form method="POST" action="{{ route('admin.levels.store') }}">
             @csrf
-            @method('PUT')
-
             <div class="row mb-3">
-                <label for="label" class="col-md-4 col-form-label text-md-end">{{ __('Libelle') }}</label>
+                <label for="label" class="col-md-4 col-form-label text-md-end">{{ __('Label') }}</label>
 
                 <div class="col-md-6">
                     <input id="label" type="text" class="form-control @error('label') is-invalid @enderror"
-                        name="label" value="{{ $level->label }}" autocomplete="label" autofocus>
+                        name="label" autocomplete="label" autofocus>
 
                     @error('label')
                         <span class="invalid-feedback" role="alert">
@@ -24,13 +18,13 @@
                     @enderror
                 </div>
             </div>
-
+        
             <div class="row mb-3">
                 <label for="tarif" class="col-md-4 col-form-label text-md-end">{{ __('Tarif') }}</label>
 
                 <div class="col-md-6">
-                    <input id="tarif" type="text" class="form-control @error('tarif') is-invalid @enderror"
-                        name="tarif" value="{{ $level->tarif }}" autocomplete="tarif">
+                    <input id="level" type="text" class="form-control @error('tarif') is-invalid @enderror"
+                    name="tarif">
 
                     @error('tarif')
                         <span class="invalid-feedback" role="alert">
@@ -41,13 +35,10 @@
             </div>
 
             <div class="row mb-3">
-                <label for="registration_fees"
-                    class="col-md-4 col-form-label text-md-end">{{ __('Frais d\'inscription') }}</label>
+                <label for="registration_fees" class="col-md-4 col-form-label text-md-end">{{ __('Frais d\'inscription') }}</label>
 
                 <div class="col-md-6">
-                    <input id="registration_fees" type="text"
-                        class="form-control @error('registration_fees') is-invalid @enderror"
-                        name="registration_fees" value="{{ $level->registration_fees }}" autocomplete="registration_fees">
+                    <input id="registration_fees" type="text" class="form-control @error('registration_fees') is-invalid @enderror" name="registration_fees">
 
                     @error('registration_fees')
                         <span class="invalid-feedback" role="alert">
@@ -61,8 +52,7 @@
                 <label for="hours" class="col-md-4 col-form-label text-md-end">{{ __('Horaires') }}</label>
 
                 <div class="col-md-6">
-                    <input id="hours" type="text" class="form-control @error('hours') is-invalid @enderror"
-                        name="hours" value="{{ $level->hours }}" autocomplete="hours">
+                    <input id="hours" type="text" class="form-control @error('registration_fees') is-invalid @enderror" name="hours">
 
                     @error('hours')
                         <span class="invalid-feedback" role="alert">
@@ -77,7 +67,7 @@
 
                 <div class="col-md-6">
                     <textarea id="comment" class="form-control @error('comment') is-invalid @enderror"
-                        name="comment" autocomplete="comment">{{ $level->comment }}</textarea>
+                        name="comment" autocomplete="comment" autofocus></textarea>
 
                     @error('comment')
                         <span class="invalid-feedback" role="alert">
@@ -86,31 +76,33 @@
                     @enderror
                 </div>
             </div>
+
             <div class="row mb-3">
-                <label for="teacher_id" class="col-md-4 col-form-label text-md-end">{{ __('Professeur') }}</label>
+                <label for="teachers"
+                    class="col-md-4 col-form-label text-md-end">{{ __('Roles') }}</label>
 
                 <div class="col-md-6">
-                    <select id="teacher_id" class="form-select @error('teacher_id') is-invalid @enderror"
-                        name="teacher_id" autocomplete="teacher_id">
-                        <option value="">Choisir un professeur</option>
-                        @foreach ($teachers as $teacher)
-                            <option value="{{ $teacher->id }}" @if ($level->teacher_id == $teacher->id) selected @endif>
-                                {{ $teacher->name }} {{ $teacher->lastname }}
+                    <select id="teachers" class="form-select @error('teachers') is-invalid @enderror"
+                        name="teachers[]" multiple>
+                        @foreach ($teachers as $value => $label)
+                            <option value="{{ $value }}">
+                                {{ $label }}
                             </option>
                         @endforeach
                     </select>
 
-                    @error('teacher_id')
+                    @error('roles')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                     @enderror
                 </div>
             </div>
-            <div class="row mb-0">
-                <div class="col-md-6 offset-md-4">
+
+            <div class="row mb-3">
+                <div class="col-md offset-md-4">
                     <button type="submit" class="btn btn-primary">
-                        {{ __('Modifier') }}
+                        {{ __('Ajouter') }}
                     </button>
                 </div>
             </div>

@@ -28,8 +28,8 @@
                             {{ _('Ajouter un utilisateur') }}</button> --}}
                         <div class="pull-right">
                             @can('user-create')
-                            <a class="btn btn-success mb-2" href="{{ route('admin.users.create') }}"><i
-                                    class="fa fa-plus"></i> {{ _('Ajouter un utlisateur') }}</a>
+                                <a class="btn btn-success mb-2" href="{{ route('admin.users.create') }}"><i
+                                        class="fa fa-plus"></i> {{ _('Ajouter un utlisateur') }}</a>
                             @endcan
                         </div>
                     </div>
@@ -59,6 +59,7 @@
                                 <th class="bg-success text-light">Téléphone</th>
                                 <th class="bg-success text-light">Type</th>
                                 <th class="bg-success text-light">Roles</th>
+                                <th class="bg-success text-light">Enfants</th>
                                 <th class="bg-success text-light">Classes</th>
                                 <th class="bg-success text-light">Actions</th>
                             </tr>
@@ -80,9 +81,16 @@
                                         @endif
                                     </td>
                                     <td>
+                                        @if ($user->type->value == 'parent' && $user->children->count() > 0)
+                                            <a href="{{ route('parent.children.list', $user->id) }}"> <span
+                                                    class="badge w3-black">{{ $user->children->count() }} enfant.s</span>
+                                            </a>
+                                        @endif
+                                    </td>
+                                    <td>
                                         @if ($user->type->value == 'professeur' && $user->levels()->count() > 0)
-                                            <a href="{{route('admin.teachers.levels.list', $user->id)}}">
-                                                <span class="badge w3-black">{{$user->levels()->count()}} niveaux</span>
+                                            <a href="{{ route('admin.teachers.levels.list', $user->id) }}">
+                                                <span class="badge w3-black">{{ $user->levels()->count() }} niveaux</span>
                                             </a>
                                         @endif
                                     </td>

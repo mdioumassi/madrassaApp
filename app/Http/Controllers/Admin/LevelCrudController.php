@@ -115,12 +115,19 @@ class LevelCrudController extends Controller
                          ->with('success', 'Level updated successfully.');
     }
     /**
-     * Update the specified resource in storage.
+     * route: /admin/levels/{level}
+     * name: admin.levels.update
      */
     public function update(LevelUpdateRequest $request, Level $level)
     {
+        $userId = $request['userId'];
         $validatedData = $request->validated();
         $level->update($validatedData);
+
+        if($userId) {
+            return redirect()->route('admin.teachers.levels.list', $userId)
+                             ->with('success', 'Level updated successfully.');
+        }
         return redirect()->route('admin.levels.index')
                          ->with('success', 'Level updated successfully.');
     }

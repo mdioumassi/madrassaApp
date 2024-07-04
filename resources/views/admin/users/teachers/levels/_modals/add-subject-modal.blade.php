@@ -19,6 +19,7 @@
                     @enderror
                 </div>
             </div>
+            <input type="hidden" name="userId" value="{{$user->id}}">
 
             <div class="row mb-3">
                 <label for="comment" class="col-md-4 col-form-label text-md-end">{{ __('Commentaire') }}</label>

@@ -117,7 +117,7 @@
     @if ($levels->count() > 0)
     @foreach($levels as $level)
         @include('admin.levels._modals.add-subject-modal', ['level' => $level])
-        @include('admin.levels._modals.edit-level-modal', ['level' => $level, 'keyword' => 'arabe-enfant'])
+        @include('admin.courses._modals.edit-level-modal', ['level' => $level, 'keyword' => 'arabe-enfant'])
         @include('admin.levels._modals.show-level-modal', ['levels' => $level])
         @include('admin.users._modal.show-users', ['user' => $level->teacher])
     @endforeach

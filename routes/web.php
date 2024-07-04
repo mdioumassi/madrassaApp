@@ -44,7 +44,6 @@ Route::prefix('admin')->group(function () {
         Route::get('/{user}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
         Route::put('/{user}', [UserController::class, 'update'])->name('admin.users.update');
         Route::delete('/{user}', [UserController::class, 'destroy'])->name('admin.users.destroy');
-
         Route::get('/{id}/levels', [UserController::class, 'getTeacherlevelsList'])->name('admin.teachers.levels.list');
     });
     Route::prefix('children')->group(function () {

@@ -82,9 +82,9 @@
                                             <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
                                                 data-bs-target="#add-subject-modal{{ $level->id }}">{{ _('Add Subject') }}</button>
                                             <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                                data-bs-target="#show-level-modal">{{ _('View') }}</button>
+                                                data-bs-target="#show-level-modal{{ $level->id }}">{{ _('View') }}</button>
                                             <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                                                data-bs-target="#edit-level-modal">{{ _('Edit') }}</button>
+                                                data-bs-target="#edit-level-modal{{ $level->id }}">{{ _('Edit') }}</button>
                                             <form action="{{ route('admin.levels.destroy', $level->id) }}" method="POST"
                                                 class="d-inline">
                                                 @csrf

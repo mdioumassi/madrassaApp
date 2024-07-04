@@ -41,15 +41,24 @@ class SubjectCrudController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * route: /admin/levels/course/{id}/store
+     * name: admin.levels.subjects.store
+     * method: post
      */
     public function storeLevelSubject(Request $request, $id)
     {
+        $userId = $request['userId'];
         $level = Level::where('id', $id)->first();
         $request->validate([
             'label' => 'required|string|max:255'
         ]);
         $level->subjects()->create($request->all());
+
+        if($userId) {
+            return redirect()->route('admin.teachers.levels.list', $userId)
+                             ->with('success', 'Subject created successfully.');
+        }
+        
         return redirect()->route('admin.levels.subjects.index', $level->id)
                          ->with('success', 'Subject created successfully.');
     }

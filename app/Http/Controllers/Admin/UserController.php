@@ -41,6 +41,7 @@ class UserController extends Controller
     /**
      * route: /admin/users/{id}/levels
      * name: admin.teachers.levels.list
+     * method: get
      */
     public function getTeacherlevelsList($id): View
     {
