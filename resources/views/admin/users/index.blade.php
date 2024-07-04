@@ -81,14 +81,14 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if ($user->type->value == 'parent' && $user->children->count() > 0)
+                                        @if ($user->getUserType() == 'parent' && $user->children->count() > 0)
                                             <a href="{{ route('parent.children.list', $user->id) }}"> <span
                                                     class="badge w3-black">{{ $user->children->count() }} enfant.s</span>
                                             </a>
                                         @endif
                                     </td>
                                     <td>
-                                        @if ($user->type->value == 'professeur' && $user->levels()->count() > 0)
+                                        @if ($user->getUserType() == 'professeur' && $user->levels()->count() > 0)
                                             <a href="{{ route('admin.teachers.levels.list', $user->id) }}">
                                                 <span class="badge w3-black">{{ $user->levels()->count() }} niveaux</span>
                                             </a>

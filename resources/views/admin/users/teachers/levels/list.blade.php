@@ -20,10 +20,8 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header"><span class="bg-success py-2 px-3 text-light rounded">Cours:</span>
-                        </div>
+                    </div>
                     <div class="card-body">
-                        <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
-                                                data-bs-target="#modal-create-level">{{ _('Ajouter un niveau') }}</button>
                         <table class="table table-bordered mt-2">
                             <thead>
                                 <tr>
@@ -43,13 +41,43 @@
                                         <td>{{ $level->tarif }}€/Année</td>
                                         <td>{{ $level->registration_fees }}€</td>
                                         <td>{{ $level->hours }}h/semaines</td>
-                                        <td>{{$level->course->label}}</td>
+                                        {{-- <td><span class="badge w3-green">{{ $level->course->keywords }}</span></td> --}}
+                                        @if ($level->course->keywords == 'arabe-enfant')
+                                            <td>
+                                                <a href="{{ route('admin.courses.select.levels.keyword', 'arabe-enfant') }}">
+                                                    <span class="badge w3-indigo">{{ $level->course->label }}</span>
+                                                </a>
+                                            </td>
+                                        @endif
+                                        @if ($level->course->keywords == 'arabe-adulte')
+                                            <td>
+                                                <a href="{{ route('admin.courses.select.levels.keyword', 'arabe-adulte') }}">
+                                                    <span class="badge w3-blue">{{ $level->course->label }}</span>
+                                                </a>
+                                            </td>
+                                        @endif
+                                        @if ($level->course->keywords == 'coran-adulte')
+                                            <td>
+                                                <a href="{{ route('admin.courses.select.levels.keyword', 'coran-adulte') }}">
+                                                    <span class="badge w3-light-blue">{{ $level->course->label }}</span>
+                                                </a>
+                                            </td>
+                                        @endif
+                                        @if ($level->course->keywords == 'coran-enfant')
+                                        <td>
+                                            <a href="{{ route('admin.courses.select.levels.keyword', 'coran-enfant') }}">
+                                                <span class="badge w3-cyan">{{ $level->course->label }}</span>
+                                            </a>
+                                        </td>
+                                    @endif
+
                                         <td>
                                             @if ($level->subjects->count() == 0)
-                                            <span class="badge w3-black">0 matière</span>
+                                                <span class="badge w3-black">0 matière</span>
                                             @else
                                                 <a href="{{ route('level.subjects', $level->id) }}"><span
-                                                        class="badge w3-black">{{ $level->subjects->count() }} matères</span></a>
+                                                        class="badge w3-black">{{ $level->subjects->count() }}
+                                                        matères</span></a>
                                             @endif
                                         </td>
                                         <td>
@@ -78,10 +106,16 @@
     </div>
     </div>
     @include('admin.users.teachers.levels._modals.show-users', ['user' => $user])
-    {{-- @include('admin.users.teachers.levels._modals.create-level-modal', ['user' => $user]) --}}
+    {{-- @include('admin.users.teachers.levels._modals.create-level-modal', ['course' => $user]) --}}
     @foreach ($levels as $level)
-        @include('admin.users.teachers.levels._modals.add-subject-modal', ['level' => $level, 'user' => $user])
-        @include('admin.users.teachers.levels._modals.edit-level-modal', ['level' => $level, 'user' => $user])
-        @include('admin.levels._modals.show-level-modal', ['level' => $level])
+        @include('admin.users.teachers.levels._modals.add-subject-modal', [
+            'level' => $level,
+            'user' => $user,
+        ])
+        @include('admin.users.teachers.levels._modals.edit-level-modal', [
+            'level' => $level,
+            'user' => $user,
+        ])
+        @include('admin.users.teachers.levels._modals.show-level-modal', ['level' => $level])
     @endforeach
 @endsection

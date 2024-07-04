@@ -17,6 +17,13 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasRoles;
 
+    const PARENT = 'parent';
+    const PROFESSEUR = 'professeur';
+    const ADMIN = 'admin';
+    const WEBMASTER = 'webmaster';
+    const ENFANT = 'enfant';
+    const ADULTE = 'adulte';
+
 
     public function children() : HasMany
     {
@@ -33,6 +40,10 @@ class User extends Authenticatable
         return $this->hasMany(Registration::class, 'adult_id');
     }
 
+    public function getUserType(): string
+    {
+        return $this->type->value ?? '';
+    }
 
     /**
      * The attributes that are mass assignable.

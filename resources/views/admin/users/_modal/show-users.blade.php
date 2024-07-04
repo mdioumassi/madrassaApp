@@ -45,7 +45,7 @@
                     <td></td>
                     <td> {{ $user->full_address }} </td>
                 </tr>
-                @if ($user->type->value =='parent' && $user->children->count() > 0)
+                @if ($user->getUserType() =='parent' && $user->children->count() > 0)
                     <tr>
                         <th class="bg-success text-light">Enfants</th>
                         <td></td>
@@ -55,7 +55,7 @@
                         </td>
                     </tr>
                 @endif
-                @if ($user->type->value =='professeur' && $user->levels->count() > 0)
+                @if ($user->getUserType() =='professeur' && $user->levels->count() > 0)
                     <tr>
                         <th class="bg-success text-light">Niveaux</th>
                         <td></td>

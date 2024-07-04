@@ -70,7 +70,7 @@ class ChildController extends Controller
 
         $parent->children()->create($request->validated());
 
-             return redirect()->route('parent.children', $id)
+             return redirect()->route('parent.children.list', $id)
                          ->with('success', 'Child created successfully.');
     }
 
