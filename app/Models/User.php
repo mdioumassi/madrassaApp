@@ -33,6 +33,7 @@ class User extends Authenticatable
         return $this->hasMany(Registration::class, 'adult_id');
     }
 
+
     /**
      * The attributes that are mass assignable.
      *

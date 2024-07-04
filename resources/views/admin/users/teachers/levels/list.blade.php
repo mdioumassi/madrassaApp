@@ -43,7 +43,7 @@
                                         <td>{{ $level->tarif }}€/Année</td>
                                         <td>{{ $level->registration_fees }}€</td>
                                         <td>{{ $level->hours }}h/semaines</td>
-                                        <td>{{$level->course->lavel}}</td>
+                                        <td>{{$level->course->label}}</td>
                                         <td>
                                             @if ($level->subjects->count() == 0)
                                             <span class="badge w3-black">0 matière</span>
