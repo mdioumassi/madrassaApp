@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CourseCrudController;
 use App\Http\Controllers\Admin\LevelCrudController;
 use App\Http\Controllers\Admin\ParentCrudController;
 use App\Http\Controllers\Admin\AdultCrudController;
+use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SubjectCrudController;
 use App\Http\Controllers\Admin\TeacherCrudController;
@@ -25,7 +26,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Auth::routes();
 
 Route::group(['middleware' => ['auth']], function() {
-    Route::resource('roles', RoleController::class);
+    Route::resource('admin/roles', RoleController::class);
+    Route::resource('admin/permissions', PermissionController::class);
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -45,6 +47,7 @@ Route::prefix('admin')->group(function () {
         Route::put('/{user}', [UserController::class, 'update'])->name('admin.users.update');
         Route::delete('/{user}', [UserController::class, 'destroy'])->name('admin.users.destroy');
         Route::get('/{id}/levels', [UserController::class, 'getTeacherlevelsList'])->name('admin.teachers.levels.list');
+        Route::get('/{id}/levels/grille', [UserController::class, 'getTeacherlevelsGrille'])->name('admin.teachers.levels.grille');
     });
     Route::prefix('children')->group(function () {
         Route::get('/', [ChildController::class, 'index'])->name('children.index');

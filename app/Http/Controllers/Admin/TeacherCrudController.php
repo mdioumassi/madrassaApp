@@ -11,6 +11,11 @@ class TeacherCrudController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+
+        $this->middleware('permission:professeur-list|professeur-create|professeur-edit|professeur-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:professeur-create', ['only' => ['create','store']]);
+        $this->middleware('permission:professeur-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:professeur-delete', ['only' => ['destroy']]);
     }
 
     /**

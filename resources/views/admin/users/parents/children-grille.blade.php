@@ -11,16 +11,15 @@
             aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ _('Dashboard') }}</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}">{{ _('Utilisateurs') }}</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.parents.list') }}">{{ _('Parents') }}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ $parent->lastname }} {{ $parent->name }}</li>
+                <li class="breadcrumb-item">{{ $parent->getFullNameAttribute() }}</li>
+                <li class="breadcrumb-item active" aria-current="page">Mes Enfants</li>
             </ol>
         </nav>
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header"><span class="bg-success py-2 px-3 text-light rounded">Parent:</span>
-                        {{ $parent->lastname }} {{ $parent->name }}</div>
+                    <div class="card-header bg-success text-light text-center">
+                        <strong>{{ $parent->getFullNameAttribute()}}:</strong> Mes Enfants</div>
                     <div class="card-body">
                         <div class="pull-right mb-3">
                             @can('child-create')
@@ -30,9 +29,10 @@
                         </div>
                         <div class="row">
                             @foreach ($children as $child)
-                                <div class="col-md-6 mb-4">
+                                <div class="col-md-4 mb-4">
                                     <div class="card">
                                         <div class="card-body">
+                                            <div class="card-header w3-green"><strong>{{ $child->getFullNameAttribute()  }}</strong></div>
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <img src="https://www.w3schools.com/w3css/img_snowtops.jpg"
@@ -40,9 +40,9 @@
                                                         style="width: 200px; height: 200px;">
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <p><strong>{{ $child->firstname }} {{ $child->lastname }}</strong></p>
+                                                    <p></p>
                                                     <p><strong>Genre:</strong> {{ $child->genre }}</p>
-                                                    <p><strong>Age:</strong> 10 ans</p>
+                                                    <p><strong>Age:</strong> {{$child->getAgeAttribute()}} ans</p>
                                                     <p><strong>Classe Française:</strong> {{ $child->french_class }}</p>
                                                     <p><strong>Classe:</strong> Niveau 0 - Arabe</p>
                                                 </div>
@@ -50,13 +50,17 @@
                                         </div>
                                         <div class="card-footer">
                                             <div class="w3-bar">
-                                                <button class="w3-button w3-ripple w3-yellow w3-small w3-left me-3" data-bs-toggle="modal"
-                                                    data-bs-target="#modal-view-edit-child{{ $child->id }}">
-                                                    <i
-                                                    class="fa-solid fa-pen-to-square"></i>  {{ _('Modifier') }}
-                                                </button>
-                                                <a href="#" class="w3-button w3-ripple w3-green w3-small w3-left">{{ _('Incription') }}</a>
-                                                <a href="#" class="w3-button w3-ripple w3-indigo w3-small w3-right">{{ _('Fiche d\'inscription') }}</a>
+                                                @can('child-edit')
+                                                    <button class="w3-button w3-ripple w3-yellow w3-small w3-left me-3"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#modal-view-edit-child{{ $child->id }}">
+                                                        <i class="fa-solid fa-pen-to-square"></i> {{ _('Modifier') }}
+                                                    </button>
+                                                @endcan
+                                                <a href="#"
+                                                    class="w3-button w3-ripple w3-green w3-small w3-left">{{ _('Incription') }}</a>
+                                                <a href="#"
+                                                    class="w3-button w3-ripple w3-indigo w3-small w3-right">{{ _('Fiche d\'inscription') }}</a>
                                             </div>
                                         </div>
                                     </div>
@@ -69,8 +73,7 @@
         </div>
     </div>
     @foreach ($children as $child)
-        {{-- @include('admin.children._modal.child-show', ['child' => $child]) --}}
-        @include('admin.children._modal.child-edit', ['child' => $child])
-        @include('admin.children._modal.child-add-in-parent', ['user' => $child->parent])
+        @include('admin.users.parents._modals.child-edit', ['child' => $child, 'user' => $child->parent])
+        @include('admin.users.parents._modals.child-add-in-parent', ['user' => $child->parent])
     @endforeach
 @endsection

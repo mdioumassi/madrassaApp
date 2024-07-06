@@ -55,6 +55,19 @@ class UserController extends Controller
 
         return view('admin.users.teachers.levels.list', compact('levels', 'user'));
     }
+
+    public function getTeacherlevelsGrille($id): View
+    {
+        $user = User::where('id', $id)->with('levels')->first();
+        $levels = $user->levels;
+
+        if ($levels->isEmpty()) {
+            return redirect()->route('admin.users.index')
+                ->with('warning', 'No levels found for this user.');
+        }
+
+        return view('admin.users.teachers.levels.grille', compact('levels', 'user'));
+    }
     /**
      * route: /admin/users/create
      * name: admin.users.create

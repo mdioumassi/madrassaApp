@@ -1,6 +1,6 @@
     <x-modal id="modal-view-edit-child{{ $child->id }}">
         <x-slot name="size">modal-lg</x-slot>
-        <x-slot name="title">{{ $child->firstname }} {{ $child->lastname }}</x-slot>
+        <x-slot name="title">{{ $child->getFullNameAttribute() }}</x-slot>
         <x-slot name="body">
             <form method="POST" action="{{ route('children.update', $child->id) }}">
                 @csrf
@@ -14,11 +14,6 @@
                             <option value="garçon" {{ $genre == 'garçon' ? 'selected' : '' }}>Garçon</option>
                             <option value="fille" {{ $genre == 'fille' ? 'selected' : '' }}>Fille</option>
                         </select>
-                        {{-- <select id="genre" class="form-select @error('genre') is-invalid @enderror" name="genre">
-                            <option value="garçon">Garçon</option>
-                            <option value="fille">Fille</option>
-                        </select> --}}
-
                         @error('genre')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -26,7 +21,7 @@
                         @enderror
                     </div>
                 </div>
-
+                <input type="hidden" name="user_id" value="{{$user->id}}">
                 <div class="row mb-3">
                     <label for="firstname" class="col-md-4 col-form-label text-md-end">{{ __('Prénom') }}</label>
 

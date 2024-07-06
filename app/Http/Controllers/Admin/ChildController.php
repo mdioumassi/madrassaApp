@@ -15,9 +15,9 @@ class ChildController extends Controller
     {
         $this->middleware('auth');
 
-        $this->middleware('permission:child-list|child-create|child-edit|child-delete', ['only' => ['index','store']]);
-        $this->middleware('permission:child-create', ['only' => ['create','store']]);
-        $this->middleware('permission:child-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:child-list|child-create|child-edit|child-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:child-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:child-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:child-delete', ['only' => ['destroy']]);
     }
 
@@ -27,8 +27,8 @@ class ChildController extends Controller
      */
     public function index()
     {
-       $children = Child::with('parent')->latest()->paginate(8);
-      
+        $children = Child::with('parent')->latest()->paginate(8);
+
 
         return view('admin.children.index', compact('children'));
     }
@@ -47,7 +47,7 @@ class ChildController extends Controller
      * name: child.parent.store
      */
     public function storeChildByParent(ChildStoreRequest $request, $id)
-    {   
+    {
 
         // $request->validate([
         //     'firstname' => ['required', 'string', 'max:255'],
@@ -69,9 +69,14 @@ class ChildController extends Controller
         $parent = User::where('id', $id)->first();
 
         $parent->children()->create($request->validated());
+        $grille = $request['affichage-grille'];
+        if ($grille) {
+            return redirect()->route('parent.children.grille', $id)
+                ->with('success', 'Child created successfully.');
+        }
 
-             return redirect()->route('parent.children.list', $id)
-                         ->with('success', 'Child created successfully.');
+        return redirect()->route('parent.children.list', $id)
+            ->with('success', 'Child created successfully.');
     }
 
     /**
@@ -82,7 +87,7 @@ class ChildController extends Controller
     {
         Child::create($request->validated());
         return redirect()->route('children.index')
-                         ->with('success', 'Child created successfully.');
+            ->with('success', 'Child created successfully.');
     }
 
     /**
@@ -109,9 +114,16 @@ class ChildController extends Controller
      */
     public function update(ChildUpdateRequest $request, Child $child)
     {
+        $userId = $request['user_id'];
+
         $child->update($request->validated());
+
+        if ($userId) {
+            return redirect()->route('parent.children.grille', $userId)
+                ->with('success', 'Child updated successfully.');
+        }
         return redirect()->route('children.index')
-                         ->with('success', 'Child updated successfully.');
+            ->with('success', 'Child updated successfully.');
     }
 
     /**
@@ -122,6 +134,6 @@ class ChildController extends Controller
     {
         $child->delete();
         return redirect()->route('children.index')
-                         ->with('success', 'Child deleted successfully.');
+            ->with('success', 'Child deleted successfully.');
     }
 }

@@ -8,12 +8,25 @@ use Illuminate\Http\Request;
 
 class PermissionController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+
+        $this->middleware('permission:permission-list|permission-create|permission-edit|permission-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:permission-create', ['only' => ['create','store']]);
+        $this->middleware('permission:permission-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:permission-delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $permissions = Permission::all()->sortBy('name');
+
+        return view('admin.permissions.index', compact('permissions'));
     }
 
     /**
@@ -21,7 +34,7 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.permissions.create');
     }
 
     /**
@@ -29,7 +42,15 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+    
+        Permission::create([
+            'name' => $request->name,
+            'guard_name' => 'web',
+        ]);
+        
+        return redirect()->route('admin.permissions.index')
+            ->with('success', 'Permission created successfully');
+
     }
 
     /**

@@ -28,6 +28,11 @@ class Level extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function registrations(): HasMany
+    {
+        return $this->hasMany(Registration::class);
+    }
+
     /**
      * The attributes that are mass assignable.
      *

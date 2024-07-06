@@ -45,6 +45,13 @@ class User extends Authenticatable
         return $this->type->value ?? '';
     }
 
+    public function getFullNameAttribute(): string
+    {
+        return $this->name . ' ' . $this->lastname;
+    }
+
+    
+
     /**
      * The attributes that are mass assignable.
      *

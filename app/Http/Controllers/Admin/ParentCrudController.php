@@ -35,7 +35,7 @@ class ParentCrudController extends Controller
     public function childsList($id)
     {
        $parent = User::where('id', $id)->with('children')->first();
-       $children = $parent->children;
+       $children = $parent->children->sortBy('firstname');
         
         return view('admin.users.parents.children-list', compact('children', 'parent'));
     }
@@ -43,7 +43,7 @@ class ParentCrudController extends Controller
     public function childsGrille($id)
     {
        $parent = User::where('id', $id)->with('children')->first();
-       $children = $parent->children;
+       $children = $parent->children->sortBy('firstname');
         
         return view('admin.users.parents.children-grille', compact('children', 'parent'));
     }
