@@ -73,13 +73,13 @@
             </div>
 
             <div class="row mb-3">
-                <label for="comment" class="col-md-4 col-form-label text-md-end">{{ __('Commentaire') }}</label>
+                <label for="description" class="col-md-4 col-form-label text-md-end">{{ __('description') }}</label>
 
                 <div class="col-md-6">
-                    <textarea id="comment" class="form-control @error('comment') is-invalid @enderror"
-                        name="comment" autocomplete="comment">{{ $level->comment }}</textarea>
+                    <textarea id="description" class="form-control @error('description') is-invalid @enderror"
+                        name="description" autocomplete="description">{{ $level->description }}</textarea>
 
-                    @error('comment')
+                    @error('description')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>

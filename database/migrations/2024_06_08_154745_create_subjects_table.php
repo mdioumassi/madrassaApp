@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('subjects', function (Blueprint $table) {
             $table->id();
             $table->string('label');
-            $table->text('comment')->nullable();
+            $table->text('description')->nullable();
             $table->foreignIdFor(\App\Models\Level::class)
                 ->constrained()
                 ->cascadeOnDelete();
+            $table->string('status')->default('active');
 
             $table->timestamps();
         });

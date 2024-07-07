@@ -29,22 +29,6 @@
                             </div>
 
                             <div class="row mb-3">
-                                <label for="slug"
-                                    class="col-md-4 col-form-label text-md-end">{{ __('Slug') }}</label>
-
-                                <div class="col-md-6">
-                                    <input id="level" type="text"
-                                        class="form-control @error('slug') is-invalid @enderror" name="slug">
-
-                                    @error('slug')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
                                 <label for="tarif"
                                     class="col-md-4 col-form-label text-md-end">{{ __('Tarif') }}</label>
 
@@ -105,14 +89,14 @@
                             </div>
 
                             <div class="row mb-3">
-                                <label for="comment"
-                                    class="col-md-4 col-form-label text-md-end">{{ __('Commentaire') }}</label>
+                                <label for="description"
+                                    class="col-md-4 col-form-label text-md-end">{{ __('description') }}</label>
 
                                 <div class="col-md-6">
-                                    <textarea id="comment" class="form-control @error('comment') is-invalid @enderror" name="comment"
+                                    <textarea id="description" class="form-control @error('description') is-invalid @enderror" name="comment"
                                         autocomplete="comment" autofocus></textarea>
 
-                                    @error('comment')
+                                    @error('description')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>

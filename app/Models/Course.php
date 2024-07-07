@@ -22,7 +22,7 @@ class Course extends Model
      */
     protected $fillable = [
         'label',
-        'comment',
+        'description',
     ];
 
 

@@ -4,30 +4,31 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Registration extends Model
 {
     use HasFactory;
 
-    public function Child(): HasOne
+    public function child(): BelongsTo
     {
-        return $this->hasOne(Child::class);
+        return $this->belongsTo(Child::class, 'child_id');
     }
 
-    public function Level(): HasOne
+    public function level(): BelongsTo
     {
-        return $this->hasOne(Level::class);
+        return $this->belongsTo(Level::class, 'level_id');
     }
 
-    public function Adult(): HasOne
+    public function adult(): BelongsTo
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 
-    public function Course(): HasOne
+    public function course(): BelongsTo
     {
-        return $this->hasOne(Course::class);
+        return $this->belongsTo(Course::class, 'course_id');
     }
 
     /**
@@ -39,7 +40,6 @@ class Registration extends Model
         'child_id',
         'level_id',
         'adult_id',
-        'course_id',
         'registration_date',
         'payment_date',
         'payment_amount',

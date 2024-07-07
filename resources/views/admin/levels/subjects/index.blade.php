@@ -11,7 +11,7 @@
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ _('Dashboard') }}</a></li>
             <li class="breadcrumb-item"><a href="{{ route('dashboard.course-and-levels') }}">{{ _('Cours & Niveaux') }}</a></li>
             <li class="breadcrumb-item"><a href="{{ route('admin.courses.select.levels.keyword', $level->course->keywords) }}">{{$level->course->label}}</a></li>
-            <li class="breadcrumb-item"><a  href="{{ route('admin.levels.show', $level->id) }}">{{ $level->label }}</a></li>
+            <li class="breadcrumb-item">{{ $level->label }}</li>
             <li class="breadcrumb-item active" aria-current="page">{{ _('Matières') }}</li>
         </ol>
         <div class="row justify-content-center">
@@ -27,7 +27,7 @@
                             <thead>
                                 <tr>
                                     <th class="bg-success text-light">{{ _('Libelle') }}</th>
-                                    <th class="bg-success text-light">{{ _('Commentaire') }}</th>
+                                    <th class="bg-success text-light">{{ _('Description') }}</th>
                                     <th class="bg-success  text-light">{{ _('Actions') }}</th>
                                 </tr>
                             </thead>
@@ -35,7 +35,7 @@
                                 @foreach ($subjects as $subject)
                                     <tr>
                                         <td>{{ $subject->label }}</td>
-                                        <td>{{ $subject->comment }}</td>
+                                        <td>{{ $subject->description }}</td>
                                         <td>
                                             <a href="{{ route('admin.subjects.show', $subject->id) }}" class="btn btn-primary">{{ _('View') }}</a>
                                             <a href="{{ route('admin.subjects.edit', $subject->id) }}" class="btn btn-warning">{{ _('Edit') }}</a>

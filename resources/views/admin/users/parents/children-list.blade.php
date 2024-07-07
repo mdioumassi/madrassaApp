@@ -13,30 +13,30 @@
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ _('Dashboard') }}</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}">{{ _('Utilisateurs') }}</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('admin.parents.list') }}">{{ _('Parents') }}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ $parent->lastname }} {{ $parent->name }}</li>
+                <li class="breadcrumb-item">{{ $parent->getFullNameAttribute()}}</li>
+                <li class="breadcrumb-item active" aria-current="page">{{ _('Enfants') }}</li>
             </ol>
         </nav>
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header"><span class="bg-success py-2 px-3 text-light rounded">Parent:</span>
-                        {{ $parent->lastname }} {{ $parent->name }}</div>
+                    <div class="card-header bg-success text-light text-center"><strong>{{ $parent->getFullNameAttribute() }}:</strong> Enfants</div>
                     <div class="card-body">
                         <div class="pull-right mb-3">
                             @can('child-create')
-                                <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                <button class="w3-button w3-green" data-bs-toggle="modal"
                                     data-bs-target="#modal-add-parent-child{{ $parent->id }}">{{ _('Ajouter un enfant') }}</button>
                             @endcan
                         </div>
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th class="bg-success text-light">Genre</th>
-                                    <th class="bg-success text-light">Nom</th>
-                                    <th class="bg-success text-light">Prénom</th>
-                                    <th class="bg-success text-light">Date de naissance</th>
-                                    <th class="bg-success text-light">Classe Française</th>
-                                    <th class="bg-success text-light">Actions</th>
+                                    <th class="w3-green" text-light">Genre</th>
+                                    <th class="w3-green" text-light">Nom</th>
+                                    <th class="w3-green" text-light">Prénom</th>
+                                    <th class="w3-green" text-light">Date de naissance</th>
+                                    <th class="w3-green" text-light">Classe Française</th>
+                                    <th class="w3-green" text-light">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>

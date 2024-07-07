@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Course;
 use App\Models\Level;
 use App\Models\User;
+use GuzzleHttp\Promise\Create;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -17,9 +18,12 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            SeedCoursesLevels::class,
-            SeedLevelsSubjects::class,
-            SeedUsersChildren::class,
+            PermissionTableSeeder::class,
+            CreateAdminUserSeeder::class,
+            // SeedCoursesLevels::class,
+            // SeedLevelsSubjects::class,
+            // SeedUsersChildren::class,
+            // RegistrationSeeder::class,
         ]);
     }
 }

@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('tarif');
             $table->string('registration_fees');
             $table->string('hours');
-            $table->text('comment')->nullable();
+            $table->text('description')->nullable();
+            $table->string('status')->default('active');
             $table->foreignIdFor(\App\Models\Course::class)->nullable();
             $table->timestamps();
         });

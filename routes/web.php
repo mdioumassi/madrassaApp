@@ -14,13 +14,14 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RegistrationController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', function () {
+    return view('welcome');
+});
+// Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
 Auth::routes();
@@ -29,6 +30,14 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('admin/roles', RoleController::class);
     Route::resource('admin/permissions', PermissionController::class);
 });
+
+Route::get('/registrations', [RegistrationController::class, 'index'])->name('registrations.index');
+Route::get('/registrations/create', [RegistrationController::class, 'create'])->name('registrations.create');
+Route::post('/registrations/store', [RegistrationController::class, 'store'])->name('registrations.store');
+Route::get('/registrations/{registration}', [RegistrationController::class, 'show'])->name('registrations.show');
+Route::get('/registrations/{registration}/edit', [RegistrationController::class, 'edit'])->name('registrations.edit');
+Route::put('/registrations/{registration}', [RegistrationController::class, 'update'])->name('registrations.update');
+Route::delete('/registrations/{registration}', [RegistrationController::class, 'destroy'])->name('registrations.destroy');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/dashboard/course-and-levels', [DashboardController::class, 'CoursesAndLevels'])->name('dashboard.course-and-levels');

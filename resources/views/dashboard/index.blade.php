@@ -19,8 +19,7 @@
                                                 </div>
                                                 <div class="col">
                                                     <button type="button" class="btn btn-primary">
-                                                        <span
-                                                            class="badge bg-danger">{{ auth()->user()->children()->count() }}</span>
+                                                        <span class="badge bg-danger"></span>
                                                         {{ _('Enfants') }}
                                                     </button>
                                                 </div>
@@ -52,8 +51,8 @@
                                             </div>
                                         </div>
                                         <div class="card-footer">
-                                                <a href="{{ route('parent.children.grille', auth()->user()->id) }}"><button
-                                                        class="btn btn-outline-primary">{{ _('Mes enfants') }}</button></a>
+                                            <a href="{{ route('parent.children.grille', auth()->user()->id) }}"><button
+                                                    class="btn btn-outline-primary">{{ _('Mes enfants') }}</button></a>
                                         </div>
                                     </div>
                                 </div>
@@ -61,7 +60,8 @@
                             @if (auth()->user()->hasRole('Professeur'))
                                 <div class="col">
                                     <div class="card">
-                                        <div class="card-header w3-green"><strong>{{auth()->user()->getFullNameAttribute()}}</strong></div>
+                                        <div class="card-header w3-green">
+                                            <strong>{{ auth()->user()->getFullNameAttribute() }}</strong></div>
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-4">
@@ -84,8 +84,12 @@
                                             </div>
                                         </div>
                                         <div class="card-footer">
-                                            <a href="{{ route('admin.teachers.levels.grille', auth()->user()->id) }}"><button
-                                                    class="btn btn-outline-primary">Mes <span class="badge w3-green">{{ auth()->user()->levels->count() }}</span> classes</button></a>
+                                            @if(auth()->user()->levels->count() > 0)
+                                                <a href="{{ route('admin.teachers.levels.grille', auth()->user()->id) }}"><button
+                                                        class="btn btn-outline-primary">Mes <span
+                                                            class="badge w3-green">{{ auth()->user()->levels->count() }}</span>
+                                                        classes</button></a>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -93,9 +97,20 @@
                             <div class="col">
                                 <div class="card">
                                     <div class="card-body">
-                                        <i class='fas fa-user-edit' style='font-size:110px'></i>
-                                        <span class="badge w3-green">{{ auth()->user()->name }}</span>
-                                        <span>{{ auth()->user()->type }}</span>
+                                        <div class="row">
+                                            <div class="col">
+                                                <i class='fas fa-user-edit' style='font-size:110px'></i
+                                                    style='font-size:110px'></i>
+                                            </div>
+                                            <div class="col">
+                                                <span class="badge w3-green">{{ auth()->user()->getFullNameAttribute() }}</span><br>
+                                                @if (!empty(auth()->user()->getRoleNames()))
+                                                    @foreach (auth()->user()->getRoleNames() as $v)
+                                                        <span class="badge bg-success">{{ $v }}</span>
+                                                    @endforeach
+                                            </div>
+                                        </div>
+                                        @endif
                                     </div>
 
                                     <div class="card-footer">

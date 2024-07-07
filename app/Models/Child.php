@@ -32,11 +32,6 @@ class Child extends Model
         return Carbon::parse($this->birthdate)->age;
     }
 
-    public function getAllCountAttribute(): int
-    {
-        return $this->count();
-    }
- 
     /**
      * The attributes that are mass assignable.
      *
@@ -47,7 +42,8 @@ class Child extends Model
         'lastname',
         'birthdate',
         'genre',
-        'french_class'
+        'french_class',
+        'status',
     ];
 
     protected function casts(): array

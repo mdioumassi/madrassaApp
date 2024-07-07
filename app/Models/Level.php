@@ -40,7 +40,7 @@ class Level extends Model
      */
     protected $fillable = [
         'label',
-        'comment',
+        'description',
         'tarif',
         'registration_fees',
         'hours',

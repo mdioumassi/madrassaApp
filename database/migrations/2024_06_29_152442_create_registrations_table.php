@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('registrations', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('child_id')->unsigned();
+            $table->bigInteger('child_id')->unsigned()->nullable();
             $table->foreign('child_id')->references('id')->on('children')->onDelete('cascade');
-            $table->bigInteger('adult_id')->unsigned();
+            $table->bigInteger('adult_id')->unsigned()->nullable();
             $table->foreign('adult_id')->references('id')->on('users')->onDelete('cascade');
-            $table->bigInteger('course_id')->unsigned();
+            $table->bigInteger('course_id')->unsigned()->nullable();
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
-            $table->bigInteger('level_id')->unsigned();
+            $table->bigInteger('level_id')->unsigned()->nullable();
             $table->foreign('level_id')->references('id')->on('levels')->onDelete('cascade');
             $table->date('registration_date')->nullable();
             $table->date('end_date')->nullable();
@@ -29,8 +29,8 @@ return new class extends Migration
             $table->string('payment_reference')->nullable();
             $table->string('payment_amount')->nullable();
             $table->string('payment_date')->nullable();
-            $table->string('registration_type')->default('normal');
-            $table->string('registration_description')->nullable();
+            $table->string('type')->default('normal');
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }

@@ -23,6 +23,7 @@ class SubjectCrudController extends Controller
     {
         $level = Level::where('id', $id)->with('subjects')->first();
         $subjects = $level->subjects;
+  
         if ($subjects->isEmpty()) {
             return redirect()->route('admin.levels.index')
                              ->with('warning', 'No subjects found for this level.');
@@ -50,7 +51,8 @@ class SubjectCrudController extends Controller
         $userId = $request['userId'];
         $level = Level::where('id', $id)->first();
         $request->validate([
-            'label' => 'required|string|max:255'
+            'label' => 'required|string|max:255',
+            'description' => 'required|string',
         ]);
         $level->subjects()->create($request->all());
 

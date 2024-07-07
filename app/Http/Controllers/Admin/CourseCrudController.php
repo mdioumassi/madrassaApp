@@ -138,7 +138,6 @@ class CourseCrudController extends Controller
     public function update(CourseUpdateRequest $request, Course $course)
     {
         $validatedData = $request->validated();
-        $validatedData['slug'] = Str::slug($validatedData['slug'], '-');
 
         $course->update($validatedData);
         return redirect()->route('admin.courses.index')

@@ -86,6 +86,10 @@
                                                     class="badge w3-black">{{ $user->children->count() }} enfant.s</span>
                                             </a>
                                         @endif
+                                        @if ($user->getUserType() == 'parent' && $user->children->count() == 0)
+                                        <span
+                                        class="badge w3-black"> 0 enfant</span>
+                                        @endif
                                     </td>
                                     <td>
                                         @if ($user->getUserType() == 'professeur' && $user->levels()->count() > 0)

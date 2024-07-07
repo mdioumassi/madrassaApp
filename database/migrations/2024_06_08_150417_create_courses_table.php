@@ -16,7 +16,8 @@ return new class extends Migration
             $table->id();
             $table->string('label');
             $table->string('keywords')->unique()->nullable();
-            $table->text('comment')->nullable();
+            $table->text('description')->nullable();
+            $table->string('status')->default('active');
             $table->timestamps();
         });
         DB::table('courses')->insert([

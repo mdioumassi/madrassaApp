@@ -41,6 +41,7 @@
                                                             style="width: 200px; height: 200px;">
                                                     </div>
                                                     <div class="col-md-8">
+                                                        <p><strong>Classe:</strong> {{ $level->label }}</p>
                                                         <p><strong>Nombre d'élèves:</strong></p>
                                                         <p><strong>Nombre de matières:
                                                                 {{ $level->subjects->count() }}</strong> </p>
@@ -75,6 +76,7 @@
                                                             style="width: 200px; height: 200px;">
                                                     </div>
                                                     <div class="col-md-8">
+                                                        <p><strong>Classe:</strong> {{ $level->label }}</p>
                                                         <p><strong>Nombre d'élèves:</strong></p>
                                                         <p><strong>Nombre de matières:
                                                                 {{ $level->subjects->count() }}</strong> </p>
@@ -109,6 +111,7 @@
                                                             style="width: 200px; height: 200px;">
                                                     </div>
                                                     <div class="col-md-8">
+                                                        <p><strong>Classe:</strong> {{ $level->label }}</p>
                                                         <p><strong>Nombre d'élèves:</strong></p>
                                                         <p><strong>Nombre de matières:
                                                                 {{ $level->subjects->count() }}</strong> </p>
@@ -126,9 +129,7 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <div class="card-header w3-light-blue mb-2">
-                                    <strong>{{_('Cours de coran pour adulte')}}</strong>
-                                </div>
+                                <div class="card-header w3-light-blue mb-2"><strong>{{_('Cours de coran pour adulte')}}</strong></div>
                             </div>
                         </div>
                         <div class="row">
@@ -145,6 +146,7 @@
                                                             style="width: 200px; height: 200px;">
                                                     </div>
                                                     <div class="col-md-8">
+                                                        <p><strong>Classe:</strong> {{ $level->label }}</p>
                                                         <p><strong>Nombre d'élèves:</strong></p>
                                                         <p><strong>Nombre de matières:
                                                                 {{ $level->subjects->count() }}</strong> </p>

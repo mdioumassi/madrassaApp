@@ -63,7 +63,6 @@ class LevelCrudController extends Controller
     {
         $course = Course::where('id', $id)->first();
         $validatedData = $request->validated();
-        $validatedData['slug'] = Str::slug($validatedData['slug'], '-');
         $course->levels()->create($validatedData);
         
         return redirect()->route('admin.courses.levels.list', $course->id)
@@ -114,6 +113,7 @@ class LevelCrudController extends Controller
         return redirect()->route('admin.courses.select.levels.keyword', $keyword)
                          ->with('success', 'Level updated successfully.');
     }
+
     /**
      * route: /admin/levels/{level}
      * name: admin.levels.update
