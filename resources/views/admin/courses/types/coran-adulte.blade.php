@@ -118,8 +118,13 @@
     ])
     @foreach ($levels as $level)
         @include('admin.levels._modals.add-subject-modal', ['level' => $level])
-        @include('admin.levels._modals.edit-level-modal', ['level' => $level, 'keyword' => 'coran-adulte'])
+        @include('admin.courses._modals.edit-level-modal', [
+            'level' => $level,
+            'keyword' => 'coran-adulte',
+        ])
         @include('admin.levels._modals.show-level-modal', ['level' => $level])
-        @include('admin.users._modal.show-users', ['user' => $level->teacher])
+        @if ($level->teacher)
+            @include('admin.users._modal.show-users', ['user' => $level->teacher])
+        @endif
     @endforeach
 @endsection

@@ -117,15 +117,16 @@ class LevelCrudController extends Controller
      * route: /admin/levels/course/{keyword}/update
      * name: admin.levels.update.keyword
      */
-    public function updateLevelByKeywords($keyword, LevelUpdateRequest $request)
-    {
-        $course = Course::where('keywords', $keyword)->first();
-        $validatedData = $request->validated();
-        $course->levels()->update($validatedData);
+    // public function updateLevelByKeywords($keyword, LevelUpdateRequest $request)
+    // {
+    //     $course = Course::where('keywords', $keyword)->first();
+    //     $validatedData = $request->validated();
+    //     dd($validatedData);
+    //     $course->levels()->update($validatedData);
         
-        return redirect()->route('admin.courses.select.levels.keyword', $keyword)
-                         ->with('success', 'Level updated successfully.');
-    }
+    //     return redirect()->route('admin.courses.select.levels.keyword', $keyword)
+    //                      ->with('success', 'Level updated successfully.');
+    // }
 
     /**
      * route: /admin/levels/{level}
@@ -134,6 +135,7 @@ class LevelCrudController extends Controller
     public function update(LevelUpdateRequest $request, Level $level)
     {
         $userId = $request['userId'];
+        $keyword = $request['keyword'];
         $validatedData = $request->validated();
         $level->update($validatedData);
 
@@ -141,6 +143,12 @@ class LevelCrudController extends Controller
             return redirect()->route('admin.teachers.levels.list', $userId)
                              ->with('success', 'Level updated successfully.');
         }
+
+        if($keyword) {
+            return redirect()->route('admin.courses.select.levels.keyword', $keyword)
+                             ->with('success', 'Level updated successfully.');
+        }
+
         return redirect()->route('admin.levels.index')
                          ->with('success', 'Level updated successfully.');
     }

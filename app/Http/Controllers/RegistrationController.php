@@ -69,7 +69,7 @@ class RegistrationController extends Controller
         $registration_data['course_id'] = Level::find($request['levelId'])->course_id;
         $request->session()->put('registration_data', $registration_data);
 
-        return redirect()->route('step3.register.payment');
+        return redirect()->route('step3.register.schooling');
     }
 
     /**
@@ -77,7 +77,7 @@ class RegistrationController extends Controller
      * route: step3.register.payment
      * Method: GET
      */
-    public function Step3RegisterPayment(Request $request)
+    public function Step3RegisterSchooling(Request $request)
     {
         $registration_data = $request->session()->get('registration_data');
 
@@ -85,28 +85,35 @@ class RegistrationController extends Controller
         $level = Level::find($registration_data['level_id']);
         $course = Course::find($registration_data['course_id']);
 
-        return view('registrations.payment', compact('child', 'level', 'course'));
+        return view('registrations.schooling', compact('child', 'level', 'course'));
     }
 
     /**
      * Step 3: Register Payment Post
-     * route: step3.register.payment.post
+     * route: step3.register.schooling.post
      * Method: POST
      */
-    public function Step3RegisterPaymentPost(Request $request) {
+    public function Step3RegisterSchoolingPost(Request $request) {
         $registration_data = $request->session()->get('registration_data');
-        $registration_data['payment_date'] = $request['payment_date'];
-        $registration_data['payment_amount'] = $request['payment_amount'];
-        $registration_data['payment_method'] = $request['payment_method'];
-        $registration_data['payment_comment'] = $request['payment_comment'];
-        $registration_data['payment_status'] = 'pending';
-        $registration_data['registration_status'] = 'pending';
+    
+        $registration_data['payment_amount'] = $request['payment_amount']*1000;
+   
         $request->session()->put('registration_data', $registration_data);
 
-        return redirect()->route('step4.register.recap');
+        return redirect()->route('step4.register.payment');
     }
 
-    public function Step3RegisterRecap(Request $request)
+    public function Step4RegisterPayment(Request $request)
+    {
+        $registration_data = $request->session()->get('registration_data');
+
+        $payment = $registration_data['payment_amount'];
+
+
+        return view('registrations.payment', compact('payment'));
+    }
+
+    public function Step4RegisterRecap(Request $request)
     {
         $registration_data = $request->session()->get('registration_data');
 

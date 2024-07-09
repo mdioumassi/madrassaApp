@@ -19,6 +19,14 @@
             </ol>
         </nav>
         <div class="row justify-content-center">
+            <div class="w3-row mb-2">
+                <div class="w3-col m2 tablink w3-bottombar w3-hover-light-grey w3-padding"><span class="w3-badge w3-indigo">1</span> Mon enfant </div>
+                <div class="w3-col m2 tablink w3-bottombar w3-border-red w3-hover-light-grey w3-padding w3-green"><span class="w3-badge w3-indigo">2</span> Choix d'une classe</div>
+                <div class="w3-col m2 tablink w3-bottombar w3-hover-border-green w3-hover-light-grey w3-padding"><span class="w3-badge w3-indigo">3</span> Frais & Scolarité</div>
+                <div class="w3-col m2 tablink w3-bottombar w3-hover-border-green w3-hover-light-grey w3-padding"><span class="w3-badge w3-indigo">4</span> Paiement</div>
+                <div class="w3-col m2 tablink w3-bottombar w3-hover-border-green w3-hover-light-grey w3-padding"><span class="w3-badge w3-indigo">5</span> Recapitulatif</div>
+                <div class="w3-col m2 tablink w3-bottombar w3-hover-border-green w3-hover-light-grey w3-padding"><span class="w3-badge w3-indigo">6</span> Fiche d'inscription</div>
+              </div>
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">

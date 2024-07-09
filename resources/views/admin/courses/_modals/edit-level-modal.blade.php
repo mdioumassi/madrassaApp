@@ -6,7 +6,7 @@
     <x-slot name="title">{{ $level->label }}</x-slot>
     <x-slot name="size">modal-lg</x-slot>
     <x-slot name="body">
-        <form method="POST" action="{{ route('admin.levels.update.keyword', $keyword) }}">
+        <form method="POST" action="{{ route('admin.levels.update', $level->id) }}">
             @csrf
             @method('PUT')
 
@@ -24,6 +24,8 @@
                     @enderror
                 </div>
             </div>
+
+            <input type="hidden" name="keyword" value="{{$keyword}}">
 
             <div class="row mb-3">
                 <label for="tarif" class="col-md-4 col-form-label text-md-end">{{ __('Tarif') }}</label>
