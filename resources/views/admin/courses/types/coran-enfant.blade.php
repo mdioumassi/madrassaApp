@@ -20,7 +20,7 @@
                     <div class="card-body">
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
-                                <a href="{{ route('admin.levels.index') }}" aria-current="page"
+                                <a href="{{ route('admin.levels.list') }}" aria-current="page"
                                     class="nav-link">{{ _('Tous les niveaux') }}</a>
                             </li>
                             <li class="nav-item">

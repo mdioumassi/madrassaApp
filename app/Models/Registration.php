@@ -39,6 +39,7 @@ class Registration extends Model
     protected $fillable = [
         'child_id',
         'level_id',
+        'course_id',
         'adult_id',
         'registration_date',
         'payment_date',

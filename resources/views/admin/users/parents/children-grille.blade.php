@@ -57,7 +57,7 @@
                                                         <i class="fa-solid fa-pen-to-square"></i> {{ _('Modifier') }}
                                                     </button>
                                                 @endcan
-                                                <a href="#"
+                                                <a href="{{route('step1.register.child', $child->id)}}"
                                                     class="w3-button w3-ripple w3-green w3-small w3-left">{{ _('Incription') }}</a>
                                                 <a href="#"
                                                     class="w3-button w3-ripple w3-indigo w3-small w3-right">{{ _('Fiche d\'inscription') }}</a>

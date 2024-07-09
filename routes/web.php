@@ -39,6 +39,17 @@ Route::get('/registrations/{registration}/edit', [RegistrationController::class,
 Route::put('/registrations/{registration}', [RegistrationController::class, 'update'])->name('registrations.update');
 Route::delete('/registrations/{registration}', [RegistrationController::class, 'destroy'])->name('registrations.destroy');
 
+
+Route::get('/register/step1/child/{id}', [RegistrationController::class, 'Step1RegisterChild'])->name('step1.register.child');
+Route::get('/register/step2/level/{child}', [RegistrationController::class, 'Step2RegisterLevel'])->name('step2.register.level');
+Route::post('/register/step2/level', [RegistrationController::class, 'Step2RegisterLevelPost'])->name('step2.register.level.post');
+Route::get('/register/step3/payment', [RegistrationController::class, 'Step3RegisterPayment'])->name('step3.register.payment');
+Route::post('/register/step3/payment', [RegistrationController::class, 'Step3RegisterPaymentPost'])->name('step3.register.payment.post');
+
+Route::get('/register/step3/recap', [RegistrationController::class, 'Step4RegisterRecap'])->name('step4.register.recap');
+
+
+
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/dashboard/course-and-levels', [DashboardController::class, 'CoursesAndLevels'])->name('dashboard.course-and-levels');
 
@@ -83,7 +94,8 @@ Route::prefix('admin')->group(function () {
         Route::get('/{keyword}/levels', [CourseCrudController::class, 'SelectLevelsByKeyword'])->name('admin.courses.select.levels.keyword');
     });
     Route::prefix('levels')->group(function () {
-        Route::get('/', [LevelCrudController::class, 'index'])->name('admin.levels.index');
+        Route::get('/list', [LevelCrudController::class, 'list'])->name('admin.levels.list');
+        Route::get('/grille', [LevelCrudController::class, 'grille'])->name('admin.levels.grille');
         Route::get('/create', [LevelCrudController::class, 'create'])->name('admin.levels.create');
         Route::post('/course/{id}/level/store', [LevelCrudController::class, 'storeLevelCourse'])->name('admin.courses.levels.store');
         Route::post('/course/keyword/{keyword}/level/store', [LevelCrudController::class, 'storeLevelByCourseKeywords'])->name('admin.courses.keywords.levels.store');

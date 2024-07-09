@@ -18,16 +18,29 @@ class LevelCrudController extends Controller
     }
 
     /**
-     * route: /admin/levels
-     * name: admin.levels.index
+     * route: /admin/levels/list
+     * name: admin.levels.list
      */
-    public function index()
+    public function list()
     {
         $levels = Level::all();
 
         $courses = Course::all();
 
-        return view('admin.levels.index', compact('levels', 'courses'));
+        return view('admin.levels.list', compact('levels', 'courses'));
+    }
+
+    /**
+     * route: /admin/levels/grille
+     * name: admin.levels.grille
+     */
+    public function grille()
+    {
+        $levels = Level::all();
+
+        $courses = Course::all();
+
+        return view('admin.levels.grille', compact('levels', 'courses'));
     }
 
     /**

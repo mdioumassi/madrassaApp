@@ -20,7 +20,7 @@
                     </div>
                     <div class="card-footer">
                         <a href="{{ route('admin.users.index') }}"><button
-                                class="btn btn-outline-primary">{{ _('Utilisateurs') }}</button></a>
+                                class="btn btn-outline-primary">{{ _('Tous les utilisateurs') }}</button></a>
                     </div>
                 </div>
             </div>

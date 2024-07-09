@@ -98,7 +98,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col">
+                                            <div class="col-md-4">
                                                 <i class='fas fa-user-edit' style='font-size:110px'></i
                                                     style='font-size:110px'></i>
                                             </div>
@@ -151,6 +151,21 @@
                                     </div>
                                 </div>
                             @endif
+                            @if (auth()->user()->hasRole('Admin'))
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <i class="w3-text-green fa-solid fa-address-card" style='font-size:110px'></i>
+                                    </div>
+
+                                    <div class="card-footer">
+                                        <a href="{{ route('registrations.index') }}">
+                                            <button class="btn btn-outline-primary">{{ _('Les inscriptions') }}</button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                         </div>
                     </div>
                 </div>
