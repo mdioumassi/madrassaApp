@@ -21,7 +21,7 @@
         <div class="row justify-content-center">
             <div class="w3-row mb-2">
                 <div class="w3-col m2 tablink w3-bottombar w3-hover-light-grey w3-padding"><span class="w3-badge w3-indigo">1</span> Mon enfant </div>
-                <div class="w3-col m2 tablink w3-bottombar w3-border-red w3-hover-light-grey w3-padding w3-green"><span class="w3-badge w3-indigo">2</span> Choix d'une classe</div>
+                <div class="w3-col m2 tablink w3-bottombar w3-border-indigo w3-hover-light-grey w3-padding w3-green"><span class="w3-badge w3-indigo">2</span> Choix d'une classe</div>
                 <div class="w3-col m2 tablink w3-bottombar w3-hover-border-green w3-hover-light-grey w3-padding"><span class="w3-badge w3-indigo">3</span> Frais & Scolarité</div>
                 <div class="w3-col m2 tablink w3-bottombar w3-hover-border-green w3-hover-light-grey w3-padding"><span class="w3-badge w3-indigo">4</span> Paiement</div>
                 <div class="w3-col m2 tablink w3-bottombar w3-hover-border-green w3-hover-light-grey w3-padding"><span class="w3-badge w3-indigo">5</span> Recapitulatif</div>
@@ -66,7 +66,6 @@
                                                             </div>
                                                             <div class="col-md-1">
                                                                 <input class="w3-radio" type="radio" name="levelId" value="{{ $level->id }}">
-                                                                {{-- <input type="hidden" name="arabe-enfant_id" value="{{ $level->course->id }}"> --}}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -154,7 +153,6 @@
                                                             </div>
                                                             <div class="col-md-1">
                                                                 <input class="w3-radio" type="radio" name="levelId" value="{{ $level->id }}">
-                                                                {{-- <input type="hidden" name="coran-enfant_id" value="{{$level->course->id}}"> --}}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -210,7 +208,7 @@
                                     @endforeach
                                 </div>
                             @endif
-                            <div class="mt-4">
+                            <div class="mt-4 w3-center">
                                 <button class="previous">&laquo; Précedent</button>
                                 <button class="next" type="submit">Suivant &raquo;</button>
                             </div>

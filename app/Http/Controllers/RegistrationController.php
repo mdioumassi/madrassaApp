@@ -37,7 +37,7 @@ class RegistrationController extends Controller
             'payment_date' => null,
             'payment_amount' => null,
             'payment_method' => null,
-            'payment_comment' => null,
+            'payment_note' => null,
             'payment_status' => null,
             'registration_status' => null,
         ];
@@ -96,13 +96,18 @@ class RegistrationController extends Controller
     public function Step3RegisterSchoolingPost(Request $request) {
         $registration_data = $request->session()->get('registration_data');
     
-        $registration_data['payment_amount'] = $request['payment_amount']*1000;
+        $registration_data['payment_amount'] = $request['payment_amount'];
    
         $request->session()->put('registration_data', $registration_data);
 
         return redirect()->route('step4.register.payment');
     }
 
+    /**
+     * Step 4: Register Payment
+     * route: step4.register.payment
+     * Method: GET
+     */
     public function Step4RegisterPayment(Request $request)
     {
         $registration_data = $request->session()->get('registration_data');
@@ -113,6 +118,40 @@ class RegistrationController extends Controller
         return view('registrations.payment', compact('payment'));
     }
 
+    /**
+     * Step 4: Register Means of Payment
+     * route: step4.register.means.payment
+     * Method: POST
+     */
+    public function Step4RegisterMeansOfPayment(Request $request)
+    {
+        $registration_data = $request->session()->get('registration_data');
+
+        $registration_data['payment_method'] = $request['payment_method'];
+        $registration_data['payment_date'] = $request['payment_date'];
+        $registration_data['payment_note'] = $request['payment_note'];
+
+        if ($registration_data['payment_method'] === 'espece'){
+            $registration_data['payment_status'] = 'paid';
+            $registration_data['registration_status'] = 'registered';
+        } else {
+            $registration_data['payment_status'] = 'pending';
+            $registration_data['registration_status'] = 'pending';
+        }
+
+        $registration_data['registration_date'] = date('Y-m-d');
+
+        $request->session()->put('registration_data', $registration_data);
+
+        return redirect()->route('step4.register.recap');
+    }
+
+    /**
+     * Step 4: Register Recap
+     * route: step4.register.recap
+     * Method: GET
+     *
+     */
     public function Step4RegisterRecap(Request $request)
     {
         $registration_data = $request->session()->get('registration_data');
@@ -120,57 +159,47 @@ class RegistrationController extends Controller
         $child = Child::find($registration_data['child_id']);
         $level = Level::find($registration_data['level_id']);
         $course = Course::find($registration_data['course_id']);
-        //$adult = User::find($registration_data['adult_id']);
+        $total_amount = $registration_data['payment_amount'];
+        $payment_method = $registration_data['payment_method'];
+        $payment_date = $registration_data['payment_date'];
+        $payment_status = $registration_data['payment_status'];
 
-        return view('registrations.recap', compact('child', 'level', 'course'));
+        return view('registrations.recap', compact('child', 'level', 'course', 'total_amount', 'payment_method', 'payment_date', 'payment_status'));
+    }
+
+    /**
+     * Step 4: Register Recap Post
+     * route: step4.register.recap.post
+     * Method: POST
+     */
+    public function Step4RegisterRecapPost(Request $request)
+    {
+        $registration_data = $request->session()->get('registration_data');
+
+        Registration::create($registration_data);
+
+        return redirect()->route('step5.registration.fiche');
     }
 
 
     /**
-     * Show the form for creating a new resource.
+     * Step 5: Register Fiche
+     * route: step5.register.fiche
+     * Method: GET
      */
-    public function create()
+    public function Step5RegisterFiche(Request $request)
     {
-        return view('registrations.create');
-    }
+        $registration_data = $request->session()->get('registration_data');
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $child = Child::find($registration_data['child_id']);
+        $level = Level::find($registration_data['level_id']);
+        $course = Course::find($registration_data['course_id']);
+        $total_amount = $registration_data['payment_amount'];
+        $payment_method = $registration_data['payment_method'];
+        $payment_date = $registration_data['payment_date'];
+        $payment_status = $registration_data['payment_status'];
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Registration $registration)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Registration $registration)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Registration $registration)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Registration $registration)
-    {
-        //
+        return view('registrations.fiche', compact('child', 'level', 'course', 'total_amount', 'payment_method', 'payment_date', 'payment_status'));
     }
 }

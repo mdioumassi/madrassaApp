@@ -13,17 +13,17 @@
                     <span class="w3-badge w3-indigo">3</span> Frais & Scolarité</div>
                 <div class="w3-col m2 tablink w3-bottombar w3-hover-border-green w3-hover-light-grey w3-padding"><span
                         class="w3-badge w3-indigo">4</span> Paiement</div>
-                <div class="w3-col m2 tablink w3-bottombar w3-border-indigo w3-green w3-hover-border-green w3-hover-light-grey w3-padding"><span
-                        class="w3-badge w3-indigo">5</span> Recapitulatif</div>
                 <div class="w3-col m2 tablink w3-bottombar w3-hover-border-green w3-hover-light-grey w3-padding"><span
+                        class="w3-badge w3-indigo">5</span> Recapitulatif</div>
+                <div class="w3-col m2 tablink w3-bottombar  w3-border-indigo w3-green w3-hover-border-green w3-hover-light-grey w3-padding"><span
                         class="w3-badge w3-indigo">6</span> Fiche d'inscription</div>
             </div>
             <div class="col-12">
                 <form action="{{route('step4.register.recap.post')}}" method="POST">
                     @csrf
                 {{-- Bloc Enfant --}}
-                <div class="w3-card-2 centered-element mb-5" style="width:80%;">
-                    <header class="w3-container w3-green w3-padding"><h3>{{ $child->getFullNameAttribute()}}</h3></header>
+                <div class="w3-card centered-element mb-5" style="width:80%;">
+                    <header class="w3-container w3-light-grey w3-padding"><h3>{{ $child->getFullNameAttribute()}}</h3></header>
                     <div class="w3-container w3-padding">
                         <div class="row">
                             <div class="col-md-2">
@@ -67,8 +67,8 @@
                     </div>
                 </div>
                 {{-- Bloc Classe --}}
-                <div class="w3-card-2 centered-element mb-5" style="width:80%;">
-                    <header class="w3-container w3-indigo w3-padding">
+                <div class="w3-card centered-element mb-5" style="width:80%;">
+                    <header class="w3-container w3-light-grey w3-padding">
                         <h3>{{ $level->label }} - {{ $course->label }}</h3>
                     </header>
                     <div class="w3-container w3-padding">
@@ -76,8 +76,8 @@
                             <div class="col">
                                 <table class="w3-table w3-bordered">
                                     <tr>
-                                        <td class="w3-light-grey"><strong>Libellé</strong></td>
-                                        <td class="w3-light-grey"><strong>Montant</strong></td>
+                                        <td class="w3-blue-grey"><strong>Libellé</strong></td>
+                                        <td class="w3-blue-grey"><strong>Montant</strong></td>
                                     </tr>
                                     <tr>
                                         <td><strong>Frais d'inscription:</strong></td>
@@ -98,8 +98,8 @@
                     </div>
                 </div>
                   {{-- Bloc Paiement --}}
-                  <div class="w3-card-2 centered-element mb-5" style="width:80%;">
-                    <header class="w3-container w3-blue-grey w3-padding">
+                  <div class="w3-card centered-element mb-5" style="width:80%;">
+                    <header class="w3-container w3-light-grey w3-padding">
                         <h3>Moyen de paiement</h3>
                     </header>
                     <div class="w3-container w3-padding">
@@ -107,8 +107,8 @@
                             <div class="col">
                                 <table class="w3-table w3-bordered">
                                     <tr>
-                                        <td class="w3-light-grey"><strong>Libellé</strong></td>
-                                        <td class="w3-light-grey"><strong>Montant</strong></td>
+                                        <td class="w3-blue-grey"><strong>Libellé</strong></td>
+                                        <td class="w3-blue-grey"><strong>Montant</strong></td>
                                     </tr>
                                     <tr>
                                         <td><strong>Montant total:</strong></td>
@@ -133,10 +133,15 @@
                 </div>
           
             </div>
-            <div class="mt-3 w3-center">
+            {{-- <div class="mt-3 w3-center">
                 <button class="previous">&laquo; Précedent</button>
-                <button class="next" type="submit">Suivant &raquo;</button>
-            </div>
+                <button class="next">Suivant &raquo;</button>
+            </div> --}}
+            <div class="w3-bar w3-center">
+                <button class="w3-button w3-border w3-large">&laquo; Précedent</button>
+                <a class="w3-button w3-green w3-large" href="{{route('parent.children.grille', $child->parent->id)}}">Inscrire un nouveau enfant</a>
+                <button class="w3-button w3-red w3-large">Télécharger la fiche</button>
+              </div>
         </form>
         </div>
     </div>

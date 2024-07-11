@@ -72,8 +72,9 @@
             </div>
         </div>
     </div>
+    @include('admin.users.parents._modals.child-add-in-parent', ['user' => $parent])
     @foreach ($children as $child)
         @include('admin.users.parents._modals.child-edit', ['child' => $child, 'user' => $child->parent])
-        @include('admin.users.parents._modals.child-add-in-parent', ['user' => $child->parent])
+        {{-- @include('admin.users.parents._modals.child-add-in-parent', ['user' => $child->parent]) --}}
     @endforeach
 @endsection

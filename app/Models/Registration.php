@@ -45,7 +45,7 @@ class Registration extends Model
         'payment_date',
         'payment_amount',
         'payment_method',
-        'payment_comment',
+        'payment_note',
         'payment_status',
         'registration_status'
     ];

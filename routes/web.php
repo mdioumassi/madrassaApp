@@ -15,12 +15,18 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\StripePaymentController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+//Paypal
+require __DIR__.'/paypal.php';
+//Stripe
+require __DIR__.'/stripe.php';
 // Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
@@ -40,14 +46,8 @@ Route::put('/registrations/{registration}', [RegistrationController::class, 'upd
 Route::delete('/registrations/{registration}', [RegistrationController::class, 'destroy'])->name('registrations.destroy');
 
 
-Route::get('/register/step1/child/{id}', [RegistrationController::class, 'Step1RegisterChild'])->name('step1.register.child');
-Route::get('/register/step2/level/{child}', [RegistrationController::class, 'Step2RegisterLevel'])->name('step2.register.level');
-Route::post('/register/step2/level', [RegistrationController::class, 'Step2RegisterLevelPost'])->name('step2.register.level.post');
-Route::get('/register/step3/schooling', [RegistrationController::class, 'Step3RegisterSchooling'])->name('step3.register.schooling');
-Route::post('/register/step3/schooling', [RegistrationController::class, 'Step3RegisterSchoolingPost'])->name('step3.register.schooling.post');
-Route::get('/register/step4/payment', [RegistrationController::class, 'Step4RegisterPayment'])->name('step4.register.payment');
-Route::get('/register/step3/recap', [RegistrationController::class, 'Step4RegisterRecap'])->name('step4.register.recap');
-Route::get('/register/step/', [RegistrationController::class, 'Step4RegisterRecap'])->name('step4.registration.form');
+//Registration
+require __DIR__.'/registration.php';
 
 
 

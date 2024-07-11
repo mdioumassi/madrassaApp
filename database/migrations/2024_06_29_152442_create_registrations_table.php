@@ -13,24 +13,24 @@ return new class extends Migration
     {
         Schema::create('registrations', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('child_id')->unsigned()->nullable();
+            $table->bigInteger('child_id')->unsigned()->unique()->nullable();
             $table->foreign('child_id')->references('id')->on('children')->onDelete('cascade');
-            $table->bigInteger('adult_id')->unsigned()->nullable();
+            $table->bigInteger('adult_id')->unsigned()->unique()->nullable();
             $table->foreign('adult_id')->references('id')->on('users')->onDelete('cascade');
-            $table->bigInteger('course_id')->unsigned()->nullable();
+            $table->bigInteger('course_id')->unsigned()->unique()->nullable();
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
-            $table->bigInteger('level_id')->unsigned()->nullable();
+            $table->bigInteger('level_id')->unsigned()->unique()->nullable();
             $table->foreign('level_id')->references('id')->on('levels')->onDelete('cascade');
             $table->date('registration_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->string('status')->default('pending');
+            $table->string('payment_note')->nullable();
             $table->string('payment_status')->default('pending');
+            $table->string('registration_status')->nullable();
             $table->string('payment_method')->nullable();
-            $table->string('payment_reference')->nullable();
             $table->string('payment_amount')->nullable();
             $table->string('payment_date')->nullable();
-            $table->string('type')->default('normal');
-            $table->string('description')->nullable();
+            $table->string('registration_type')->default('normal');
+            $table->string('registration_description')->nullable();
             $table->timestamps();
         });
     }
