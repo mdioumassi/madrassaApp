@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('registrations', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('child_id')->unsigned()->unique()->nullable();
+            $table->bigInteger('child_id')->unsigned()->nullable();
             $table->foreign('child_id')->references('id')->on('children')->onDelete('cascade');
-            $table->bigInteger('adult_id')->unsigned()->unique()->nullable();
+            $table->bigInteger('adult_id')->unsigned()->nullable();
             $table->foreign('adult_id')->references('id')->on('users')->onDelete('cascade');
             $table->bigInteger('course_id')->unsigned()->unique()->nullable();
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');

@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+@php
+    $countAllChild = DB::table('children')->count();
+@endphp
     <div class="container">
         <div class="row justify-content-center mb-5">
             <div class="col-md-12">
@@ -19,7 +22,7 @@
                                                 </div>
                                                 <div class="col">
                                                     <button type="button" class="btn btn-primary">
-                                                        <span class="badge bg-danger"></span>
+                                                        <span class="badge bg-danger">{{ $countAllChild }}</span>
                                                         {{ _('Enfants') }}
                                                     </button>
                                                 </div>

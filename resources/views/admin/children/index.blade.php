@@ -33,9 +33,9 @@
                                     <th class="bg-success text-light">Genre</th>
                                     <th class="bg-success text-light">Nom</th>
                                     <th class="bg-success text-light">Prénom</th>
-                                    <th class="bg-success text-light">Date de naissance</th>
-                                    <th class="bg-success text-light">Classe Française</th>
+                                    <th class="bg-success text-light">Age</th>
                                     <th class="bg-success text-light">Parent</th>
+                                    <th class="bg-success text-light">Status</th>
                                     <th class="bg-success text-light">Actions</th>
                                 </tr>
                             </thead>
@@ -49,15 +49,20 @@
                                     <tr>
                                         <td>{{ $child->genre }}</td>
                                         <td>{{ $child->firstname }}</td>
-                                        <td>{{ $child->lastname }}</td>
-                                        <td>{{ $child->birthdate }}</td>
-                                        <td>{{ $child->french_class }}</td>
+                                        <td>{{ strtoupper($child->lastname) }}</td>
+                                        <td>{{ $child->getAgeAttribute() }} ans</td>                                      
                                         <td>
                                             @if ($child->parent->type->value == 'parent')
                                                 <a
-                                                    href="{{ route('admin.users.show', $child->parent->id) }}">{{ $child->parent->name }}</a>
+                                                    href="{{ route('admin.users.show', $child->parent->id) }}">{{ $child->parent->getFullNameAttribute() }}</a>
                                             @endif
                                         </td>
+                                        @if (!$child->is_registered($child->id))
+                                            <td><span class="w3-text-red">Non inscrit</span></td>
+                                        @else
+                                            <td><span class="w3-text-green">Inscrit</span></td>
+                                        @endif
+
                                         <td>
                                             <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                                 data-bs-target="#modal-view-detail-child{{ $child->id }}"><i
@@ -65,6 +70,10 @@
                                             <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                                 data-bs-target="#modal-view-edit-child{{ $child->id }}"><i
                                                     class="fa-solid fa-pen-to-square"></i> {{ _('Edit') }}</button>
+                                            <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="">
+                                                @if ($child->is_registered($child->id))
+                                                <i class="fa fa-drivers-license-o"></i> {{ _('Fiche') }}</button>
+                                                @endif
                                             <form action="{{ route('children.destroy', $child->id) }}" method="POST"
                                                 class="d-inline">
                                                 @csrf

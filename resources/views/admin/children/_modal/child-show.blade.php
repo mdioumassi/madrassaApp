@@ -1,38 +1,32 @@
 <x-modal id="modal-view-detail-child{{$child->id}}">
-    <x-slot name="size">modal-lg</x-slot>
+    <x-slot name="size">modal-xl</x-slot>
     <x-slot name="title">{{ $child->firstname }} {{ $child->lastname }}</x-slot>
     <x-slot name="body">
         <div class="row">
-            <div class="col-4">
+            <div class="col-3">
                 <img src="{{ $child->photo }}" class="img-fluid" alt="photo">
             </div>
             <div class="col">
                 <table class="table">
-                    <thead> </thead>
                     <tbody>
                         <tr>
-                            <th class="bg-success text-light">Genre</th>
-                            <td></td>
+                            <th width="200px" class="bg-success text-light">Genre</th>
                             <td> {{ $child->genre }} </td>
                         </tr>
                         <tr>
                             <th class="bg-success text-light">Nom</th>
-                            <td></td>
                             <td> {{ $child->firstname }} </td>
                         </tr>
                         <tr>
                             <th class="bg-success text-light">Prénom</th>
-                            <td></td>
                             <td> {{ $child->lastname }} </td>
                         </tr>
                         <tr>
-                            <th class="bg-success text-light">Date de naissance</th>
-                            <td></td>
-                            <td> {{ $child->birthdate }} </td>
+                            <th class="bg-success text-light">Age</th>
+                            <td> {{ $child->getAgeAttribute() }} ans </td>
                         </tr>
                         <tr>
                             <th class="bg-success text-light">Classe Française</th>
-                            <td></td>
                             <td> {{ $child->french_class }} </td>
                         </tr>
                         <tr>
@@ -44,6 +38,14 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+            <div class="col-4">
+                @foreach($child->registrations as $registration)
+                <b>{{ strtoupper($registration->course->label) }}</b>
+                    <ul>
+                        <li>{{ $registration->level->label }}</li>
+                    </ul>
+                @endforeach
             </div>
         </div>
     </x-slot>

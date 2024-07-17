@@ -13,105 +13,106 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header"><span class="bg-success py-2 px-3 text-light rounded"><i
-                                class='far fa-user-circle'></i> Utilisateurs</span>
-                        {{ __('Parents') }}</div>
+                    <div class="card-header bg-success"><span class="text-light"><b><i
+                                class='far fa-user-circle'></i> Utilisateurs:</b> {{ __('Parents') }}</span></div>
                     <div class="card-body">
                         <div class="pull-right">
-                            <a class="btn btn-success mb-2" href="{{ route('admin.users.create') }}"><i
+                            <a class="w3-button w3-green mb-2" href="{{ route('admin.users.create') }}"><i
                                     class="fa fa-plus"></i> {{ _('Ajouter un utlisateur') }}</a>
                         </div>
-                    </div>
-                    <ul class="nav nav-tabs">
-                        <li class="nav-item">
-                            <a href="{{ route('admin.users.index') }}" aria-current="page"
-                                class="nav-link">{{ _('Utilisateurs') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('admin.parents.list') }}" aria-current="page"
-                                class="nav-link active">{{ _('Parents') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin.students.list') }}">{{ _('Adultes') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin.teachers.list') }}">{{ _('Professeurs') }}</a>
-                        </li>
-                    </ul>
-                    <table class="table table-bordered mt-2">
-                        <thead>
-                            <tr>
-                                <th class="bg-success text-light">ID</th>
-                                <th class="bg-success text-light">Civilité</th>
-                                <th class="bg-success text-light">Nom</th>
-                                <th class="bg-success text-light">Prénom</th>
-                                <th class="bg-success text-light">Email</th>
-                                <th class="bg-success text-light">Téléphone</th>
-                                <th class="bg-success text-light">Roles</th>
-                                <th class="bg-success text-light">Enfants</th>
-                                <th class="bg-success text-light">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if ($users->count() == 0)
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.users.index') }}" aria-current="page"
+                                    class="nav-link">{{ _('Utilisateurs') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.parents.list') }}" aria-current="page"
+                                    class="nav-link active">{{ _('Parents') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.students.list') }}">{{ _('Adultes') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.teachers.list') }}">{{ _('Professeurs') }}</a>
+                            </li>
+                        </ul>
+                        <table class="table table-bordered mt-2">
+                            <thead>
                                 <tr>
-                                    <td colspan="7" class="text-center">Aucun utilisateur trouvé</td>
+                                    <th class="w3-green text-light">ID</th>
+                                    <th class="w3-green text-light">Civilité</th>
+                                    <th class="w3-green text-light">Nom</th>
+                                    <th class="w3-green text-light">Prénom</th>
+                                    <th class="w3-green text-light">Email</th>
+                                    <th class="w3-green text-light">Téléphone</th>
+                                    <th class="w3-green text-light">Roles</th>
+                                    <th class="w3-green text-light">Enfants</th>
+                                    <th class="w3-green text-light">Actions</th>
                                 </tr>
-                            @endif
-                            @foreach ($users as $user)
-                                <tr>
-                                    <td>{{ $user->id }}</td>
-                                    <td>{{ $user->civility }}</td>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->lastname }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td>{{ $user->phone }}</td>
-                                    <td>
-                                        @if (!empty($user->getRoleNames()))
-                                            @foreach ($user->getRoleNames() as $v)
-                                                <label class="badge bg-success">{{ $v }}</label>
-                                            @endforeach
-                                            @else
-                                            <label class="badge bg-danger">Aucun rôle</label>
-                                        @endif
-                                    </td>
-                                    @if ($user->type->value == 'parent' && $user->children->count() > 0)
+                            </thead>
+                            <tbody>
+                                @if ($users->count() == 0)
+                                    <tr>
+                                        <td colspan="7" class="text-center">Aucun utilisateur trouvé</td>
+                                    </tr>
+                                @endif
+                                @foreach ($users as $user)
+                                    <tr>
+                                        <td>{{ $user->id }}</td>
+                                        <td>{{ $user->civility }}</td>
+                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->lastname }}</td>
+                                        <td>{{ $user->email }}</td>
+                                        <td>{{ $user->phone }}</td>
                                         <td>
-                                            <a href="{{ route('parent.children.list', $user->id) }}"> <span
-                                                    class="badge w3-black">{{ $user->children->count() }} enfant.s</span>
-                                                </a>
+                                            @if (!empty($user->getRoleNames()))
+                                                @foreach ($user->getRoleNames() as $v)
+                                                    <label class="badge bg-success">{{ $v }}</label>
+                                                @endforeach
+                                            @else
+                                                <label class="badge bg-danger">Aucun rôle</label>
+                                            @endif
                                         </td>
-                                    @else
-                                        <td><span class="badge w3-black">0 enfant</span></td>
-                                    @endif
-                                    <td>
-                                        <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
-                                            data-bs-target="#modal-add-parent-child{{ $user->id }}"><i
-                                                class="fa fa-plus"></i> {{ _('Add child') }}</button>
-                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                            data-bs-target="#modal-show-users{{ $user->id }}"><i
-                                                class="fa-solid fa-list"></i> {{ _('View') }}</button>
-                                        @can('user-edit')
-                                            <a class="btn btn-warning btn-sm"
-                                                href="{{ route('admin.users.edit', $user->id) }}"><i
-                                                    class="fa-solid fa-pen-to-square"></i> {{ _('Edit') }}</a>
-                                        @endcan
-                                        @can('user-delete')
-                                            <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST"
-                                                class="d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm"
-                                                    onclick="return confirm('Are you sure?')"><i class="fa-solid fa-trash"></i>
-                                                    {{ _('Delete') }}</button>
-                                            </form>
-                                        @endcan
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                    {!! $users->links() !!}
+                                        @if ($user->type->value == 'parent' && $user->children->count() > 0)
+                                            <td>
+                                                <a href="{{ route('parent.children.list', $user->id) }}"> <span
+                                                        class="badge w3-black">{{ $user->children->count() }}
+                                                        enfant.s</span>
+                                                </a>
+                                            </td>
+                                        @else
+                                            <td><span class="badge w3-black">0 enfant</span></td>
+                                        @endif
+                                        <td>
+                                            <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
+                                                data-bs-target="#modal-add-parent-child{{ $user->id }}"><i
+                                                    class="fa fa-plus"></i> {{ _('Add child') }}</button>
+                                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                                data-bs-target="#modal-show-users{{ $user->id }}"><i
+                                                    class="fa-solid fa-list"></i> {{ _('View') }}</button>
+                                            @can('user-edit')
+                                                <a class="btn btn-warning btn-sm"
+                                                    href="{{ route('admin.users.edit', $user->id) }}"><i
+                                                        class="fa-solid fa-pen-to-square"></i> {{ _('Edit') }}</a>
+                                            @endcan
+                                            @can('user-delete')
+                                                <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST"
+                                                    class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm"
+                                                        onclick="return confirm('Are you sure?')"><i
+                                                            class="fa-solid fa-trash"></i>
+                                                        {{ _('Delete') }}</button>
+                                                </form>
+                                            @endcan
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        {!! $users->links() !!}
+                    </div>
                 </div>
             </div>
         </div>

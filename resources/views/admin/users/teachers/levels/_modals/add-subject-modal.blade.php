@@ -7,7 +7,6 @@
 
             <div class="row mb-3">
                 <label for="label" class="col-md-4 col-form-label text-md-end">{{ __('Label') }}</label>
-
                 <div class="col-md-6">
                     <input id="label" type="text" class="form-control @error('label') is-invalid @enderror"
                         name="label" autocomplete="label" autofocus>
@@ -20,6 +19,8 @@
                 </div>
             </div>
             <input type="hidden" name="userId" value="{{$user->id}}">
+            <input type="hidden" name="grilleTeacher" value="grille">
+            
 
             <div class="row mb-3">
                 <label for="comment" class="col-md-4 col-form-label text-md-end">{{ __('Commentaire') }}</label>

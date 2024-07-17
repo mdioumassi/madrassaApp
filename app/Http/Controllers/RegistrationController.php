@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ChildStoreRequest;
 use App\Models\Child;
 use App\Models\Course;
 use App\Models\Level;
 use App\Models\Registration;
+use App\Models\User;
 use Illuminate\Http\Client\Request as ClientRequest;
 use Illuminate\Http\Request;
 
@@ -20,6 +22,22 @@ class RegistrationController extends Controller
 
         return view('registrations.index', compact('registrations'));
     }
+
+    public function Step1RegisterChildCreate($parenId)
+    {
+        $user = User::find($parenId);
+        return view('registrations.create', compact('user'));
+    }
+
+    public function Step1RegisterChildStore(ChildStoreRequest $request, $parentId)
+    {
+        $parent = User::where('id', $parentId)->first();
+
+        $child = $parent->children()->create($request->validated());
+
+        return redirect()->route('step1.register.child', $child->id);
+    }
+
 
     /**
      * Step 1: Register Child

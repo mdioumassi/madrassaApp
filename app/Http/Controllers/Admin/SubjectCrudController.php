@@ -49,20 +49,26 @@ class SubjectCrudController extends Controller
     public function storeLevelSubject(Request $request, $id)
     {
         $userId = $request['userId'];
+
+        $grille = $request['grilleTeacher'];
         $level = Level::where('id', $id)->first();
         $request->validate([
             'label' => 'required|string|max:255',
-            'description' => 'required|string',
+            'description' => 'nullable|string',
         ]);
         $level->subjects()->create($request->all());
 
-        if($userId) {
+        if($userId && $grille) {
+            return redirect()->route('admin.teachers.levels.grille', $userId)
+                             ->with('success', 'Subject created successfully.');
+        } else if($userId){
             return redirect()->route('admin.teachers.levels.list', $userId)
+                             ->with('success', 'Subject created successfully.');
+        } else {
+            return redirect()->route('admin.levels.subjects.index', $level->id)
                              ->with('success', 'Subject created successfully.');
         }
         
-        return redirect()->route('admin.levels.subjects.index', $level->id)
-                         ->with('success', 'Subject created successfully.');
     }
 
     /**

@@ -13,12 +13,12 @@ class Registration extends Model
 
     public function child(): BelongsTo
     {
-        return $this->belongsTo(Child::class, 'child_id');
+        return $this->belongsTo(Child::class);
     }
 
     public function level(): BelongsTo
     {
-        return $this->belongsTo(Level::class, 'level_id');
+        return $this->belongsTo(Level::class);
     }
 
     public function adult(): BelongsTo
@@ -28,7 +28,7 @@ class Registration extends Model
 
     public function course(): BelongsTo
     {
-        return $this->belongsTo(Course::class, 'course_id');
+        return $this->belongsTo(Course::class);
     }
 
     /**

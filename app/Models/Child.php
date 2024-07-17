@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Child extends Model
 {
@@ -17,9 +18,9 @@ class Child extends Model
         return $this->belongsTo(User::class, 'parent_id');
     }
 
-    public function registration(): BelongsTo
+    public function registrations(): HasMany
     {
-        return $this->belongsTo(Registration::class, 'child_id');
+        return $this->hasMany(Registration::class, 'child_id');
     }
 
     public function getFullNameAttribute(): string
@@ -30,6 +31,16 @@ class Child extends Model
     public function getAgeAttribute(): int
     {
         return Carbon::parse($this->birthdate)->age;
+    }
+
+    public function getLevelRegistration($id): Registration
+    {
+        return Registration::where('child_id', $id)->first();
+    }
+
+    public function is_registered($id): bool
+    {
+        return Registration::where('child_id', $id)->exists();
     }
 
     /**

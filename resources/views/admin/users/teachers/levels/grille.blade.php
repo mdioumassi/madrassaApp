@@ -22,145 +22,77 @@
                         <strong>{{ $user->getFullNameAttribute() }}: </strong>Mes Classes
                     </div>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <div class="card-header w3-indigo mb-2"><b>{{_('Cours d\'arabe pour enfant')}}</b></div>
+                        {{-- Bloc cours arabe pour enfant --}}
+                        <div class="w3-card-4 mb-5">
+                            <header class="w3-container w3-indigo">
+                                <h1>{{ _('Cours d\'arabe pour enfant') }}</h1>
+                            </header>
+                            <div class="w3-container mt-4">
+                                <div class="row">
+                                    @foreach ($levels as $level)
+                                        @if ($level->course->keywords == 'arabe-enfant')
+                                            @include(
+                                                'admin.users.teachers.levels._partials._course-levels',
+                                                ['level' => $level]
+                                            )
+                                        @endif
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            @foreach ($levels as $level)
-                                @if ($level->course->keywords == 'arabe-enfant')
-                                    <div class="col-md-4 mb-4">
-                                        <div class="card">
-                                            <div class="card-header w3-green">{{ $level->label }}</div>
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col-md-4">
-                                                        <img src="https://www.w3schools.com/w3css/img_snowtops.jpg"
-                                                            alt="{{ $level->name }}" class="img-thumbnail"
-                                                            style="width: 200px; height: 200px;">
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <p><strong>Classe:</strong> {{ $level->label }}</p>
-                                                        <p><strong>Nombre d'élèves:</strong></p>
-                                                        <p><strong>Nombre de matières:
-                                                                {{ $level->subjects->count() }}</strong> </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card-footer">
-                                                <div class="w3-bar">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
-                            @endforeach
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="card-header w3-blue mb-2"><strong>{{_('Cours d\'arabe pour adulte')}}</strong></div>
+                        {{-- Bloc cours arabe pour adulte --}}
+                        <div class="w3-card-4 mb-5">
+                            <header class="w3-container w3-blue mb-2">
+                                <h1>{{ _('Cours d\'arabe pour adulte') }}</h1>
+                            </header>
+                            <div class="w3-container mt-4">
+                                <div class="row">
+                                    @foreach ($levels as $level)
+                                        @if ($level->course->keywords == 'arabe-adulte')
+                                            @include(
+                                                'admin.users.teachers.levels._partials._course-levels',
+                                                ['level' => $level]
+                                            )
+                                        @endif
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            @foreach ($levels as $level)
-                                @if ($level->course->keywords == 'arabe-adulte')
-                                    <div class="col-md-4 mb-4">
-                                        <div class="card">
-                                            <div class="card-header w3-green">{{ $level->label }}</div>
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col-md-4">
-                                                        <img src="https://www.w3schools.com/w3css/img_snowtops.jpg"
-                                                            alt="{{ $level->name }}" class="img-thumbnail"
-                                                            style="width: 200px; height: 200px;">
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <p><strong>Classe:</strong> {{ $level->label }}</p>
-                                                        <p><strong>Nombre d'élèves:</strong></p>
-                                                        <p><strong>Nombre de matières:
-                                                                {{ $level->subjects->count() }}</strong> </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card-footer">
-                                                <div class="w3-bar">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
-                            @endforeach
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="card-header w3-cyan mb-2"><strong>{{_('Cours de coran pour enfant')}}</strong></div>
+                        {{-- Bloc cours coran pour enfant --}}
+                        <div class="w3-card-4 mb-5">
+                            <header class="w3-container  w3-cyan">
+                                <h1>{{ _('Cours de coran pour enfant') }}</h1>
+                            </header>
+                            <div class="w3-container mt-4">
+                                <div class="row">
+                                    @foreach ($levels as $level)
+                                        @if ($level->course->keywords == 'coran-enfant')
+                                            @include(
+                                                'admin.users.teachers.levels._partials._course-levels',
+                                                ['level' => $level]
+                                            )
+                                        @endif
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            @foreach ($levels as $level)
-                                @if ($level->course->keywords == 'coran-enfant')
-                                    <div class="col-md-4 mb-4">
-                                        <div class="card">
-                                            <div class="card-header w3-green">{{ $level->label }}</div>
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col-md-4">
-                                                        <img src="https://www.w3schools.com/w3css/img_snowtops.jpg"
-                                                            alt="{{ $level->name }}" class="img-thumbnail"
-                                                            style="width: 200px; height: 200px;">
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <p><strong>Classe:</strong> {{ $level->label }}</p>
-                                                        <p><strong>Nombre d'élèves:</strong></p>
-                                                        <p><strong>Nombre de matières:
-                                                                {{ $level->subjects->count() }}</strong> </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card-footer">
-                                                <div class="w3-bar">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
-                            @endforeach
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="card-header w3-light-blue mb-2"><strong>{{_('Cours de coran pour adulte')}}</strong></div>
+                        {{-- Bloc cours coran pour adulte --}}
+                        <div class="w3-card-4 mb-5">
+                            <header class="w3-container  w3-light-blue">
+                                <h1>{{ _('Cours de coran pour adulte') }}</h1>
+                            </header>
+                            <div class="w3-container mt-4">
+                                <div class="row">
+                                    @foreach ($levels as $level)
+                                        @if ($level->course->keywords == 'coran-adulte')
+                                            @include(
+                                                'admin.users.teachers.levels._partials._course-levels',
+                                                ['level' => $level]
+                                            )
+                                        @endif
+                                    @endforeach
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            @foreach ($levels as $level)
-                                @if ($level->course->keywords == 'coran-adulte')
-                                    <div class="col-md-4 mb-4">
-                                        <div class="card">
-                                            <div class="card-header w3-green">{{ $level->label }}</div>
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col-md-4">
-                                                        <img src="https://www.w3schools.com/w3css/img_snowtops.jpg"
-                                                            alt="{{ $level->name }}" class="img-thumbnail"
-                                                            style="width: 200px; height: 200px;">
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <p><strong>Classe:</strong> {{ $level->label }}</p>
-                                                        <p><strong>Nombre d'élèves:</strong></p>
-                                                        <p><strong>Nombre de matières:
-                                                                {{ $level->subjects->count() }}</strong> </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card-footer">
-                                                <div class="w3-bar">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
-                            @endforeach
                         </div>
                     </div>
                 </div>
