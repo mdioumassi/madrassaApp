@@ -16,10 +16,11 @@
                     <div class="card-header bg-success"><span class=" py-2 px-3 text-light rounded"><i
                                 class='far fa-user-circle'></i> Utilisateurs: {{ __('Professeurs') }}</span></div>
                     <div class="card-body">
-                        <div class="pull-right">
-                            <a class="w3-button w3-green mb-2" href="{{ route('admin.users.create') }}"><i
-                                    class="fa fa-plus"></i> {{ _('Ajouter un utlisateur') }}</a>
-                        </div>
+                        @can('user-create')
+                            <button type="button" class="w3-button w3-green mb-2" data-bs-toggle="modal"
+                                data-bs-target="#modal-create-users"><i class="fa fa-plus"></i>
+                                {{ _('Ajouter un utilisateur') }}</button>
+                        @endcan
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
                                 <a href="{{ route('admin.users.index') }}" aria-current="page"
@@ -109,7 +110,7 @@
             </div>
         </div>
     </div>
-    {{-- @include('admin.users._modal.create-users') --}}
+    @include('admin.users._modal.create-users')
     @foreach ($users as $user)
         @include('admin.users._modal.show-users', ['user' => $user])
         @include('admin.users._modal.edit-users', ['user' => $user])

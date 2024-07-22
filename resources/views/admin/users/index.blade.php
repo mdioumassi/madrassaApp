@@ -2,11 +2,6 @@
 
 @section('content')
     <div class="container">
-        @session('success')
-            <div class="alert alert-success" role="alert">
-                {{ $value }}
-            </div>
-        @endsession
 
         <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
             aria-label="breadcrumb">
@@ -19,17 +14,14 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header bg-success text-light"><b><i class='far fa-user-circle'></i> {{ __('Les utilisateurs') }}</b></div>
+                    <div class="card-header bg-success text-light"><b><i class='far fa-user-circle'></i>
+                            {{ __('Les utilisateurs') }}</b></div>
                     <div class="card-body">
-                        {{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#modal-create-users"><i class="fa fa-plus"></i>
-                            {{ _('Ajouter un utilisateur') }}</button> --}}
-                        <div class="pull-right">
-                            @can('user-create')
-                                <a class="w3-button w3-green mb-2" href="{{ route('admin.users.create') }}"><i
-                                        class="fa fa-plus"></i> {{ _('Ajouter un utlisateur') }}</a>
-                            @endcan
-                        </div>
+                        @can('user-create')
+                            <button type="button" class="w3-button w3-green mb-2" data-bs-toggle="modal"
+                                data-bs-target="#modal-create-users"><i class="fa fa-plus"></i>
+                                {{ _('Ajouter un utilisateur') }}</button>
+                        @endcan
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
                                 <a href="{{ route('admin.users.index') }}" aria-current="page"
@@ -101,9 +93,10 @@
                                                 data-bs-target="#modal-show-users{{ $user->id }}"><i
                                                     class="fa-solid fa-list"></i> {{ _('View') }}</button>
                                             @can('user-edit')
-                                                <a class="btn btn-warning btn-sm"
-                                                    href="{{ route('admin.users.edit', $user->id) }}"><i
-                                                        class="fa-solid fa-pen-to-square"></i> {{ _('Edit') }}</a>
+                                                <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-edit-users{{ $user->id }}">
+                                                    <i class="fa-solid fa-pen-to-square"></i> {{ _('Edit') }}
+                                                </button>
                                             @endcan
                                             @can('user-delete')
                                                 <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST"
@@ -133,4 +126,34 @@
         @include('admin.users._modal.edit-users', ['user' => $user])
         @include('admin.children._modal.child-add-in-parent', ['user' => $user])
     @endforeach
+@endsection
+@section('footer-scripts')
+    <script type="text/javascript">
+        $("#form-create-user").submit(function(e) {
+            e.preventDefault();
+            var url = $(this).attr('action');
+            var formData = new FormData(this);
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    $('#modal-create-users').modal('hide');
+                    $('#form-create-user').trigger('reset');
+                    location.reload();
+                },
+                error: function(response) {
+                    $('#form-create-user').find(".print-error-msg").find("ul").html('');
+                    $('#form-create-user').find(".print-error-msg").css('display', 'block');
+                    $.each(response.responseJSON.errors, function(key, value) {
+                        $('#form-create-user').find(".print-error-msg").find("ul").append(
+                            '<li>' + value + '</li>');
+                    });
+                }
+            });
+        });
+    </script>
 @endsection

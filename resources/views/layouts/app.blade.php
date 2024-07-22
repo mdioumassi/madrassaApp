@@ -56,10 +56,11 @@
                                 </li>
                             @endif
                         @else
-                        @if(auth()->user()->hasRole('Admin'))
-                        <li><a class="nav-link" href="{{ route('admin.users.index') }}">Gestion des utilisateurs</a></li>
-                        <li><a class="nav-link" href="{{ route('roles.index') }}">Gestion des rôles</a></li>
-                        @endif
+                            @if (auth()->user()->hasRole('Admin'))
+                                <li><a class="nav-link" href="{{ route('admin.users.index') }}">Gestion des
+                                        utilisateurs</a></li>
+                                <li><a class="nav-link" href="{{ route('roles.index') }}">Gestion des rôles</a></li>
+                            @endif
 
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
@@ -93,7 +94,7 @@
         </main>
     </div>
     @vite('resources/js/app.js')
-    @stack('scripts')
+    @yield('footer-scripts')
 </body>
 
 </html>

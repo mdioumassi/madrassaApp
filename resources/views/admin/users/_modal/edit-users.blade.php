@@ -1,6 +1,10 @@
+@php
+      $roles = \Spatie\Permission\Models\Role::all()->pluck('name', 'name');
+      $userRole = $user->roles->pluck('name', 'name')->all();
+@endphp
 <x-modal id="modal-edit-users{{ $user->id }}">
     <x-slot name="title">{{ $user->name }} {{ $user->lastname }}</x-slot>
-    <x-slot name="size">modal-lg</x-slot>
+    <x-slot name="size">modal-xl</x-slot>
     <x-slot name="body">
         @if (count($errors) > 0)
             <div class="alert alert-danger">
@@ -12,14 +16,13 @@
                 </ul>
             </div>
         @endif
-        <form action="{{ route('admin.users.update', $user->id) }}" method="POST">
+        <form action="{{ route('admin.users.update', $user->id) }}" method="POST" id="form-create-user" enctype="multipart/form-data" class="w3-padding w3-light-grey">
             @csrf
             @method('PUT')
 
             <div class="row mb-3">
-                <label for="civility" class="col-md-4 col-form-label text-md-end ">{{ __('Civility') }}</label>
-
-                <div class="col-md-6">
+                <div class="col">
+                    <label for="civility">{{ __('Civility') }}</label>
                     <select id="civility" class="form-select @error('civility') is-invalid @enderror" name="civility">
                         <option value="Mr" @if ($user->civility == 'Mr') selected @endif>Monsieur
                         </option>
@@ -35,12 +38,9 @@
                         </span>
                     @enderror
                 </div>
-            </div>
-
-            <div class="row mb-3">
-                <label for="type" class="col-md-4 col-form-label text-md-end ">{{ __('Type') }}</label>
-
-                <div class="col-md-6">
+      
+                <div class="col">
+                    <label for="type">{{ __('Type') }}</label>
                     <select id="type" class="form-select @error('type') is-invalid @enderror" name="type">
                         <option value="parent" @if ($user->type == 'parent') selected @endif>Parent
                         </option>
@@ -56,42 +56,9 @@
                         </span>
                     @enderror
                 </div>
-            </div>
 
-            <div class="row mb-3">
-                <label for="name" class="col-md-4 col-form-label text-md-end ">{{ __('Name') }}</label>
-
-                <div class="col-md-6">
-                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
-                        name="name" value="{{ $user->name }}">
-
-                    @error('name')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label for="lastname" class="col-md-4 col-form-label text-md-end ">{{ __('Lastname') }}</label>
-
-                <div class="col-md-6">
-                    <input id="lastname" type="text" class="form-control @error('lastname') is-invalid @enderror"
-                        name="lastname" value="{{ $user->lastname }}">
-
-                    @error('lastname')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label for="function" class="col-md-4 col-form-label text-md-end ">{{ __('Function') }}</label>
-
-                <div class="col-md-6">
+                <div class="col">
+                    <label for="function">{{ __('Function') }}</label>
                     <input id="function" type="function" class="form-control @error('function') is-invalid @enderror"
                         name="function" value="{{ $user->function }}">
 
@@ -104,9 +71,34 @@
             </div>
 
             <div class="row mb-3">
-                <label for="phone" class="col-md-4 col-form-label text-md-end ">{{ __('Phone') }}</label>
+                <div class="col">
+                    <label for="name">{{ __('Name') }}</label>
+                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
+                        name="name" value="{{ $user->name }}">
 
-                <div class="col-md-6">
+                    @error('name')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="col">
+                    <label for="lastname">{{ __('Lastname') }}</label>
+                    <input id="lastname" type="text" class="form-control @error('lastname') is-invalid @enderror"
+                        name="lastname" value="{{ $user->lastname }}">
+
+                    @error('lastname')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="phone">{{ __('Phone') }}</label>
                     <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror"
                         name="phone" value="{{ $user->phone }}">
 
@@ -116,12 +108,22 @@
                         </span>
                     @enderror
                 </div>
+                <div class="col">
+                    <label for="email">{{ __('Email') }}</label>
+                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+                        name="email" value="{{ $user->email }}">
+
+                    @error('email')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
             </div>
 
             <div class="row mb-3">
-                <label for="full_address" class="col-md-4 col-form-label text-md-end ">{{ __('Full Address') }}</label>
-
-                <div class="col-md-6">
+                <div class="col">
+                    <label for="full_address">{{ __('Full Address') }}</label>
                     <input id="full_address" type="text"
                         class="form-control @error('full_address') is-invalid @enderror" name="full_address"
                         value="{{ $user->full_address }}">
@@ -135,24 +137,8 @@
             </div>
 
             <div class="row mb-3">
-                <label for="email" class="col-md-4 col-form-label text-md-end ">{{ __('Email') }}</label>
-
-                <div class="col-md-6">
-                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                        name="email" value="{{ $user->email }}">
-
-                    @error('email')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label for="password" class="col-md-4 col-form-label text-md-end ">{{ __('Password') }}</label>
-
-                <div class="col-md-6">
+                <div class="col">
+                    <label for="password">{{ __('Password') }}</label>
                     <input id="password" type="password"
                         class="form-control @error('password') is-invalid @enderror" name="password">
 
@@ -162,13 +148,11 @@
                         </span>
                     @enderror
                 </div>
-            </div>
+    
+               
 
-            <div class="row mb-3">
-                <label for="confirm-password"
-                    class="col-md-4 col-form-label text-md-end ">{{ __('Confirm Password') }}</label>
-
-                <div class="col-md-6">
+                <div class="col">
+                    <label for="confirm-password">{{ __('Confirm Password') }}</label>
                     <input id="confirm-password" type="password"
                         class="form-control @error('confirm-password') is-invalid @enderror"
                         name="confirm-password">
@@ -179,18 +163,16 @@
                         </span>
                     @enderror
                 </div>
-            </div>
-
-            <div class="row mb-3">
-                <label for="roles" class="col-md-4 col-form-label text-md-end ">{{ __('Roles') }}</label>
-
-                <div class="col-md-6">
+                
+                <div class="col">
+                    <label for="roles">{{ __('Roles') }}</label>
                     <select name="roles[]" class="form-control" multiple="multiple">
                         @foreach ($roles as $value => $label)
-                            <option value="{{ $value }}" {{ isset($userRole[$value]) ? 'selected' : ''}}>
+                            <option value="{{ $value }}"
+                                {{ isset($userRole[$value]) ? 'selected' : '' }}>
                                 {{ $label }}
                             </option>
-                         @endforeach
+                        @endforeach
                     </select>
 
                     @error('roles')
@@ -200,10 +182,7 @@
                     @enderror
                 </div>
             </div>
-
-
-
-            <button type="submit" class="btn btn-primary">{{ _('Editer') }}</button>
+            <button type="submit" class="btn btn-primary">{{ _('Modifier') }}</button>
         </form>
     </x-slot>
     <x-slot name="footer">

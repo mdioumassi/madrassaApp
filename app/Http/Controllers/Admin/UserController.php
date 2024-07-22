@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -83,13 +84,12 @@ class UserController extends Controller
      * route: /admin/users/store
      * name: admin.users.store
      */
-    public function store(UserStoreRequest $request): RedirectResponse
+    public function store(UserStoreRequest $request): JsonResponse
     {
         $user = User::create($request->validated());
         $user->assignRole($request->input('roles'));
 
-        return redirect()->route('admin.users.index')
-            ->with('success', 'User created successfully.');
+        return response()->json(['success' => 'User created successfully.']);
     }
 
     /**
