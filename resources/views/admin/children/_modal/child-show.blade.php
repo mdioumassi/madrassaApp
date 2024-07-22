@@ -40,12 +40,12 @@
                 </table>
             </div>
             <div class="col-4">
-                @foreach($child->registrations as $registration)
-                <b>{{ strtoupper($registration->course->label) }}</b>
+                {{-- @foreach($child->registrations as $registration) --}}
+                <b>{{ strtoupper($child->registration->course->label) }}</b>
                     <ul>
-                        <li>{{ $registration->level->label }}</li>
+                        <li>{{ $child->registration->level->label }}</li>
                     </ul>
-                @endforeach
+                {{-- @endforeach --}}
             </div>
         </div>
     </x-slot>

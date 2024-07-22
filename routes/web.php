@@ -37,7 +37,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('admin/permissions', PermissionController::class);
 });
 
-Route::get('/registrations', [RegistrationController::class, 'index'])->name('registrations.index');
+Route::get('/registrations/children', [RegistrationController::class, 'listChildren'])->name('registrations.children');
+Route::get('/registrations/adults', [RegistrationController::class, 'listAdults'])->name('registrations.adults');
+
+
 Route::get('/registrations/create', [RegistrationController::class, 'create'])->name('registrations.create');
 Route::post('/registrations/store', [RegistrationController::class, 'store'])->name('registrations.store');
 Route::get('/registrations/{registration}', [RegistrationController::class, 'show'])->name('registrations.show');

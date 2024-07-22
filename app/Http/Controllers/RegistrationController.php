@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ChildStoreRequest;
+use App\Http\Requests\UserStoreRequest;
 use App\Models\Child;
 use App\Models\Course;
 use App\Models\Level;
@@ -10,25 +11,70 @@ use App\Models\Registration;
 use App\Models\User;
 use Illuminate\Http\Client\Request as ClientRequest;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class RegistrationController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function listChildren()
     {
-        $registrations = Registration::latest()->paginate(8);
+        $children = Registration::where('child_id', '!=', null)->get();
 
-        return view('registrations.index', compact('registrations'));
+        return view('registrations.children', ['registrations' => $children]);
     }
 
+    public function listAdults()
+    {
+        $adults = Registration::where('adult_id', '!=', null)->get();
+
+        return view('registrations.adults', ['registrations' => $adults]);
+    }
+
+    /**
+     * Step 0: Register Parent
+     * route: step0.register.parent.create
+     * name: step0.register.parent.create
+     * Method: GET
+     */
+    public function Step0RegisterParentCreate()
+    {
+        $roles = Role::pluck('name', 'name')->all();
+        return view('registrations.parents.create', compact('roles'));
+    }
+
+    /**
+     * Step 0: Register Parent
+     * route: step0.register.parent.store
+     * name: step0.register.parent.store
+     * Method: POST
+     */
+    public function Step0RegisterParentStore(UserStoreRequest $request)
+    {
+
+        $user = User::create($request->validated());
+        $user->assignRole($request->input('roles'));
+
+        return redirect()->route('step1.register.child.create', $user->id);
+    }
+
+    /**
+     * Step 1: Register Child
+     * route: step1.register.child.create
+     * Method: GET
+     */
     public function Step1RegisterChildCreate($parenId)
     {
         $user = User::find($parenId);
-        return view('registrations.create', compact('user'));
+        return view('registrations.childs.create', compact('user'));
     }
 
+    /**
+     * Step 1: Register Child
+     * route: step1.register.child.store
+     * Method: POST
+     */
     public function Step1RegisterChildStore(ChildStoreRequest $request, $parentId)
     {
         $parent = User::where('id', $parentId)->first();
@@ -154,7 +200,7 @@ class RegistrationController extends Controller
             $registration_data['registration_status'] = 'registered';
         } else {
             $registration_data['payment_status'] = 'pending';
-            $registration_data['registration_status'] = 'pending';
+            $registration_data['registration_status'] = 'unregistered';
         }
 
         $registration_data['registration_date'] = date('Y-m-d');

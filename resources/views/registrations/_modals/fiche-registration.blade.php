@@ -1,4 +1,3 @@
-@foreach ($registrations as $registration)
     <x-modal id="modal-fiche-registration{{ $registration->id }}">
         <x-slot name="title">{{ _('Fiche d\'inscription') }}</x-slot>
         <x-slot name="size">modal-xl</x-slot>
@@ -9,7 +8,7 @@
                         {{-- Bloc Parent --}}
                         <div class="w3-card centered-element mb-5">
                             <header class="w3-container w3-light-grey w3-padding">
-                                <h3>{{ $child->parent->getFullNameAttribute() }}</h3>
+                                <h3>{{ $registration->child->parent->getFullNameAttribute() }}</h3>
                             </header>
                             <div class="w3-container w3-padding">
                                 <div class="row">
@@ -173,4 +172,3 @@
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">{{ _('Fermer') }}</button>
         </x-slot>
     </x-modal>
-@endforeach

@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegistrationController;
 
+Route::post('/register/step0/parent/store', [RegistrationController::class, 'Step0RegisterParentStore'])->name('step0.register.parent.store');
+Route::get('/register/step0/parent/create', [RegistrationController::class, 'Step0RegisterParentCreate'])->name('step0.register.parent.create');
 Route::get('/register/step1/parent/{id}/child', [RegistrationController::class, 'Step1RegisterChildCreate'])->name('step1.register.child.create');
 Route::post('/register/step1/parent/{id}/child/store', [RegistrationController::class, 'Step1RegisterChildStore'])->name('step1.register.child.store');
 Route::get('/register/step1/child/{id}', [RegistrationController::class, 'Step1RegisterChild'])->name('step1.register.child');

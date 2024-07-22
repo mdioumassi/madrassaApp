@@ -31,6 +31,25 @@ class Registration extends Model
         return $this->belongsTo(Course::class);
     }
 
+    public function getPaymentStatus(): string
+    {
+        if ($this->payment_status === 'paid') return '<span class="w3-tag w3-green w3-round">Payé</span>';
+        if ($this->payment_status === 'pending') return '<span class="w3-tag w3-red w3-round">Non payé</span>';
+    }
+
+    public function getRegistrationStatus(): string
+    {
+        if ($this->registration_status === 'registered') return '<span class="w3-tag w3-green w3-round">Inscrit</span>';
+        if ($this->registration_status === 'unregistered') return '<span class="w3-tag w3-red w3-round">Non inscrit</span>';
+    }
+
+    public function getPaymentMethod(): string
+    {
+        if ($this->payment_method === 'espece') return '<span class="w3-tag w3-blue w3-round">Espèce</span>';
+        if ($this->payment_method === 'cheque') return '<span class="w3-tag w3-yellow w3-round">Chèque</span>';
+        if ($this->payment_method === 'virement') return '<span class="w3-tag w3-green w3-round">Virement</span>';
+    }
+
     /**
      * The attributes that are mass assignable.
      *

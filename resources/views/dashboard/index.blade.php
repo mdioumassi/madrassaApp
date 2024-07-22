@@ -162,7 +162,7 @@
                                     </div>
 
                                     <div class="card-footer">
-                                        <a href="{{ route('registrations.index') }}">
+                                        <a href="{{ route('registrations.children') }}">
                                             <button class="btn btn-outline-primary">{{ _('Les inscriptions') }}</button>
                                         </a>
                                     </div>

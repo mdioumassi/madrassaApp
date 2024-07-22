@@ -33,7 +33,19 @@
                                 <div class="col-md-6 mb-4">
                                     <div class="w3-card-4">
                                         <header class="w3-container w3-blue">
-                                            <h1>{{ $child->getFullNameAttribute() }}</h1>
+                                            <div class="row">
+                                                <div class="col-11">
+                                                    <h1>{{ $child->getFullNameAttribute() }}</h1>
+                                                </div>
+                                                <div class="col">
+                                                    @can('child-edit')
+                                                        <a href="" data-bs-toggle="modal"
+                                                            data-bs-target="#modal-view-edit-child{{ $child->id }}">
+                                                            <i class='fas fa-edit' style='font-size:24px; margin-top:17px'></i>
+                                                        </a>
+                                                    @endcan
+                                                </div>
+                                            </div>
                                         </header>
                                         <div class="w3-container w3-padding">
                                             <div class="row">
@@ -42,7 +54,7 @@
                                                         alt="{{ $child->firstname }}" class="img-thumbnail img-fluid"
                                                         style="width: 200px; height: 200px;">
                                                 </div>
-                                                <div class="col-4">
+                                                <div class="col-5">
                                                     <table class="w3-table w3-bordered">
                                                         <tr>
                                                             <td><strong>Genre:</strong></td>
@@ -50,7 +62,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td><strong>Age:</strong></td>
-                                                            <td>{{ $child->getAgeAttribute() }} ans</td>
+                                                            <td>{{ $child->getAgeAttribute() }}ans</td>
                                                         </tr>
                                                         <tr>
                                                             <td><strong>Classe Française:</strong></td>
@@ -67,27 +79,36 @@
                                                                 <td><span class="w3-text-green">Inscrit</span></td>
                                                             </tr>
                                                         @endif
+                                                        <tr>
+                                                            <td><strong>Date d'inscription:</strong></td>
+                                                            <td>{{ date('d-m-Y', strtotime($child->registration->registration_date)) }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>Paiement:</strong></td>
+                                                            <td>{{ $child->registration->payment_amount }}€</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>Paiement status:</strong></td>
+                                                            <td>{!! $child->registration->getPaymentStatus() !!}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>Paiement methode:</strong></td>
+                                                            <td>{!! $child->registration->getPaymentMethod() !!}</td>
+                                                        </tr>
                                                     </table>
                                                 </div>
-                                                <div class="col-5">
-                                                    @foreach ($child->registrations as $registration)
-                                                        <b>{{ strtoupper($registration->course->label) }}</b>
+                                                <div class="col-4">
+                                                    {{-- @foreach ($child->registrations as $registration) --}}
+                                                        <b>{{ strtoupper($child->registration->course->label) }}</b>
                                                         <ul>
-                                                            <li>{{ $registration->level->label }}</li>
+                                                            <li>{{ $child->registration->level->label }}</li>
                                                         </ul>
-                                                    @endforeach
+                                                    {{-- @endforeach --}}
                                                 </div>
                                             </div>
                                         </div>
                                         <footer class="w3-container w3-padding w3-light-grey">
                                             <div class="w3-bar">
-                                                @can('child-edit')
-                                                    <button class="w3-button w3-ripple w3-yellow w3-small w3-left me-3"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#modal-view-edit-child{{ $child->id }}">
-                                                        <i class="fa-solid fa-pen-to-square"></i> {{ _('Modifier') }}
-                                                    </button>
-                                                @endcan
                                                 @if (!$child->is_registered($child->id))
                                                     <a href="{{ route('step1.register.child', $child->id) }}"
                                                         class="w3-button w3-ripple w3-green w3-small w3-left">{{ _('Incription') }}</a>
@@ -96,93 +117,13 @@
                                                 @else
                                                     <a href="{{ route('step1.register.child', $child->id) }}"
                                                         class="w3-button w3-ripple w3-green w3-small w3-left w3-disabled">{{ _('Incription') }}</a>
-                                                    {{-- <a href="#"
-                                                        class="w3-button w3-ripple w3-indigo w3-small w3-right">{{ _('Fiche d\'inscription') }}</a> --}}
-                                                    @foreach ($child->registrations as $registration)
                                                         <button class="w3-button w3-ripple w3-indigo w3-small w3-right"
                                                             data-bs-toggle="modal"
-                                                            data-bs-target="#modal-fiche-registration{{ $registration->id }}">{{ _('Fiche d\'inscription') }}</button>
-                                                    @endforeach
+                                                            data-bs-target="#modal-fiche-registration{{ $child->registration->id }}">{{ _('Fiche d\'inscription') }}</button>
                                                 @endif
                                             </div>
                                         </footer>
                                     </div>
-
-                                    {{-- <div class="card">
-                                        <div class="card-body">
-                                            <div class="card-header w3-green">
-                                                <strong>{{ $child->getFullNameAttribute() }}</strong></div>
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <img src="https://www.w3schools.com/w3css/img_snowtops.jpg"
-                                                        alt="{{ $child->firstname }}" class="img-thumbnail img-fluid"
-                                                        style="width: 200px; height: 200px;">
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <table class="w3-table w3-bordered">
-                                                        <tr>
-                                                            <td><strong>Genre:</strong></td>
-                                                            <td>{{ $child->genre }}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><strong>Age:</strong></td>
-                                                            <td>{{ $child->getAgeAttribute() }} ans</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><strong>Classe Française:</strong></td>
-                                                            <td>{{ $child->french_class }}</td>
-                                                        </tr>
-                                                        @if (!$child->is_registered($child->id))
-                                                            <tr>
-                                                                <td><strong>Statut:</strong></td>
-                                                                <td><span class="w3-text-red">Non inscrit</span></td>
-                                                            </tr>
-                                                        @else
-                                                            <tr>
-                                                                <td><strong>Statut:</strong></td>
-                                                                <td><span class="w3-text-green">Inscrit</span></td>
-                                                            </tr>
-                                                            
-                                                                <tr>
-                                                                    @foreach ($child->registrations as $registration)
-                                                                    <td>
-                                                                    {{ $registration->course->label }}
-                                                                    <ul>
-                                                                        <li>{{ $registration->level->label }}</li>
-                                                                    </ul>
-                                                                    </td>
-                                                                    @endforeach
-                                                                </tr>
-                                                           
-                                                        @endif
-                                                    </table>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-footer">
-                                            <div class="w3-bar">
-                                                @can('child-edit')
-                                                    <button class="w3-button w3-ripple w3-yellow w3-small w3-left me-3"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#modal-view-edit-child{{ $child->id }}">
-                                                        <i class="fa-solid fa-pen-to-square"></i> {{ _('Modifier') }}
-                                                    </button>
-                                                @endcan
-                                                @if (!$child->is_registered($child->id))
-                                                    <a href="{{ route('step1.register.child', $child->id) }}"
-                                                        class="w3-button w3-ripple w3-green w3-small w3-left">{{ _('Incription') }}</a>
-                                                    <a href="#"
-                                                        class="w3-button w3-ripple w3-indigo w3-small w3-right  w3-disabled">{{ _('Fiche d\'inscription') }}</a>
-                                                @else
-                                                    <a href="{{ route('step1.register.child', $child->id) }}"
-                                                        class="w3-button w3-ripple w3-green w3-small w3-left w3-disabled">{{ _('Incription') }}</a>
-                                                    <a href="#"
-                                                        class="w3-button w3-ripple w3-indigo w3-small w3-right">{{ _('Fiche d\'inscription') }}</a>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div> --}}
                                 </div>
                             @endforeach
                         </div>
@@ -192,16 +133,7 @@
         </div>
     </div>
     @include('admin.users.parents._modals.child-add-in-parent', ['user' => $parent])
-
     @foreach ($children as $child)
-        @include('registrations._modals.fiche-registration', [
-            'registrations' => $child->registrations,
-            // 'level' => $child->registrations[0]->level,
-            // 'course' => $child->registrations[0]->course,
-            // 'total_amount' =>
-            //     $child->registrations[0]->level->registration_fees + $child->registrations[0]->level->tarif,
-        ])
-        @include('admin.users.parents._modals.child-edit', ['child' => $child, 'user' => $child->parent])
-        {{-- @include('admin.users.parents._modals.child-add-in-parent', ['user' => $child->parent]) --}}
+        @include('registrations._modals.fiche-registration', ['registration' => $child->registration])
     @endforeach
 @endsection

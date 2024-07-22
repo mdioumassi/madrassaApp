@@ -15,7 +15,6 @@
                 <div class="card">
                     <div class="card-header w3-green"><i class='fas fa-user-plus'></i> {{ __('Ajouter un utilisateur') }}
                     </div>
-
                     <div class="card-body">
                         @if (count($errors) > 0)
                             <div class="alert alert-danger">

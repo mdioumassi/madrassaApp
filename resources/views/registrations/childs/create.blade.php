@@ -25,7 +25,7 @@
                         <header class="w3-container w3-indigo w3-padding w3-center">
                             <h3>{{ _('Ajouter un enfant') }}</h3>
                         </header>
-                        <div class="w3-container w3-padding">
+                        <div class="w3-container w3-padding-24">
                             <div class="row">
                                 <div class="col">
 

@@ -47,7 +47,7 @@
                                 @endif
                                 @foreach ($children as $child)
                                     <tr>
-                                        <td>{{ $child->genre }}</td>
+                                        <td class="w3-center">{!! $child->getGenre() !!}</td>
                                         <td>{{ $child->firstname }}</td>
                                         <td>{{ strtoupper($child->lastname) }}</td>
                                         <td>{{ $child->getAgeAttribute() }} ans</td>                                      
