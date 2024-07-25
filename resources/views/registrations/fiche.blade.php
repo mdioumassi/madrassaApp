@@ -23,15 +23,17 @@
                     @csrf
                 {{-- Bloc Enfant --}}
                 <div class="w3-card centered-element mb-5" style="width:80%;">
-                    <header class="w3-container w3-light-grey w3-padding"><h3>{{ $child->getFullNameAttribute()}}</h3></header>
+                    <header class="w3-container w3-light-grey w3-padding">
+                        <h3>{{ $child->getFullNameAttribute() }}</h3>
+                    </header>
                     <div class="w3-container w3-padding">
                         <div class="row">
                             <div class="col-md-2">
-                                <img src="https://www.w3schools.com/w3css/img_snowtops.jpg"
-                                    alt="{{ $child->firstname }}" class="img-thumbnail"
-                                    style="width: 200px; height: 200px;">
+                                <img src="/photos/{{ $child->photo }}" alt="{{ $child->firstname }}"
+                                class="img-thumbnail img-fluid"
+                                style="width: 200px;">
                             </div>
-                            <div class="col-md-6">
+                            <div class="col">
                                 <table class="w3-table w3-bordered">
                                     <tr>
                                         <td><strong>Sexe:</strong></td>
@@ -54,14 +56,6 @@
                                         <td>{{ $course->label }}</td>
                                     </tr>
                                 </table>
-                            </div>
-                            <div class="col-md-4">
-                                <strong class="mb-3">Professeur:</strong> {{ $level->teacher->getFullNameAttribute() }}
-                                <ul class="w3-ul w3-card">
-                                    <li><strong>Email:</strong> {{ $level->teacher->email }}</li>
-                                    <li> <strong>Téléphone:</strong> {{ $level->teacher->phone }}</li>
-                                    <li> <strong>Fonction:</strong> {{ $level->teacher->function }}</li>
-                                </ul>
                             </div>
                         </div>
                     </div>
@@ -93,6 +87,14 @@
                                         </td>
                                     </tr>
                                 </table>
+                            </div>
+                            <div class="col-4">
+                                <strong class="mb-3">Professeur:</strong> {{ $level->teacher->getFullNameAttribute() }}
+                                <ul class="w3-ul w3-card">
+                                    <li><strong>Email:</strong> {{ $level->teacher->email }}</li>
+                                    <li> <strong>Téléphone:</strong> {{ $level->teacher->phone }}</li>
+                                    <li> <strong>Fonction:</strong> {{ $level->teacher->function }}</li>
+                                </ul>
                             </div>
                         </div>
                     </div>

@@ -50,11 +50,11 @@
                                         <td class="w3-center">{!! $child->getGenre() !!}</td>
                                         <td>{{ $child->firstname }}</td>
                                         <td>{{ strtoupper($child->lastname) }}</td>
-                                        <td>{{ $child->getAgeAttribute() }} ans</td>                                      
+                                        <td>{{ $child->getAgeAttribute() }} ans</td>
                                         <td>
                                             @if ($child->parent->type->value == 'parent')
-                                                <a
-                                                    href="{{ route('admin.users.show', $child->parent->id) }}">{{ $child->parent->getFullNameAttribute() }}</a>
+                                                <a href="" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-show-users{{ $child->parent->id }}">{{ $child->parent->getFullNameAttribute() }}</a>
                                             @endif
                                         </td>
                                         @if (!$child->is_registered($child->id))
@@ -70,10 +70,14 @@
                                             <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                                 data-bs-target="#modal-view-edit-child{{ $child->id }}"><i
                                                     class="fa-solid fa-pen-to-square"></i> {{ _('Edit') }}</button>
-                                            <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="">
-                                                @if ($child->is_registered($child->id))
-                                                <i class="fa fa-drivers-license-o"></i> {{ _('Fiche') }}</button>
-                                                @endif
+                                            @if ($child->is_registered($child->id))
+                                                <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-fiche-registration{{ $child->registration->id }}"">
+                                                    <i class="fa fa-drivers-license-o"></i> {{ _('Fiche') }}</button>
+                                            @else
+                                                <button type="button" class="btn btn-info btn-sm" disabled><i
+                                                        class="fa fa-drivers-license-o"></i> {{ _('Fiche') }}</button>
+                                            @endif
                                             <form action="{{ route('children.destroy', $child->id) }}" method="POST"
                                                 class="d-inline">
                                                 @csrf
@@ -95,7 +99,11 @@
         </div>
     </div>
     @foreach ($children as $child)
+    @include('admin.users._modal.show-users', ['user' => $child->parent])
         @include('admin.children._modal.child-show', ['child' => $child])
         @include('admin.children._modal.child-edit', ['child' => $child])
+        @if ($child->registration)
+            @include('registrations._modals.fiche-registration', ['registration' => $child->registration])
+        @endif
     @endforeach
 @endsection

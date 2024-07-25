@@ -20,7 +20,7 @@
             @endif
             @foreach ($level->registrations as $registration)
                 <tr>
-                    <td>{{ $registration->child->genre }}</td>
+                    <td class="w3-center">{!! $registration->child->getGenre() !!}</td>
                     <td>{{ $registration->child->firstname }}</td>
                     <td>{{ strtoupper($registration->child->lastname) }}</td>
                     <td>{{ $registration->child->getAgeAttribute() }} ans</td>

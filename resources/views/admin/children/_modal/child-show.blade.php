@@ -40,12 +40,14 @@
                 </table>
             </div>
             <div class="col-4">
-                {{-- @foreach($child->registrations as $registration) --}}
+                @if ($child->registration == null)
+                    <div class="alert alert-danger">Aucune inscription</div>
+                @else
                 <b>{{ strtoupper($child->registration->course->label) }}</b>
                     <ul>
                         <li>{{ $child->registration->level->label }}</li>
                     </ul>
-                {{-- @endforeach --}}
+                @endif
             </div>
         </div>
     </x-slot>

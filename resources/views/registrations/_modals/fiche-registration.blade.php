@@ -7,40 +7,40 @@
                     <div class="col">
                         {{-- Bloc Parent --}}
                         <div class="w3-card centered-element mb-5">
-                            <header class="w3-container w3-light-grey w3-padding">
-                                <h3>{{ $registration->child->parent->getFullNameAttribute() }}</h3>
+                            <header class="w3-container w3-light-grey">
+                                <h3><span class="badge w3-green">Parent</span>  {{ $registration->child->parent->getFullNameAttribute() }}</h3>
                             </header>
                             <div class="w3-container w3-padding">
                                 <div class="row">
-                                    <div class="col-md-3">
-                                        <img src="https://www.w3schools.com/w3css/img_snowtops.jpg"
-                                            alt="{{ $registration->child->firstname }}" class="img-thumbnail"
-                                            style="width: 200px; height: 200px;">
+                                    <div class="col-md-2">
+                                        <img src="/avatars/{{ $registration->child->parent->avatar }}" alt="{{ $registration->child->parent->firstname }}"
+                                        class="img-thumbnail img-fluid"
+                                        style="width: 200px;">
                                     </div>
-                                    <div class="col-md-9">
+                                    <div class="col">
                                         <table class="w3-table w3-bordered">
                                             <tr>
-                                                <td><strong>Civilité:</strong></td>
+                                                <td class="w3-blue-grey"><strong>Civilité:</strong></td>
                                                 <td>{{ $registration->child->parent->civility }}</td>
                                             </tr>
                                             <tr>
-                                                <td><strong>Type:</strong></td>
+                                                <td class="w3-blue-grey"><strong>Type:</strong></td>
                                                 <td>{{ $registration->child->parent->type }}</td>
                                             </tr>
                                             <tr>
-                                                <td><strong>Profession:</strong></td>
+                                                <td class="w3-blue-grey"><strong>Profession:</strong></td>
                                                 <td>{{ $registration->child->parent->function }}</td>
                                             </tr>
                                             <tr>
-                                                <td><strong>Email:</strong></td>
+                                                <td class="w3-blue-grey"><strong>Email:</strong></td>
                                                 <td>{{ $registration->child->parent->email }}</td>
                                             </tr>
                                             <tr>
-                                                <td><strong>Téléphone:</strong></td>
+                                                <td class="w3-blue-grey"><strong>Téléphone:</strong></td>
                                                 <td>{{ $registration->child->parent->phone}}</td>
                                             </tr>
                                             <tr>
-                                                <td><strong>Adresse:</strong></td>
+                                                <td class="w3-blue-grey"><strong>Adresse:</strong></td>
                                                 <td>{{ $registration->child->parent->full_address }}</td>
                                             </tr>
                                         </table>
@@ -50,57 +50,46 @@
                         </div>
                         {{-- Bloc Enfant --}}
                         <div class="w3-card centered-element mb-5">
-                            <header class="w3-container w3-light-grey w3-padding">
-                                <h3>{{ $registration->child->getFullNameAttribute() }}</h3>
+                            <header class="w3-container w3-light-grey">
+                                <h3><span class="badge w3-green">Enfant</span>  {{ $registration->child->getFullNameAttribute() }}</h3>
                             </header>
                             <div class="w3-container w3-padding">
                                 <div class="row">
                                     <div class="col-md-2">
-                                        <img src="https://www.w3schools.com/w3css/img_snowtops.jpg"
-                                            alt="{{ $registration->child->firstname }}" class="img-thumbnail"
-                                            style="width: 200px; height: 200px;">
+                                        <img src="/photos/{{ $registration->child->photo }}" alt="{{ $registration->child->firstname }}"
+                                        class="img-thumbnail img-fluid"
+                                        style="width: 200px;">
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col">
                                         <table class="w3-table w3-bordered">
                                             <tr>
-                                                <td><strong>Sexe:</strong></td>
+                                                <td class="w3-blue-grey"><strong>Sexe:</strong></td>
                                                 <td>{{ $registration->child->genre }}</td>
                                             </tr>
                                             <tr>
-                                                <td><strong>Age:</strong></td>
+                                                <td class="w3-blue-grey"><strong>Age:</strong></td>
                                                 <td>{{ $registration->child->getAgeAttribute() }} ans</td>
                                             </tr>
                                             <tr>
-                                                <td><strong>Classe Française:</strong></td>
+                                                <td class="w3-blue-grey"><strong>Classe Française:</strong></td>
                                                 <td>{{ $registration->child->french_class }}</td>
                                             </tr>
                                             <tr>
-                                                <td><strong>Niveau:</strong></td>
+                                                <td class="w3-blue-grey"><strong>Niveau:</strong></td>
                                                 <td>{{ $registration->level->label }}</td>
                                             </tr>
                                             <tr>
-                                                <td><strong>Cours:</strong></td>
+                                                <td class="w3-blue-grey"><strong>Cours:</strong></td>
                                                 <td>{{ $registration->course->label }}</td>
                                             </tr>
                                         </table>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <strong class="mb-3">Professeur:</strong>
-                                        {{ $registration->level->teacher->getFullNameAttribute() }}
-                                        <ul class="w3-ul w3-card">
-                                            <li><strong>Email:</strong> {{ $registration->level->teacher->email }}</li>
-                                            <li> <strong>Téléphone:</strong> {{ $registration->level->teacher->phone }}
-                                            </li>
-                                            <li> <strong>Fonction:</strong>
-                                                {{ $registration->level->teacher->function }}</li>
-                                        </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         {{-- Bloc Classe --}}
                         <div class="w3-card centered-element mb-5">
-                            <header class="w3-container w3-light-grey w3-padding">
+                            <header class="w3-container w3-light-grey">
                                 <h3>{{ $registration->level->label }} - {{ $registration->course->label }}</h3>
                             </header>
                             <div class="w3-container w3-padding">
@@ -126,12 +115,23 @@
                                             </tr>
                                         </table>
                                     </div>
+                                    <div class="col-md-4">
+                                        <strong class="mb-3">Professeur:</strong>
+                                        {{ $registration->level->teacher->getFullNameAttribute() }}
+                                        <ul class="w3-ul w3-card">
+                                            <li><strong>Email:</strong> {{ $registration->level->teacher->email }}</li>
+                                            <li> <strong>Téléphone:</strong> {{ $registration->level->teacher->phone }}
+                                            </li>
+                                            <li> <strong>Fonction:</strong>
+                                                {{ $registration->level->teacher->function }}</li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         {{-- Bloc Paiement --}}
                         <div class="w3-card centered-element mb-5">
-                            <header class="w3-container w3-light-grey w3-padding">
+                            <header class="w3-container w3-light-grey">
                                 <h3>Moyen de paiement</h3>
                             </header>
                             <div class="w3-container w3-padding">
@@ -156,7 +156,7 @@
                                             </tr>
                                             <tr>
                                                 <td><strong>Paiement status:</strong></td>
-                                                <td><span class="badge w3-green">{{ ucfirst($registration->payment_status) }}</span>
+                                                <td>{!! $registration->getPaymentStatus() !!}
                                                 </td>
                                             </tr>
                                         </table>

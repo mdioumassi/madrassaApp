@@ -27,7 +27,8 @@ class ChildUpdateRequest extends FormRequest
             'birthdate' => ['required', 'date'],
             'genre' => ['required', 'string', 'max:10'],
             'french_class' => ['required', 'string', 'max:255'],
-            'photo' => 'image'
+            
+            'photo' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
         ];
     }
 }

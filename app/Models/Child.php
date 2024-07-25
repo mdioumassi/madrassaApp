@@ -62,6 +62,7 @@ class Child extends Model
         'genre',
         'french_class',
         'status',
+        'photo',
     ];
 
     protected function casts(): array

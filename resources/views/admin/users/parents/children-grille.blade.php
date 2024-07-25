@@ -47,18 +47,18 @@
                                                 </div>
                                             </div>
                                         </header>
-                                        <div class="w3-container w3-padding">
+                                        <div class="w3-container">
                                             <div class="row">
-                                                <div class="col-3">
-                                                    <img src="https://www.w3schools.com/w3css/img_snowtops.jpg"
-                                                        alt="{{ $child->firstname }}" class="img-thumbnail img-fluid"
-                                                        style="width: 200px; height: 200px;">
+                                                <div class="col-3 w3-padding">
+                                                    <img src="/photos/{{ $child->photo }}" alt="{{ $child->firstname }}"
+                                                        class="img-thumbnail img-fluid"
+                                                        style="width: 200px;">
                                                 </div>
                                                 <div class="col-5">
                                                     <table class="w3-table w3-bordered">
                                                         <tr>
                                                             <td><strong>Genre:</strong></td>
-                                                            <td>{{ $child->genre }}</td>
+                                                            <td>{!! $child->getGenre() !!}</td>
                                                         </tr>
                                                         <tr>
                                                             <td><strong>Age:</strong></td>
@@ -79,31 +79,71 @@
                                                                 <td><span class="w3-text-green">Inscrit</span></td>
                                                             </tr>
                                                         @endif
-                                                        <tr>
-                                                            <td><strong>Date d'inscription:</strong></td>
-                                                            <td>{{ date('d-m-Y', strtotime($child->registration->registration_date)) }}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><strong>Paiement:</strong></td>
-                                                            <td>{{ $child->registration->payment_amount }}€</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><strong>Paiement status:</strong></td>
-                                                            <td>{!! $child->registration->getPaymentStatus() !!}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><strong>Paiement methode:</strong></td>
-                                                            <td>{!! $child->registration->getPaymentMethod() !!}</td>
-                                                        </tr>
+                                                    </table>
+                                                        @if ($child->registration)
+                                                            <div class="accordion accordion-flush"
+                                                                id="accordion{{ $child->registration->id }}">
+                                                                <div class="accordion-item">
+                                                                    <h2 class="accordion-header"
+                                                                        id="flush-headingOne{{ $child->registration->id }}">
+                                                                        @if ($child->registration->payment_status == 'paid')
+                                                                            <button
+                                                                                class="accordion-button w3-panel w3-light-green w3-leftbar w3-padding"
+                                                                                type="button" data-bs-toggle="collapse"
+                                                                                data-bs-target="#flush-collapseOne{{ $child->registration->id }}"
+                                                                                aria-expanded="false"
+                                                                                aria-controls="flush-collapseOne{{ $child->registration->id }}">
+                                                                                <b class="w3-center">PAIEMENT & INSCRIPTION</b>
+                                                                            </button>
+                                                                        @else
+                                                                            <button
+                                                                                class="accordion-button collapsed w3-panel w3-red w3-leftbar w3-padding"
+                                                                                type="button" data-bs-toggle="collapse"
+                                                                                data-bs-target="#flush-collapseOne{{ $child->registration->id }}"
+                                                                                aria-expanded="false"
+                                                                                aria-controls="flush-collapseOne{{ $child->registration->id }}">
+                                                                                <b class="w3-center">PAIEMENT & INSCRIPTION</b>
+                                                                            </button>
+                                                                        @endif
+                                                                    </h2>
+                                                                    <div id="flush-collapseOne{{ $child->registration->id }}"
+                                                                        class="accordion-collapse collapse"
+                                                                        aria-labelledby="flush-headingOne{{ $child->registration->id }}"
+                                                                        data-bs-parent="#accordion{{ $child->registration->id }}">
+                                                                        <div class="accordion-body">
+                                                                            <table class="w3-table w3-bordered">
+                                                                                <tr>
+                                                                                    <td><strong>Date d'inscription:</strong></td>
+                                                                                    <td>{{ date('d-m-Y', strtotime($child->registration->registration_date)) }}
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td><strong>Paiement:</strong></td>
+                                                                                    <td>{{ $child->registration->payment_amount }}€</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td><strong>Paiement status:</strong></td>
+                                                                                    <td>{!! $child->registration->getPaymentStatus() !!}</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td><strong>Paiement methode:</strong></td>
+                                                                                    <td>{!! $child->registration->getPaymentMethod() !!}</td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @endif
                                                     </table>
                                                 </div>
                                                 <div class="col-4">
-                                                    {{-- @foreach ($child->registrations as $registration) --}}
+                                                    @if ($child->registration)
                                                         <b>{{ strtoupper($child->registration->course->label) }}</b>
                                                         <ul>
                                                             <li>{{ $child->registration->level->label }}</li>
                                                         </ul>
-                                                    {{-- @endforeach --}}
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -117,9 +157,9 @@
                                                 @else
                                                     <a href="{{ route('step1.register.child', $child->id) }}"
                                                         class="w3-button w3-ripple w3-green w3-small w3-left w3-disabled">{{ _('Incription') }}</a>
-                                                        <button class="w3-button w3-ripple w3-indigo w3-small w3-right"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#modal-fiche-registration{{ $child->registration->id }}">{{ _('Fiche d\'inscription') }}</button>
+                                                    <button class="w3-button w3-ripple w3-indigo w3-small w3-right"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#modal-fiche-registration{{ $child->registration->id }}">{{ _('Fiche d\'inscription') }}</button>
                                                 @endif
                                             </div>
                                         </footer>
@@ -134,6 +174,21 @@
     </div>
     @include('admin.users.parents._modals.child-add-in-parent', ['user' => $parent])
     @foreach ($children as $child)
-        @include('registrations._modals.fiche-registration', ['registration' => $child->registration])
+        @include('admin.children._modal.child-edit', ['child' => $child])
+        @if ($child->registration)
+            @include('registrations._modals.fiche-registration', ['registration' => $child->registration])
+        @endif
     @endforeach
+@endsection
+
+@section('footer-scripts')
+    <script type="text/javascript">
+        $('#inputPhoto').change(function() {
+            let reader = new FileReader();
+            reader.onload = (e) => {
+                $('#preview-photo').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(this.files[0]);
+        });
+    </script>
 @endsection

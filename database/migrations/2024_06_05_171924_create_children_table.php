@@ -22,6 +22,7 @@ return new class extends Migration
             $table->bigInteger('parent_id')->unsigned();
             $table->foreign('parent_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('status')->default('active');
+            $table->string('photo')->nullable();
             $table->timestamps();
         });
     }

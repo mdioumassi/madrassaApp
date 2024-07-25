@@ -77,9 +77,14 @@ class RegistrationController extends Controller
      */
     public function Step1RegisterChildStore(ChildStoreRequest $request, $parentId)
     {
+        $validatedData = $request->validated();
+        $photo = time().'.'.$request->photo->extension();  
+        $request->photo->move(public_path('photos'), $photo);
+        $validatedData['photo'] = $photo;
+
         $parent = User::where('id', $parentId)->first();
 
-        $child = $parent->children()->create($request->validated());
+        $child = $parent->children()->create($validatedData);
 
         return redirect()->route('step1.register.child', $child->id);
     }

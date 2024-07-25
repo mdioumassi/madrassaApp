@@ -15,6 +15,11 @@ class LevelCrudController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+
+        $this->middleware('permission:level-list|level-create|level-edit|level-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:level-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:level-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:level-delete', ['only' => ['destroy']]);
     }
 
     /**
@@ -149,7 +154,12 @@ class LevelCrudController extends Controller
                              ->with('success', 'Level updated successfully.');
         }
 
-        return redirect()->route('admin.levels.index')
+        if ($request['grille'] == 'teacher') {
+            return redirect()->route('admin.levels.grille')
+                             ->with('success', 'Level updated successfully.');
+        }
+
+        return redirect()->route('admin.levels.list')
                          ->with('success', 'Level updated successfully.');
     }
 

@@ -48,24 +48,6 @@ class ChildController extends Controller
      */
     public function storeChildByParent(ChildStoreRequest $request, $id)
     {
-
-        // $request->validate([
-        //     'firstname' => ['required', 'string', 'max:255'],
-        //     'lastname' => ['required', 'string', 'max:255'],
-        //     'birthdate' => ['required', 'date'],
-        //     'genre' => ['required', 'string', 'max:10'],
-        //     'french_class' => ['required', 'string', 'max:255'],
-        //     'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-        // ]);
-        // $input = $request->all();
-        // if ($request->hasFile('photo')) {
-        //     $photoName = time() . '.' . $request->photo->extension();
-        //     $request->photo->move(public_path('photos'), $photoName);
-
-        //     $input['photo'] = $photoName;
-        // } else {
-        //     unset($input['photo']);
-        // }
         $parent = User::where('id', $id)->first();
 
         $parent->children()->create($request->validated());
@@ -114,9 +96,14 @@ class ChildController extends Controller
      */
     public function update(ChildUpdateRequest $request, Child $child)
     {
+        $validatedData = $request->validated();
+        $photo = time().'.'.$request->photo->extension();  
+        $request->photo->move(public_path('photos'), $photo);
+        $validatedData['photo'] = $photo;
+
         $userId = $request['user_id'];
 
-        $child->update($request->validated());
+        $child->update($validatedData);
 
         if ($userId) {
             return redirect()->route('parent.children.grille', $userId)

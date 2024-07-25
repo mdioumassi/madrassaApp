@@ -6,7 +6,8 @@
             <div class="w3-row mb-5">
                 <div
                     class="w3-col m2 tablink w3-bottombar w3-border-indigo  w3-green w3-hover-border-green w3-hover-light-grey w3-padding">
-                    <span class="w3-badge w3-indigo">1</span> Mon enfant </div>
+                    <span class="w3-badge w3-indigo">1</span> Mon enfant
+                </div>
                 <div class="w3-col m2 tablink w3-bottombar w3-hover-border-green  w3-hover-light-grey w3-padding"><span
                         class="w3-badge w3-indigo">2</span> Choix d'une classe</div>
                 <div class="w3-col m2 tablink w3-bottombar  w3-hover-border-green w3-hover-light-grey w3-padding">
@@ -20,21 +21,33 @@
                         class="w3-badge w3-indigo">6</span> Fiche d'inscription</div>
             </div>
             <div class="col-12">
-                <form  method="POST" action="{{ route('step1.register.child.store', $user->id) }}">
-                    <div class="w3-card-2 centered-element" style="width:80%;">
+                <form method="POST" action="{{ route('step1.register.child.store', $user->id) }}"
+                    enctype="multipart/form-data" id="photo-upload">
+                    @csrf
+                    <div class="w3-card-2 centered-element" style="width:80%;" class="w3-light-grey">
                         <header class="w3-container w3-indigo w3-padding w3-center">
                             <h3>{{ _('Ajouter un enfant') }}</h3>
                         </header>
                         <div class="w3-container w3-padding-24">
                             <div class="row">
-                                <div class="col">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-2">
+                                    <img id="preview-photo" width="200px" class="w3-center">
+                                    <div class="">
+                                        <label class="form-label" for="inputPhoto">Choisir une photo:</label>
+                                        <input type="file" name="photo" id="inputPhoto"
+                                            class="form-control @error('photo') is-invalid @enderror">
 
-                                    @csrf
+                                        @error('photo')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col">
                                     <div class="row mb-3">
                                         <label for="genre"
                                             class="col-md-4 col-form-label text-md-end">{{ __('Genre') }}</label>
-
-                                        <div class="col-md-6">
+                                        <div class="col-md-6 ">
                                             <select id="genre" class="form-select @error('genre') is-invalid @enderror"
                                                 name="genre">
                                                 <option value="garçon">Garçon</option>
@@ -116,20 +129,6 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    {{-- <div class="row mb-3">
-                                        <label for="photo" class="col-md-4 col-form-label text-md-end">Photo: </label>
-                        
-                                        <div class="col-md-6">
-                                            <input id="photo" type="file" class="form-control @error('photo') is-invalid @enderror"
-                                                name="photo" value="{{ old('photo') }}" autocomplete="photo">
-                        
-                                            @error('photo')
-                                                <span role="alert" class="text-danger">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div> --}}
                                 </div>
                             </div>
                         </div>
@@ -141,4 +140,15 @@
             </div>
         </div>
     </div>
+@endsection
+@section('footer-scripts')
+    <script type="text/javascript">
+        $('#inputPhoto').change(function() {
+            let reader = new FileReader();
+            reader.onload = (e) => {
+                $('#preview-photo').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(this.files[0]);
+        });
+    </script>
 @endsection

@@ -33,14 +33,14 @@ class Registration extends Model
 
     public function getPaymentStatus(): string
     {
-        if ($this->payment_status === 'paid') return '<span class="w3-tag w3-green w3-round">Payé</span>';
-        if ($this->payment_status === 'pending') return '<span class="w3-tag w3-red w3-round">Non payé</span>';
+        if ($this->payment_status === 'paid') return '<span class="badge bg-success">Payé</span>';
+        if ($this->payment_status === 'pending') return '<span class="badge bg-danger">Non payé</span>';
     }
 
     public function getRegistrationStatus(): string
     {
-        if ($this->registration_status === 'registered') return '<span class="w3-tag w3-green w3-round">Inscrit</span>';
-        if ($this->registration_status === 'unregistered') return '<span class="w3-tag w3-red w3-round">Non inscrit</span>';
+        if ($this->registration_status === 'registered') return '<span class="badge bg-success">Inscrit</span>';
+        if ($this->registration_status === 'unregistered') return '<span class="badge bg-danger">Non inscrit</span>';
     }
 
     public function getPaymentMethod(): string
