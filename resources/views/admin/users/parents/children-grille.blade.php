@@ -150,7 +150,7 @@
                                         <footer class="w3-container w3-padding w3-light-grey">
                                             <div class="w3-bar">
                                                 @if (!$child->is_registered($child->id))
-                                                    <a href="{{ route('step1.register.child', $child->id) }}"
+                                                    <a href="{{ route('step1.register.child.create', $child->id) }}"
                                                         class="w3-button w3-ripple w3-green w3-small w3-left">{{ _('Incription') }}</a>
                                                     <a href="#"
                                                         class="w3-button w3-ripple w3-indigo w3-small w3-right  w3-disabled">{{ _('Fiche d\'inscription') }}</a>

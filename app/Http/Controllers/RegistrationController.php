@@ -10,6 +10,7 @@ use App\Models\Level;
 use App\Models\Registration;
 use App\Models\User;
 use Illuminate\Http\Client\Request as ClientRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
@@ -50,13 +51,21 @@ class RegistrationController extends Controller
      * name: step0.register.parent.store
      * Method: POST
      */
-    public function Step0RegisterParentStore(UserStoreRequest $request)
+    public function Step0RegisterParentStore(UserStoreRequest $request, User $user)
     {
+        $validatedData = $request->validated();
+        $email = $request['email'];
 
-        $user = User::create($request->validated());
-        $user->assignRole($request->input('roles'));
-
-        return redirect()->route('step1.register.child.create', $user->id);
+        $userIsExist = $user->isEmailExist($email);
+        if ($userIsExist) {
+            $user = $user->where('email', $email)->first();
+            return redirect()->route('step1.register.child.create', $user->id);          
+        } else {
+            $validatedData['email'] = $email;
+            $parent = User::create($validatedData);
+            $parent->assignRole($request->input('roles'));
+            return redirect()->route('step1.register.child.create', $parent->id);
+        }
     }
 
     /**
@@ -75,12 +84,27 @@ class RegistrationController extends Controller
      * route: step1.register.child.store
      * Method: POST
      */
-    public function Step1RegisterChildStore(ChildStoreRequest $request, $parentId)
+    public function Step1RegisterChildStore(ChildStoreRequest $request, $parentId, Child $child)
     {
         $validatedData = $request->validated();
-        $photo = time().'.'.$request->photo->extension();  
-        $request->photo->move(public_path('photos'), $photo);
-        $validatedData['photo'] = $photo;
+        $firstname = $request['firstname'];
+        $lastname = $request['lastname'];
+   
+        if ($child->isExist($firstname, $lastname)) {
+            $child = $child->where('firstname', $firstname)->where('lastname', $lastname)->first();
+            dd($child);
+            return redirect()->route('step1.register.child', $child->id);
+        } else {
+            $photo = time().'.'.$request->photo->extension();  
+            $request->photo->move(public_path('photos'), $photo);
+            $validatedData['photo'] = $photo;
+            $parent = User::where('id', $parentId)->first();
+
+            $child = $parent->children()->create($validatedData);
+    
+            return redirect()->route('step1.register.child', $child->id);
+        }
+        
 
         $parent = User::where('id', $parentId)->first();
 
@@ -95,8 +119,9 @@ class RegistrationController extends Controller
      * route: step1.register.child
      * Method: GET
      */
-    public function Step1RegisterChild(Request $request, $child_id)
+    public function Step1RegisterChild(Request $request, $child_id): RedirectResponse
     {
+   
         $registration_data = [
             'child_id' => $child_id,
             'level_id' => null,
@@ -112,7 +137,9 @@ class RegistrationController extends Controller
         ];
         $request->session()->put('registration_data', $registration_data);
 
-        return redirect()->route('step2.register.level', 'child');
+        return redirect()->route('step2.register.level.child');
+
+       // return redirect()->route('step2.register.level.child');
     }
 
     /**
@@ -120,10 +147,15 @@ class RegistrationController extends Controller
      * route: step2.register.level
      * Method: GET
      */
-    public function Step2RegisterLevel(Request $request, $child)
+    public function Step2RegisterLevelChild(Request $request)
     {
-        $levels = Level::all();
-        return view('admin.levels.grille', compact('levels', 'child'));
+
+        $levels = Level::join('courses', 'levels.course_id', '=', 'courses.id')
+            ->where('courses.keywords', 'arabe-enfant')
+            ->orWhere('courses.keywords', 'coran-enfant')
+            ->get();
+
+        return view('admin.levels.grille-course-child', compact('levels'));
     }
 
     /**
@@ -163,10 +195,11 @@ class RegistrationController extends Controller
      * Method: POST
      */
     public function Step3RegisterSchoolingPost(Request $request) {
+
         $registration_data = $request->session()->get('registration_data');
     
         $registration_data['payment_amount'] = $request['payment_amount'];
-   
+
         $request->session()->put('registration_data', $registration_data);
 
         return redirect()->route('step4.register.payment');
@@ -182,7 +215,6 @@ class RegistrationController extends Controller
         $registration_data = $request->session()->get('registration_data');
 
         $payment = $registration_data['payment_amount'];
-
 
         return view('registrations.payment', compact('payment'));
     }

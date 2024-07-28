@@ -27,7 +27,7 @@
                                     href="{{ route('registrations.adults') }}">{{ _('Inscriptions adultes') }}</a>
                             </li>
                         </ul>
-                        <a href="" class="w3-button w3-green mt-3 mb-2">Inscrire un adulte </a>
+                        <a href="{{ route('step0.register.adult.create') }}" class="w3-button w3-green mt-3 mb-2">Inscrire un adulte </a>
                         <table class="table table-bordered mt-2">
                             <thead>
                                 <tr>

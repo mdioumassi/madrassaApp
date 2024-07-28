@@ -1,6 +1,6 @@
     <x-modal id="modal-fiche-registration{{ $registration->id }}">
         <x-slot name="title">{{ _('Fiche d\'inscription') }}</x-slot>
-        <x-slot name="size">modal-xl</x-slot>
+        <x-slot name="size">modal-xl modal-dialog-scrollable</x-slot>
         <x-slot name="body">
             <div class="container">
                 <div class="row">

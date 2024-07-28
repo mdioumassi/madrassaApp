@@ -50,6 +50,17 @@ class Child extends Model
         if ($this->genre->value === 'fille') return '<i class="fa fa-female w3-text-pink" style="font-size:30px"></i>';
     }
 
+    public function isExist($fisrtname, $lastname): bool
+    {
+        // return Child::where('firstname', $fisrtname)
+        // ->orWhere('lastname', $lastname)
+        // ->exists();
+        return Child::join('users', 'children.parent_id', '=', 'users.id')
+            ->where('children.firstname', $fisrtname)
+            ->where('children.lastname', $lastname)
+            ->exists();
+    }
+
     /**
      * The attributes that are mass assignable.
      *

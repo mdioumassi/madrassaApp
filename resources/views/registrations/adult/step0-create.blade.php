@@ -2,18 +2,10 @@
 
 @section('content')
     <div class="container">
-        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
-        aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ _('Dashboard') }}</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('registrations.children') }}">{{ _('Inscriptions') }}</a></li>
-            <li class="breadcrumb-item active" aria-current="page">{{ _('Inscrire un enfant') }}</li>
-        </ol>
-    </nav>
         <div class="row">
             <div class="w3-row mb-5">
-                <div class="w3-col m2 tablink w3-bottombar w3-hover-border-green w3-hover-light-grey w3-padding">
-                    <span class="w3-badge w3-indigo">1</span> Mon enfant
+                <div class="w3-col m2 tablink w3-bottombar w3-border-indigo  w3-green w3-hover-border-green w3-hover-light-grey w3-padding">
+                    <span class="w3-badge w3-indigo">1</span> Informations personnelles
                 </div>
                 <div class="w3-col m2 tablink w3-bottombar w3-hover-border-green  w3-hover-light-grey w3-padding"><span
                         class="w3-badge w3-indigo">2</span> Choix d'une classe</div>
@@ -27,15 +19,14 @@
                 <div class="w3-col m2 tablink w3-bottombar w3-hover-border-green w3-hover-light-grey w3-padding"><span
                         class="w3-badge w3-indigo">6</span> Fiche d'inscription</div>
             </div>
-            <div class="col-12">
-                <form action="{{ route('step0.register.parent.store') }}" method="post">
+            <div class="col">
+                <form action="{{route('step0.register.adult.store')}}" method="post">
                     @csrf
                     <div class="w3-card-4 centered-element" style="width: 80%">
-                        <header class="w3-container w3-grey">
-                            <h1>Ajouter un parent</h1>
+                        <header class="w3-container w3-indigo w3-center">
+                            <h1>Ajouter un adulte</h1>
                         </header>
                         <div class="w3-container mt-3 w3-padding-24">
-
                             <div class="row mb-3">
                                 <div class="col">
                                     <label for="civility">{{ __('Civilité') }}:</label>
@@ -57,7 +48,7 @@
                                     <label for="type">{{ __('Type') }}:</label>
                                     <select id="type" class="form-select @error('type') is-invalid @enderror"
                                         name="type">
-                                        <option value="parent" selected="selected">Parent</option>
+                                        <option value="adulte" selected="selected">Adulte</option>
                                     </select>
 
                                     @error('type')
@@ -171,7 +162,7 @@
                                     <label for="roles">{{ __('Roles') }}</label>
                                     <select id="roles" class="form-select @error('roles') is-invalid @enderror"
                                         name="roles[]">
-                                        <option value="Parent" selected="selected">Parent</option>
+                                        <option value="Adulte" selected="selected">Adulte</option>
                                     </select>
 
                                     @error('roles')

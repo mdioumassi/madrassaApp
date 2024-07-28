@@ -50,6 +50,21 @@ class User extends Authenticatable
         return $this->name . ' ' . $this->lastname;
     }
 
+    public function getAvatarUrlAttribute(): string
+    {
+        return $this->avatar ? asset('storage/' . $this->avatar) : asset('images/default-avatar.png');
+    }
+
+    public function isEmailExist(string $email): bool
+    {
+        return $this->where('email', $email)->exists();
+    }
+
+    public function isPhoneExist(string $phone): bool
+    {
+        return $this->where('phone', $phone)->exists();
+    }
+
     
 
     /**

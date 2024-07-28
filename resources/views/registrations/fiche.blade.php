@@ -141,7 +141,7 @@
             </div> --}}
             <div class="w3-bar w3-center">
                 <button class="w3-button w3-border w3-large">&laquo; Précedent</button>
-                <a class="w3-button w3-green w3-large" href="{{route('parent.children.grille', $child->parent->id)}}">Inscrire un nouveau enfant</a>
+                <a class="w3-button w3-green w3-large" href="{{route('parent.children.grille', auth()->user()->id)}}">Inscrire un nouveau enfant</a>
                 <button class="w3-button w3-red w3-large">Télécharger la fiche</button>
               </div>
         </form>

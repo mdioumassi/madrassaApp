@@ -27,11 +27,11 @@
                     <div class="w3-container w3-padding">
                         <div class="row">
                             <div class="col-md-2">
-                                <img src="https://www.w3schools.com/w3css/img_snowtops.jpg"
+                                <img src="/photos/{{ $child->photo }}"
                                     alt="{{ $child->firstname }}" class="img-thumbnail"
                                     style="width: 200px; height: 200px;">
                             </div>
-                            <div class="col-md-6">
+                            <div class="col">
                                 <table class="w3-table w3-bordered">
                                     <tr>
                                         <td><strong>Sexe:</strong></td>
@@ -54,14 +54,6 @@
                                         <td>{{ $course->label }}</td>
                                     </tr>
                                 </table>
-                            </div>
-                            <div class="col-md-4">
-                                <strong class="mb-3">Professeur:</strong> {{ $level->teacher->getFullNameAttribute() }}
-                                <ul class="w3-ul w3-card">
-                                    <li><strong>Email:</strong> {{ $level->teacher->email }}</li>
-                                    <li> <strong>Téléphone:</strong> {{ $level->teacher->phone }}</li>
-                                    <li> <strong>Fonction:</strong> {{ $level->teacher->function }}</li>
-                                </ul>
                             </div>
                         </div>
                     </div>
@@ -93,6 +85,14 @@
                                         </td>
                                     </tr>
                                 </table>
+                            </div>
+                            <div class="col-md-4">
+                                <strong class="mb-3">Professeur:</strong> {{ $level->teacher->getFullNameAttribute() }}
+                                <ul class="w3-ul w3-card">
+                                    <li><strong>Email:</strong> {{ $level->teacher->email }}</li>
+                                    <li> <strong>Téléphone:</strong> {{ $level->teacher->phone }}</li>
+                                    <li> <strong>Fonction:</strong> {{ $level->teacher->function }}</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
