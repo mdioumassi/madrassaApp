@@ -2,13 +2,23 @@
 
 @section('content')
     <div class="container">
+        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
+            aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ _('Dashboard') }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('registrations.children') }}">{{ _('Inscriptions') }}</a></li>
+                <li class="breadcrumb-item">{{ $parent->getFullNameAttribute() }}</li>
+                <li class="breadcrumb-item">{{ $child->getFullNameAttribute() }}</li>
+                <li class="breadcrumb-item">{{ $level->label }}</li>
+                <li class="breadcrumb-item active" aria-current="page">{{ _('Moyen de paiement') }}</li>
+            </ol>
+        </nav>
         <div class="row">
             <div class="w3-row mb-5">
                 <div class="w3-col m2 tablink w3-bottombar w3-hover-border-green w3-hover-light-grey w3-padding">
                     <span class="w3-badge w3-indigo">1</span> Ajouter un parent
                 </div>
-                <div
-                    class="w3-col m2 tablink w3-bottombar  w3-hover-border-green w3-hover-light-grey w3-padding">
+                <div class="w3-col m2 tablink w3-bottombar  w3-hover-border-green w3-hover-light-grey w3-padding">
                     <span class="w3-badge w3-indigo">2</span> Ajouter un enfant
                 </div>
                 <div class="w3-col m2 tablink w3-bottombar  w3-hover-light-grey w3-padding"><span
@@ -68,7 +78,8 @@
                                     </div>
                                 </div>
                                 <div class="row" id="payment_by_bank_transfert">
-                                    <span class="w3-center mt-4 mb-4 w3-blue-grey"><b>Paiement par virement bancaire</b></span>
+                                    <span class="w3-center mt-4 mb-4 w3-blue-grey"><b>Paiement par virement
+                                            bancaire</b></span>
                                     <div class="col">
                                         <table class="w3-table w3-bordered">
                                             <tr>
@@ -88,7 +99,8 @@
                                     <div class="col">
                                         <div class="form-group w3-center">
                                             <label for="payment_receipt"><b>Reçu de paiement</b></label>
-                                            <input type="file" class="form-control" id="payment_receipt" name="payment_receipt">
+                                            <input type="file" class="form-control" id="payment_receipt"
+                                                name="payment_receipt">
                                         </div>
                                     </div>
                                 </div>
@@ -115,7 +127,7 @@
                                     <div class="col">
                                     </div>
                                 </div>
-                                <div class="row mb-5"  id="payment_by_check">
+                                <div class="row mb-5" id="payment_by_check">
                                     <span class="w3-center mt-4 mb-4 w3-blue-grey"><b>Paiement par chèque</b></span>
                                     <div class="col">
                                         <table class="w3-table w3-bordered">

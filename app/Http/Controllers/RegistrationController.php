@@ -163,8 +163,10 @@ class RegistrationController extends Controller
      */
     public function Step1RegisterChild(Request $request, $child_id): RedirectResponse
     {
+        $parent = Child::find($child_id)->parent;
         $registration_data = [
             'child_id' => $child_id,
+            'parent_id' => $parent->id,
             'level_id' => null,
             'course_id' => null,
             'adult_id' => null,
@@ -190,6 +192,10 @@ class RegistrationController extends Controller
     {
         $parent = Child::find($childId)->parent;
         $child = Child::find($childId);
+        $registration_data = $request->session()->get('registration_data');
+        $registration_data['parent_id'] = $parent->id;
+        $request->session()->put('registration_data', $registration_data);
+
         $levels = Level::join('courses', 'levels.course_id', '=', 'courses.id')
             ->where('courses.keywords', 'arabe-enfant')
             ->orWhere('courses.keywords', 'coran-enfant')
@@ -230,8 +236,9 @@ class RegistrationController extends Controller
         $child = Child::find($registration_data['child_id']);
         $level = Level::find($registration_data['level_id']);
         $course = Course::find($registration_data['course_id']);
+        $parent = User::find($registration_data['parent_id']);
 
-        return view('registrations.schooling', compact('child', 'level', 'course'));
+        return view('registrations.schooling', compact('child', 'level', 'course', 'parent'));
     }
 
     /**
@@ -261,9 +268,14 @@ class RegistrationController extends Controller
     {
         $registration_data = $request->session()->get('registration_data');
 
+        $child = Child::find($registration_data['child_id']);
+        $level = Level::find($registration_data['level_id']);
+        $course = Course::find($registration_data['course_id']);
+        $parent = User::find($registration_data['parent_id']);
+
         $payment = $registration_data['payment_amount'];
 
-        return view('registrations.payment', compact('payment'));
+        return view('registrations.payment', compact('payment', 'child', 'level', 'course', 'parent'));
     }
 
     /**
@@ -310,12 +322,15 @@ class RegistrationController extends Controller
         $child = Child::find($registration_data['child_id']);
         $level = Level::find($registration_data['level_id']);
         $course = Course::find($registration_data['course_id']);
+        $parent = User::find($registration_data['parent_id']);
         $total_amount = $registration_data['payment_amount'];
         $payment_method = $registration_data['payment_method'];
         $payment_date = $registration_data['payment_date'];
         $payment_status = $registration_data['payment_status'];
 
-        return view('registrations.recap', compact('child', 'level', 'course', 'total_amount', 'payment_method', 'payment_date', 'payment_status'));
+        return view('registrations.recap', compact(
+            'child', 'level', 'course', 'total_amount', 'payment_method', 'payment_date', 'payment_status', 'parent'
+        ));
     }
 
     /**
@@ -347,13 +362,14 @@ class RegistrationController extends Controller
         $child = Child::find($registration_data['child_id']);
         $level = Level::find($registration_data['level_id']);
         $course = Course::find($registration_data['course_id']);
+        $parent = User::find($registration_data['parent_id']);
         $total_amount = $registration_data['payment_amount'];
         $payment_method = $registration_data['payment_method'];
         $payment_date = $registration_data['payment_date'];
         $payment_status = $registration_data['payment_status'];
 
         return view('registrations.fiche', compact(
-            'child', 'level', 'course', 'total_amount', 'payment_method', 'payment_date', 'payment_status'
+            'child', 'level', 'course', 'total_amount', 'payment_method', 'payment_date', 'payment_status', 'parent'
         ));
     }
 }

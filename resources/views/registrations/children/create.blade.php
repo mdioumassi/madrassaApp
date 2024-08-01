@@ -58,6 +58,7 @@
                                             <label for="genre">{{ __('Genre') }}</label>
                                             <select id="genre" class="form-select @error('genre') is-invalid @enderror"
                                                 name="genre">
+                                                <option value="">Choisir le genre</option>
                                                 <option value="garçon">Garçon</option>
                                                 <option value="fille">Fille</option>
                                             </select>

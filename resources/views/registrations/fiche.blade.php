@@ -2,6 +2,19 @@
 
 @section('content')
     <div class="container">
+        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
+        aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ _('Dashboard') }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('registrations.children') }}">{{ _('Inscriptions') }}</a></li>
+            <li class="breadcrumb-item">{{ $parent->getFullNameAttribute() }}</li>
+            <li class="breadcrumb-item">{{ $child->getFullNameAttribute() }}</li>
+            <li class="breadcrumb-item">{{ $level->label }}</li>
+            <li class="breadcrumb-item">{{ ucfirst($payment_method) }}</li>
+            <li class="breadcrumb-item active" aria-current="page">{{ _('Recapitulatif') }}</li>
+            <li class="breadcrumb-item active" aria-current="page">{{ _('Fiche') }}</li>
+        </ol>
+    </nav>
         <div class="row">
             <div class="w3-row mb-5">
                 <div class="w3-col m2 tablink w3-bottombar w3-hover-light-grey w3-padding"><span
