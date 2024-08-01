@@ -48,3 +48,12 @@ button {
 .equal {
     height: 15rem;
 }
+
+.v-center {
+  margin: 0;
+  position: absolute;
+  top: 31%;
+  margin-left: 28px;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}

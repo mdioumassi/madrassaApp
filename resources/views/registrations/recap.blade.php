@@ -27,9 +27,7 @@
                     <div class="w3-container w3-padding">
                         <div class="row">
                             <div class="col-md-2">
-                                <img src="/photos/{{ $child->photo }}"
-                                    alt="{{ $child->firstname }}" class="img-thumbnail"
-                                    style="width: 200px; height: 200px;">
+                                <img src="{{ $child->getPhotoUrlAttribute() }}" style="width: 200px;" class="w3-circle img-fluid">
                             </div>
                             <div class="col">
                                 <table class="w3-table w3-bordered">

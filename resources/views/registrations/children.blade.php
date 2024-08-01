@@ -25,7 +25,7 @@
                                     href="{{ route('registrations.adults') }}">{{ _('Inscriptions adultes') }}</a>
                             </li>
                         </ul>
-                        <a href="{{route('step0.register.parent.create')}}" class="w3-button w3-green mt-3 mb-2">Inscrire un enfant </a>
+                        <a href="{{route('step0.register.parent.choice')}}" class="w3-button w3-green mt-3 mb-2">Inscrire un enfant </a>
                         {{-- <a class="w3-button w3-green mt-3 mb-2" href="" data-bs-target="#modal-register-child"
                             data-bs-toggle="modal">Inscrire un enfant</a> --}}
                         <table class="table table-bordered mt-2">

@@ -2,23 +2,33 @@
 
 @section('content')
     <div class="container">
+        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
+            aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ _('Dashboard') }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('registrations.children') }}">{{ _('Inscriptions') }}</a></li>
+                <li class="breadcrumb-item">{{$user->getFullNameAttribute()}}</li>
+                <li class="breadcrumb-item active" aria-current="page">{{ _('Ajouter un enfant') }}</li>
+            </ol>
+        </nav>
         <div class="row">
             <div class="w3-row mb-5">
+                <div class="w3-col m2 tablink w3-bottombar w3-hover-border-green w3-hover-light-grey w3-padding">
+                    <span class="w3-badge w3-indigo">1</span> Ajouter un parent
+                </div>
                 <div
                     class="w3-col m2 tablink w3-bottombar w3-border-indigo  w3-green w3-hover-border-green w3-hover-light-grey w3-padding">
-                    <span class="w3-badge w3-indigo">1</span> Mon enfant
+                    <span class="w3-badge w3-indigo">2</span> Ajouter un enfant
                 </div>
                 <div class="w3-col m2 tablink w3-bottombar w3-hover-border-green  w3-hover-light-grey w3-padding"><span
-                        class="w3-badge w3-indigo">2</span> Choix d'une classe</div>
+                        class="w3-badge w3-indigo">3</span> Choix d'une classe</div>
                 <div class="w3-col m2 tablink w3-bottombar  w3-hover-border-green w3-hover-light-grey w3-padding">
-                    <span class="w3-badge w3-indigo">3</span> Frais & Scolarité
+                    <span class="w3-badge w3-indigo">4</span> Frais & Scolarité
                 </div>
                 <div class="w3-col m2 tablink w3-bottombar w3-hover-border-green w3-hover-light-grey w3-padding"><span
-                        class="w3-badge w3-indigo">4</span> Paiement</div>
+                        class="w3-badge w3-indigo">5</span> Paiement</div>
                 <div class="w3-col m2 tablink w3-bottombar w3-hover-border-green w3-hover-light-grey w3-padding"><span
-                        class="w3-badge w3-indigo">5</span> Recapitulatif</div>
-                <div class="w3-col m2 tablink w3-bottombar w3-hover-border-green w3-hover-light-grey w3-padding"><span
-                        class="w3-badge w3-indigo">6</span> Fiche d'inscription</div>
+                        class="w3-badge w3-indigo">6</span> Recapitulatif</div>
             </div>
             <div class="col-12">
                 <form method="POST" action="{{ route('step1.register.child.store', $user->id) }}"
@@ -30,10 +40,9 @@
                         </header>
                         <div class="w3-container w3-padding-24">
                             <div class="row">
-                                <div class="col-md-1"></div>
-                                <div class="col-md-2">
+                                <div class="col-4">
                                     <img id="preview-photo" width="200px" class="w3-center">
-                                    <div class="">
+                                    <div class="w3-border">
                                         <label class="form-label" for="inputPhoto">Choisir une photo:</label>
                                         <input type="file" name="photo" id="inputPhoto"
                                             class="form-control @error('photo') is-invalid @enderror">
@@ -43,11 +52,10 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col">
+                                <div class="col-8">
                                     <div class="row mb-3">
-                                        <label for="genre"
-                                            class="col-md-4 col-form-label text-md-end">{{ __('Genre') }}</label>
-                                        <div class="col-md-6 ">
+                                        <div class="col">
+                                            <label for="genre">{{ __('Genre') }}</label>
                                             <select id="genre" class="form-select @error('genre') is-invalid @enderror"
                                                 name="genre">
                                                 <option value="garçon">Garçon</option>
@@ -63,10 +71,8 @@
                                     </div>
                                     <input type="hidden" name="affichage-grille" value="grille">
                                     <div class="row mb-3">
-                                        <label for="firstname"
-                                            class="col-md-4 col-form-label text-md-end">{{ __('Prénom') }}</label>
-
-                                        <div class="col-md-6">
+                                        <div class="col">
+                                            <label for="firstname">{{ __('Prénom') }}</label>
                                             <input id="firstname" type="text"
                                                 class="form-control @error('firstname') is-invalid @enderror"
                                                 name="firstname" autocomplete="firstname" autofocus>
@@ -80,10 +86,8 @@
                                     </div>
 
                                     <div class="row mb-3">
-                                        <label for="lastname"
-                                            class="col-md-4 col-form-label text-md-end">{{ __('Nom') }}</label>
-
-                                        <div class="col-md-6">
+                                        <div class="col">
+                                            <label for="lastname">{{ __('Nom') }}</label>
                                             <input id="lastname" type="text"
                                                 class="form-control @error('lastname') is-invalid @enderror" name="lastname"
                                                 autocomplete="lastname" autofocus>
@@ -97,10 +101,9 @@
                                     </div>
 
                                     <div class="row mb-3">
-                                        <label for="birthdate"
-                                            class="col-md-4 col-form-label text-md-end">{{ __('Date de naissance') }}</label>
+                                        <div class="col">
+                                            <label for="birthdate">{{ __('Date de naissance') }}</label>
 
-                                        <div class="col-md-6">
                                             <input id="birthdate" type="date"
                                                 class="form-control @error('birthdate') is-invalid @enderror"
                                                 name="birthdate" autocomplete="birthdate" autofocus>
@@ -114,10 +117,9 @@
                                     </div>
 
                                     <div class="row mb-3">
-                                        <label for="french_class"
-                                            class="col-md-4 col-form-label text-md-end">{{ __('Classe Française') }}</label>
+                                        <div class="col">
+                                            <label for="french_class">{{ __('Classe Française') }}</label>
 
-                                        <div class="col-md-6">
                                             <input id="french_class" type="text"
                                                 class="form-control @error('french_class') is-invalid @enderror"
                                                 name="french_class" autocomplete="french_class" autofocus>

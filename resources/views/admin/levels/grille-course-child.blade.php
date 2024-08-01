@@ -11,44 +11,48 @@
             aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ _('Dashboard') }}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ _('Mes classes') }}</li>
+                <li class="breadcrumb-item"><a href="{{ route('registrations.children') }}">{{ _('Inscriptions') }}</a></li>
+                <li class="breadcrumb-item">{{ $parent->getFullNameAttribute() }}</li>
+                <li class="breadcrumb-item">{{ $child->getFullNameAttribute() }}</li>
+                <li class="breadcrumb-item active" aria-current="page">{{ _('Choisir un niveau') }}</li>
             </ol>
         </nav>
         <div class="row justify-content-center">
-            <div class="w3-row mb-2">
-                <div class="w3-col m2 tablink w3-bottombar w3-hover-light-grey w3-padding"><span
-                        class="w3-badge w3-indigo">1</span> Mon enfant </div>
+            <div class="w3-row mb-3">
+                <div class="w3-col m2 tablink w3-bottombar w3-hover-border-green w3-hover-light-grey w3-padding">
+                    <span class="w3-badge w3-indigo">1</span> Ajouter un parent
+                </div>
+                <div class="w3-col m2 tablink w3-bottombar  w3-hover-border-green w3-hover-light-grey w3-padding">
+                    <span class="w3-badge w3-indigo">2</span> Ajouter un enfant
+                </div>
                 <div class="w3-col m2 tablink w3-bottombar w3-border-indigo w3-hover-light-grey w3-padding w3-green"><span
-                        class="w3-badge w3-indigo">2</span> Choix d'une classe</div>
+                        class="w3-badge w3-indigo">3</span> Choix d'une classe</div>
                 <div class="w3-col m2 tablink w3-bottombar w3-hover-border-green w3-hover-light-grey w3-padding"><span
-                        class="w3-badge w3-indigo">3</span> Frais & Scolarité</div>
+                        class="w3-badge w3-indigo">4</span> Frais & Scolarité</div>
                 <div class="w3-col m2 tablink w3-bottombar w3-hover-border-green w3-hover-light-grey w3-padding"><span
-                        class="w3-badge w3-indigo">4</span> Paiement</div>
+                        class="w3-badge w3-indigo">5</span> Paiement</div>
                 <div class="w3-col m2 tablink w3-bottombar w3-hover-border-green w3-hover-light-grey w3-padding"><span
-                        class="w3-badge w3-indigo">5</span> Recapitulatif</div>
-                <div class="w3-col m2 tablink w3-bottombar w3-hover-border-green w3-hover-light-grey w3-padding"><span
-                        class="w3-badge w3-indigo">6</span> Fiche d'inscription</div>
+                        class="w3-badge w3-indigo">6</span> Recapitulatif</div>
             </div>
             <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body">
-                        <form method="POST" action="{{ route('step2.register.level.post') }}">
-                            @csrf
+                <form method="POST" action="{{ route('step2.register.level.post') }}">
+                    @csrf
+                    <input type="hidden" name="childId" value="{{ $childId }}">
+                    <div class="w3-card-4">
+                        <header class="w3-container w3-indigo">
+                            <h2 class="w3-center">COURS ARABE POUR ENFANT</h2>
+                        </header>
+                        <div class="w3-container mt-3">
                             {{-- Cours d\'arabe pour enfant  --}}
-                            <div class="row">
-                                <div class="col">
-                                    <div class="card-header w3-indigo mb-2"><b>{{ _('Cours d\'arabe pour enfant') }}</b>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="row">
                                 @foreach ($levels as $level)
                                     @if ($level->course->keywords == 'arabe-enfant')
                                         <div class="col-md-4 mb-4">
-                                            <div class="card">
-                                                <div class="card-header w3-green">{{ $level->label }}
-                                                </div>
-                                                <div class="card-body">
+                                            <div class="w3-card-2">
+                                                <header class="w3-container w3-green">
+                                                    <h3 class="w3-center"> {{ $level->label }}</h3>
+                                                </header>
+                                                <div class="w3-container w3-padding">
                                                     <div class="row">
                                                         <div class="col-md-5">
                                                             <img src="https://www.w3schools.com/w3css/img_snowtops.jpg"
@@ -77,21 +81,24 @@
                                     @endif
                                 @endforeach
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="w3-card-4 mt-5">
+                        <header class="w3-container w3-indigo">
+                            <h2 class="w3-center">COURS CORAN POUR ENFANT</h2>
+                        </header>
+                        <div class="w3-container mt-3">
                             {{-- Cours de coran pour enfant  --}}
-                            <div class="row">
-                                <div class="col">
-                                    <div class="card-header w3-cyan mb-2">
-                                        <strong>{{ _('Cours de coran pour enfant') }}</strong>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="row">
                                 @foreach ($levels as $level)
                                     @if ($level->course->keywords == 'coran-enfant')
                                         <div class="col-md-4 mb-4">
-                                            <div class="card">
-                                                <div class="card-header w3-green">{{ $level->label }}</div>
-                                                <div class="card-body">
+                                            <div class="w3-card-2">
+                                                <header class="w3-container w3-green">
+                                                    <h2 class="w3-center"> {{ $level->label }}</h2>
+                                                </header>
+                                                <div class="w3-container w3-padding">
                                                     <div class="row">
                                                         <div class="col-md-5">
                                                             <img src="https://www.w3schools.com/w3css/img_snowtops.jpg"
@@ -120,13 +127,13 @@
                                     @endif
                                 @endforeach
                             </div>
-                            <div class="mt-4 w3-center">
-                                <button class="previous">&laquo; Précedent</button>
-                                <button class="next" type="submit">Suivant &raquo;</button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
-                </div>
+                    <div class="mt-4 w3-center">
+                        <button class="previous">&laquo; Précedent</button>
+                        <button class="next" type="submit">Suivant &raquo;</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

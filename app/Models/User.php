@@ -25,17 +25,17 @@ class User extends Authenticatable
     const ADULTE = 'adulte';
 
 
-    public function children() : HasMany
+    public function children(): HasMany
     {
         return $this->hasMany(Child::class, 'parent_id');
     }
 
-    public function levels() : HasMany
+    public function levels(): HasMany
     {
         return $this->hasMany(Level::class, 'teacher_id');
     }
 
-    public function registrations() : HasMany
+    public function registrations(): HasMany
     {
         return $this->hasMany(Registration::class, 'adult_id');
     }
@@ -50,9 +50,14 @@ class User extends Authenticatable
         return $this->name . ' ' . $this->lastname;
     }
 
-    public function getAvatarUrlAttribute(): string
+    public function getAvatarUrlAttribute()
     {
-        return $this->avatar ? asset('storage/' . $this->avatar) : asset('images/default-avatar.png');
+        if ($this->civility === 'Mr') {
+            return $this->avatar ? asset('avatars/' . $this->avatar) : asset('images/homme.png');
+        }
+        if ($this->civility === 'Mme') {
+            return $this->avatar ? asset('avatars/' . $this->avatar) : asset('images/femme.png');
+        }
     }
 
     public function isEmailExist(string $email): bool
@@ -65,7 +70,7 @@ class User extends Authenticatable
         return $this->where('phone', $phone)->exists();
     }
 
-    
+
 
     /**
      * The attributes that are mass assignable.

@@ -12,9 +12,8 @@
                             </header>
                             <div class="w3-container w3-padding">
                                 <div class="row">
-                                    <div class="col-md-2">
-                                        <img src="/avatars/{{ $registration->child->parent->avatar }}" alt="{{ $registration->child->parent->firstname }}"
-                                        class="img-thumbnail img-fluid"
+                                    <div class="col-md-3">
+                                        <img src="{{ $registration->child->parent->getAvatarUrlAttribute() }}" class="v-center img-thumbnail img-fluid w3-circle"
                                         style="width: 200px;">
                                     </div>
                                     <div class="col">
@@ -56,8 +55,8 @@
                             <div class="w3-container w3-padding">
                                 <div class="row">
                                     <div class="col-md-2">
-                                        <img src="/photos/{{ $registration->child->photo }}" alt="{{ $registration->child->firstname }}"
-                                        class="img-thumbnail img-fluid"
+                                        <img src="{{ $registration->child->getPhotoUrlAttribute() }}"
+                                        class="img-thumbnail img-fluid w3-circle"
                                         style="width: 200px;">
                                     </div>
                                     <div class="col">

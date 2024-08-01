@@ -43,7 +43,7 @@ class Registration extends Model
         if ($this->registration_status === 'unregistered') return '<span class="badge bg-danger">Non inscrit</span>';
     }
 
-    public function getPaymentMethod(): string
+    public function getPaymentMethod()
     {
         if ($this->payment_method === 'espece') return '<span class="w3-tag w3-blue w3-round">Espèce</span>';
         if ($this->payment_method === 'cheque') return '<span class="w3-tag w3-yellow w3-round">Chèque</span>';

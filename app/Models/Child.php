@@ -50,14 +50,23 @@ class Child extends Model
         if ($this->genre->value === 'fille') return '<i class="fa fa-female w3-text-pink" style="font-size:30px"></i>';
     }
 
-    public function isExist($fisrtname, $lastname): bool
+    public function getPhotoUrlAttribute()
     {
-        // return Child::where('firstname', $fisrtname)
-        // ->orWhere('lastname', $lastname)
-        // ->exists();
+        if ($this->genre->value === 'garçon') {
+            return $this->photo ? asset('photos/' . $this->photo) : asset('images/children/garcon.jpeg');
+        }
+
+        if ($this->genre->value === 'fille') {
+            return $this->photo ? asset('photos/' . $this->photo) : asset('images/children/fille.png');
+        }
+    }
+
+    public function isExist($fisrtname, $lastname, $parentId): bool
+    {
         return Child::join('users', 'children.parent_id', '=', 'users.id')
             ->where('children.firstname', $fisrtname)
             ->where('children.lastname', $lastname)
+            ->where('children.parent_id', $parentId)
             ->exists();
     }
 

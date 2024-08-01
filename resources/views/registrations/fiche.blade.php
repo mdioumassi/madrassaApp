@@ -29,9 +29,7 @@
                     <div class="w3-container w3-padding">
                         <div class="row">
                             <div class="col-md-2">
-                                <img src="/photos/{{ $child->photo }}" alt="{{ $child->firstname }}"
-                                class="img-thumbnail img-fluid"
-                                style="width: 200px;">
+                                <img src="{{ $child->getPhotoUrlAttribute() }}" class="img-thumbnail img-fluid w3-circle"   style="width: 200px;">
                             </div>
                             <div class="col">
                                 <table class="w3-table w3-bordered">
@@ -133,15 +131,10 @@
                         </div>
                     </div>
                 </div>
-          
             </div>
-            {{-- <div class="mt-3 w3-center">
-                <button class="previous">&laquo; Précedent</button>
-                <button class="next">Suivant &raquo;</button>
-            </div> --}}
             <div class="w3-bar w3-center">
                 <button class="w3-button w3-border w3-large">&laquo; Précedent</button>
-                <a class="w3-button w3-green w3-large" href="{{route('parent.children.grille', auth()->user()->id)}}">Inscrire un nouveau enfant</a>
+                <a class="w3-button w3-green w3-large" href="{{route('registrations.children')}}">Inscrire un nouveau enfant</a>
                 <button class="w3-button w3-red w3-large">Télécharger la fiche</button>
               </div>
         </form>

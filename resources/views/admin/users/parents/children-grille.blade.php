@@ -32,7 +32,7 @@
                             @foreach ($children as $child)
                                 <div class="col-md-6 mb-4">
                                     <div class="w3-card-4">
-                                        <header class="w3-container w3-blue">
+                                        <header class="w3-container w3-indigo">
                                             <div class="row">
                                                 <div class="col-11">
                                                     <h1>{{ $child->getFullNameAttribute() }}</h1>
@@ -47,12 +47,10 @@
                                                 </div>
                                             </div>
                                         </header>
-                                        <div class="w3-container">
+                                        <div class="w3-container mt-3">
                                             <div class="row">
                                                 <div class="col-3 w3-padding">
-                                                    <img src="/photos/{{ $child->photo }}" alt="{{ $child->firstname }}"
-                                                        class="img-thumbnail img-fluid"
-                                                        style="width: 200px;">
+                                                    <img src="{{ $child->getPhotoUrlAttribute() }}" class="img-thumbnail img-fluid w3-circle" style="width: 200px;">
                                                 </div>
                                                 <div class="col-5">
                                                     <table class="w3-table w3-bordered">
@@ -80,62 +78,6 @@
                                                             </tr>
                                                         @endif
                                                     </table>
-                                                        @if ($child->registration)
-                                                            <div class="accordion accordion-flush"
-                                                                id="accordion{{ $child->registration->id }}">
-                                                                <div class="accordion-item">
-                                                                    <h2 class="accordion-header"
-                                                                        id="flush-headingOne{{ $child->registration->id }}">
-                                                                        @if ($child->registration->payment_status == 'paid')
-                                                                            <button
-                                                                                class="accordion-button w3-panel w3-light-green w3-leftbar w3-padding"
-                                                                                type="button" data-bs-toggle="collapse"
-                                                                                data-bs-target="#flush-collapseOne{{ $child->registration->id }}"
-                                                                                aria-expanded="false"
-                                                                                aria-controls="flush-collapseOne{{ $child->registration->id }}">
-                                                                                <b class="w3-center">PAIEMENT & INSCRIPTION</b>
-                                                                            </button>
-                                                                        @else
-                                                                            <button
-                                                                                class="accordion-button collapsed w3-panel w3-red w3-leftbar w3-padding"
-                                                                                type="button" data-bs-toggle="collapse"
-                                                                                data-bs-target="#flush-collapseOne{{ $child->registration->id }}"
-                                                                                aria-expanded="false"
-                                                                                aria-controls="flush-collapseOne{{ $child->registration->id }}">
-                                                                                <b class="w3-center">PAIEMENT & INSCRIPTION</b>
-                                                                            </button>
-                                                                        @endif
-                                                                    </h2>
-                                                                    <div id="flush-collapseOne{{ $child->registration->id }}"
-                                                                        class="accordion-collapse collapse"
-                                                                        aria-labelledby="flush-headingOne{{ $child->registration->id }}"
-                                                                        data-bs-parent="#accordion{{ $child->registration->id }}">
-                                                                        <div class="accordion-body">
-                                                                            <table class="w3-table w3-bordered">
-                                                                                <tr>
-                                                                                    <td><strong>Date d'inscription:</strong></td>
-                                                                                    <td>{{ date('d-m-Y', strtotime($child->registration->registration_date)) }}
-                                                                                    </td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td><strong>Paiement:</strong></td>
-                                                                                    <td>{{ $child->registration->payment_amount }}€</td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td><strong>Paiement status:</strong></td>
-                                                                                    <td>{!! $child->registration->getPaymentStatus() !!}</td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td><strong>Paiement methode:</strong></td>
-                                                                                    <td>{!! $child->registration->getPaymentMethod() !!}</td>
-                                                                                </tr>
-                                                                            </table>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        @endif
-                                                    </table>
                                                 </div>
                                                 <div class="col-4">
                                                     @if ($child->registration)
@@ -144,6 +86,65 @@
                                                             <li>{{ $child->registration->level->label }}</li>
                                                         </ul>
                                                     @endif
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    @if ($child->registration)
+                                                    <div class="accordion accordion-flush"
+                                                        id="accordion{{ $child->registration->id }}">
+                                                        <div class="accordion-item">
+                                                            <h2 class="accordion-header"
+                                                                id="flush-headingOne{{ $child->registration->id }}">
+                                                                @if ($child->registration->payment_status == 'paid')
+                                                                    <button
+                                                                        class="accordion-button w3-panel w3-light-green w3-leftbar w3-padding"
+                                                                        type="button" data-bs-toggle="collapse"
+                                                                        data-bs-target="#flush-collapseOne{{ $child->registration->id }}"
+                                                                        aria-expanded="false"
+                                                                        aria-controls="flush-collapseOne{{ $child->registration->id }}">
+                                                                        <b class="w3-center">PAIEMENT & INSCRIPTION</b>
+                                                                    </button>
+                                                                @else
+                                                                    <button
+                                                                        class="accordion-button collapsed w3-panel w3-red w3-leftbar w3-padding"
+                                                                        type="button" data-bs-toggle="collapse"
+                                                                        data-bs-target="#flush-collapseOne{{ $child->registration->id }}"
+                                                                        aria-expanded="false"
+                                                                        aria-controls="flush-collapseOne{{ $child->registration->id }}">
+                                                                        <b class="w3-center">PAIEMENT & INSCRIPTION</b>
+                                                                    </button>
+                                                                @endif
+                                                            </h2>
+                                                            <div id="flush-collapseOne{{ $child->registration->id }}"
+                                                                class="accordion-collapse collapse"
+                                                                aria-labelledby="flush-headingOne{{ $child->registration->id }}"
+                                                                data-bs-parent="#accordion{{ $child->registration->id }}">
+                                                                <div class="accordion-body">
+                                                                    <table class="w3-table w3-bordered">
+                                                                        <tr>
+                                                                            <td><strong>Date d'inscription:</strong></td>
+                                                                            <td>{{ date('d-m-Y', strtotime($child->registration->registration_date)) }}
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td><strong>Paiement:</strong></td>
+                                                                            <td>{{ $child->registration->payment_amount }}€</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td><strong>Paiement status:</strong></td>
+                                                                            <td>{!! $child->registration->getPaymentStatus() !!}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td><strong>Paiement methode:</strong></td>
+                                                                            <td>{!! $child->registration->getPaymentMethod() !!}</td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endif
                                                 </div>
                                             </div>
                                         </div>
