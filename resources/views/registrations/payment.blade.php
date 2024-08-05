@@ -51,6 +51,7 @@
                                                 <option value="cheque">Chèque</option>
                                                 <option value="virement">Virement</option>
                                                 <option value="carte">Carte bancaire</option>
+                                                <option value="paypal">Paypal</option>
                                             </select>
                                         </div>
                                         <div class="form-group mt-3 w3-center w3-blue-grey">
@@ -58,7 +59,7 @@
                                             <div class="input-group input-group-lg">
                                                 <input style="font-size: 3.5rem" type="text"
                                                     class="form-control display-1 w3-center" id="amount" name="amount"
-                                                    value="{{ $payment }}" readonly>
+                                                    value="{{ $payment_amount }}" readonly>
                                                 <span class="input-group-text w3-light-grey">€/an</span>
                                             </div>
                                         </div>
@@ -104,29 +105,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row" id="payment_by_credit_card">
-                                    <span class="w3-center mt-4 mb-4 w3-blue-grey"><b>Paiement par carte bancaire</b></span>
-
-                                    <div class="col w3-border-red">
-                                        <form id='checkout-form' method='post' action="{{ route('stripe.post') }}">
-                                            @csrf
-                                            <strong>Name:</strong>
-                                            <input type="input" class="form-control" name="name"
-                                                placeholder="Enter Name">
-
-                                            <input type='hidden' name='stripeToken' id='stripe-token-id'>
-                                            <br>
-                                            <div id="card-element" class="form-control"></div>
-                                            <button id='pay-btn' class="btn btn-success mt-3" type="button"
-                                                style="margin-top: 20px; width: 100%;padding: 7px;"
-                                                onclick="createToken()">PAY
-                                                $10
-                                            </button>
-                                            <form>
-                                    </div>
-                                    <div class="col">
-                                    </div>
-                                </div>
                                 <div class="row mb-5" id="payment_by_check">
                                     <span class="w3-center mt-4 mb-4 w3-blue-grey"><b>Paiement par chèque</b></span>
                                     <div class="col">
@@ -140,52 +118,64 @@
                                                 <td>12 rue de la paix, 75000 Paris</td>
                                             </tr>
                                         </table>
-
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="mt-4 w3-center">
-                        <button class="previous">&laquo; Précedent</button>
-                        <button class="next" type="submit">Suivant &raquo;</button>
-                    </div>
+                        <div class="mt-4 w3-center">
+                            <button class="previous">&laquo; Précedent</button>
+                            <button class="next" type="submit">Suivant &raquo;</button>
+                        </div>
                 </form>
             </div>
         </div>
     </div>
+    @include('registrations._modals.carte-payment', ["amount" => $payment_amount])
     <script src="https://js.stripe.com/v3/"></script>
-    <script type="text/javascript">
-        var stripe = Stripe('{{ env('STRIPE_KEY') }}')
-        var elements = stripe.elements();
-        var cardElement = elements.create('card');
-        cardElement.mount('#card-element');
+    <script>
+        const clientSecret = {{ Illuminate\Support\Js::from($client_secret) }};
+        const stripePublicKey = {{ Illuminate\Support\Js::from($public_key) }};
+        document.addEventListener('DOMContentLoaded', async () => {
+            const stripe = Stripe(stripePublicKey, {
+                apiVersion: '2020-08-27',
 
-        /*------------------------------------------
-        --------------------------------------------
-        Create Token Code
-        --------------------------------------------
-        --------------------------------------------*/
-        function createToken() {
-            document.getElementById("pay-btn").disabled = true;
-            stripe.createToken(cardElement).then(function(result) {
+            });
 
-                if (typeof result.error != 'undefined') {
-                    document.getElementById("pay-btn").disabled = false;
-                    alert(result.error.message);
-                }
+            const elements = stripe.elements({
+                clientSecret: clientSecret
+            });
 
-                /* creating token success */
-                if (typeof result.token != 'undefined') {
-                    document.getElementById("stripe-token-id").value = result.token.id;
-                    document.getElementById('checkout-form').submit();
+            const paymentElement = elements.create('payment');
+            paymentElement.mount('#payment-element');
+
+            const paymentForm = document.querySelector('#payment-form');
+            paymentForm.addEventListener('submit', async (e) => {
+                // Avoid a full page POST request.
+                e.preventDefault();
+
+                // Disable the form from submitting twice.
+                paymentForm.querySelector('button').disabled = true;
+                // Confirm the card payment that was created server side:
+                const {
+                    error
+                } = await stripe.confirmPayment({
+                    elements,
+                    confirmParams: {
+                        return_url: `${window.location.origin}/register/payment/confimation`
+                    }
+                });
+                if (error) {
+                    addMessage(error.message);
+
+                    // Re-enable the form so the customer can resubmit.
+                    paymentForm.querySelector('button').disabled = false;
+                    return;
                 }
             });
-        }
+        });
     </script>
     <script>
         $(document).ready(function() {
-
             $('.next').click(function() {
                 var payment_method = $('#payment_method').val();
                 var amount = $('#amount').val();
@@ -212,7 +202,8 @@
             $('#payment_method').change(function() {
                 var payment_method = $('#payment_method').val();
                 if (payment_method == 'carte') {
-                    $('#payment_by_credit_card').show();
+                    // $('#payment_by_credit_card').show();
+                    $('#modal-carte-payment').modal('show');
                     $('#payment_by_bank_transfert').hide();
                     $('#payment_by_check').hide();
                 } else if (payment_method == 'virement') {

@@ -11,10 +11,12 @@
         </nav>
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header w3-green">{{ __('Profile') }}</div>
+                <div class="w3-card-4">
+                    <header class="w3-container w3-indigo">
+                        <h1>{{ __('Profile') }}</h1>
+                      </header>
 
-                    <div class="card-body">
+                      <div class="w3-container w3-padding-16">
                         <form method="POST" action="{{ route('user.profile.store') }}" enctype="multipart/form-data">
                             @csrf
 
@@ -39,7 +41,8 @@
                                 </div>
 
                                 <div class="mb-3 col-md-6">
-                                    <img src="/avatars/{{ auth()->user()->avatar }}" style="width:80px;margin-top: 10px;">
+                                    <img src="{{ auth()->user()->getAvatarUrlAttribute() }}"
+                                        style="width:80px;margin-top: 10px;">
                                     <span class="">{{ auth()->user()->type }}</span>
                                 </div>
 
@@ -47,8 +50,16 @@
                             <div class="row">
                                 <div class="mb-3 col-md-6">
                                     <label for="civility" class="form-label">Civilité: </label>
-                                    <input class="form-control" type="text" id="name" name="name"
-                                        value="{{ auth()->user()->civility }}" autofocus="">
+                                    <select id="civility" class="form-select @error('civility') is-invalid @enderror"
+                                        name="civility">
+                                        <option value="Mr" @if (auth()->user()->civility == 'Mr') selected @endif>Monsieur
+                                        </option>
+                                        <option value="Mme" @if (auth()->user()->civility == 'Mme') selected @endif>Madame
+                                        </option>
+                                        <option value="Mlle" @if (auth()->user()->civility == 'Mlle') selected @endif>
+                                            Mademoiselle</option>
+                                    </select>
+
                                     @error('civility')
                                         <span role="alert" class="text-danger">
                                             <strong>{{ $message }}</strong>
@@ -143,7 +154,7 @@
                             <div class="row mb-0">
                                 <div class="col-md-12 offset-md-5">
                                     <button type="submit" class="btn btn-primary">
-                                        {{ __('Upload Profile') }}
+                                        {{ __('Enregistrer') }}
                                     </button>
                                 </div>
                             </div>

@@ -7,7 +7,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ _('Dashboard') }}</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('registrations.children') }}">{{ _('Inscriptions') }}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ _('Choisir un parent') }}</li>
+                <li class="breadcrumb-item active" aria-current="page">{{ _('Choisir un enfant') }}</li>
             </ol>
         </nav>
         <div class="w3-row mb-3">
@@ -30,6 +30,7 @@
         </div>
         <a href="{{route("step1.register.child.create", $parent->id)}}">
             <button class="w3-button w3-xlarge w3-circle w3-green w3-card-4 mb-3">+</button>
+            <span><b>Enfant</b></span>
         </a>
         <div class="row">
             @foreach ($children as $child)
@@ -43,7 +44,7 @@
                                 <tr>
                                     <td rowspan="4">
                                         <img src="{{ $child->getPhotoUrlAttribute() }}"
-                                            class="w3-image img-thumbnail w3-circle" style="width:150px">
+                                            class="w3-image img-thumbnail w3-circle" style="width:135px">
                                     </td>
                                     <td><b>Genre</b>:</td>
                                     <td>{!! $child->getGenre() !!}</td>

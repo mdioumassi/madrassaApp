@@ -31,6 +31,8 @@ Route::get('/register/step4/recap', [RegistrationController::class, 'Step4Regist
 Route::post('/register/step4/recap/store', [RegistrationController::class, 'Step4RegisterRecapPost'])->name('step4.register.recap.post');
 //Registration
 Route::get('/register/child/fiche', [RegistrationController::class, 'Step5RegisterChildFiche'])->name('step5.registration.child.fiche');
+//Payment confirmation
+Route::get('/register/payment/confimation', [RegistrationController::class, 'Step5RegisterPaymentConfirmation'])->name('step5.registration.payment.confirmation');
 
 //Registration adult
 //  Route::get('/register/step0/adult/create', [RegisterAdultController::class, 'Step0RegisterAdultCreate'])->name('step0.register.adult.create');

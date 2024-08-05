@@ -1,7 +1,9 @@
 <?php
       
 namespace App\Http\Controllers;
-       
+
+use App\Services\StripeService;
+use Dotenv\Util\Str;
 use Illuminate\Http\Request;
 use Stripe;
 use Illuminate\View\View;
@@ -9,33 +11,24 @@ use Illuminate\Http\RedirectResponse;
        
 class StripePaymentController extends Controller
 {
+
     /**
      * success response method.
      *
      * @return \Illuminate\Http\Response
      */
-    public function stripe(): View
+    public static function stripe()
     {
-        return view('stripe');
+        $stripeService = new StripeService();
+        $intent = $stripeService->getPaymentIntent(15);
+        $client_secret = $intent->client_secret;
+        $public_key = $stripeService->getPublicKey();
+
+        return view('stripe', compact('client_secret', 'public_key'));
     }
-      
-    /**
-     * success response method.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function stripePost(Request $request): RedirectResponse
+
+    public static function stripePayment()
     {
-        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-      
-        Stripe\Charge::create ([
-                "amount" => 10 * 100,
-                "currency" => "usd",
-                "source" => $request->stripeToken,
-                "description" => "Test payment from itsolutionstuff.com." 
-        ]);
-                
-        return back()
-                ->with('success', 'Payment successful!');
+        dump('Payment successful');
     }
 }

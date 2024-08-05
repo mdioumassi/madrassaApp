@@ -10,12 +10,12 @@
             </div>
 
             <!-- Modal body -->
-            <div class="modal-body">
+            <div class="modal-body w3-light-grey">
                 {{ $body }}
             </div>
 
             <!-- Modal footer -->
-            <div class="modal-footer">
+            <div class="modal-footer w3-blue-grey">
                 {{ $footer }}
             </div>
         </div>

@@ -19,30 +19,19 @@
             <div class="card mt-5">
                 <h3 class="card-header p-3">Laravel 11 Stripe Payment Gateway Integration Example - ItSolutionStuff.com</h3>
                 <div class="card-body">
-
-                    @session('success')
-                        <div class="alert alert-success" role="alert"> 
-                            {{ $value }}
+                    <form id="payment-form">
+                        <label for="payment-element">Payment details</label>
+                        <div id="payment-element">
+                            <!-- Elements will create input elements here -->
                         </div>
-                    @endsession
-          
-                    <form id='checkout-form' method='post' action="{{ route('stripe.post') }}">   
-                        @csrf    
 
-                        <strong>Name:</strong>
-                        <input type="input" class="form-control" name="name" placeholder="Enter Name">
+                        <!-- We'll put the error messages in this element -->
+                        <div id="payment-errors" role="alert"></div>
 
-                        <input type='hidden' name='stripeToken' id='stripe-token-id'>                              
-                        <br>
-                        <div id="card-element" class="form-control" ></div>
-                        <button 
-                            id='pay-btn'
-                            class="btn btn-success mt-3"
-                            type="button"
-                            style="margin-top: 20px; width: 100%;padding: 7px;"
-                            onclick="createToken()">PAY $10
-                        </button>
-                    <form>
+
+                        <button id="submit">Payer</button>
+                    </form>
+                    <div id="messages" role="alert" style="display: none;"></div>
                 </div>
             </div>
         </div>
@@ -50,8 +39,50 @@
 </div>
       
 </body>
-     
 <script src="https://js.stripe.com/v3/"></script>
+<script>
+    const clientSecret = {{ Illuminate\Support\Js::from($client_secret) }};
+    const stripePublicKey = {{ Illuminate\Support\Js::from($public_key) }};
+    document.addEventListener('DOMContentLoaded', async () => {
+        const stripe = Stripe(stripePublicKey, {
+            apiVersion: '2020-08-27',
+
+        });
+
+        const elements = stripe.elements({
+            clientSecret: clientSecret
+        });
+
+        const paymentElement = elements.create('payment');
+        paymentElement.mount('#payment-element');
+
+        const paymentForm = document.querySelector('#payment-form');
+        paymentForm.addEventListener('submit', async (e) => {
+            // Avoid a full page POST request.
+            e.preventDefault();
+
+            // Disable the form from submitting twice.
+            paymentForm.querySelector('button').disabled = true;
+            // Confirm the card payment that was created server side:
+            const {
+                error
+            } = await stripe.confirmPayment({
+                elements,
+                confirmParams: {
+                    return_url: `${window.location.origin}/register/payment/confimation`
+                }
+            });
+            if (error) {
+                addMessage(error.message);
+
+                // Re-enable the form so the customer can resubmit.
+                paymentForm.querySelector('button').disabled = false;
+                return;
+            }
+        });
+    });
+</script>
+{{-- <script src="https://js.stripe.com/v3/"></script>
 <script type="text/javascript">
   
     var stripe = Stripe('{{ env('STRIPE_KEY') }}')
@@ -80,6 +111,6 @@
             }
         });
     }
-</script>
+</script> --}}
  
 </html>

@@ -65,7 +65,7 @@
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    <img src="/avatars/{{ Auth::user()->avatar }}" style="width: 30px; border-radius: 10%">
+                                    <img src="{{ Auth::user()->getAvatarUrlAttribute() }}" style="width: 30px; border-radius: 10%">
                                     {{ Auth::user()->name }}
                                 </a>
 

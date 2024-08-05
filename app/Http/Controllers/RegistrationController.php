@@ -9,6 +9,7 @@ use App\Models\Course;
 use App\Models\Level;
 use App\Models\Registration;
 use App\Models\User;
+use App\Services\StripeService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
@@ -22,7 +23,7 @@ class RegistrationController extends Controller
      */
     public function listChildren()
     {
-        $children = Registration::where('child_id', '!=', null)->get();
+        $children = Registration::where('child_id', '!=', null)->latest()->paginate(8);
 
         return view('registrations.children', ['registrations' => $children]);
     }
@@ -34,7 +35,7 @@ class RegistrationController extends Controller
      */
     public function listAdults()
     {
-        $adults = Registration::where('adult_id', '!=', null)->get();
+        $adults = Registration::where('adult_id', '!=', null)->latest()->paginate(8);
 
         return view('registrations.adults', ['registrations' => $adults]);
     }
@@ -247,8 +248,8 @@ class RegistrationController extends Controller
      * name: step3.register.schooling.post
      * Method: POST
      */
-    public function Step3RegisterSchoolingPost(Request $request) {
-
+    public function Step3RegisterSchoolingPost(Request $request) 
+    {
         $registration_data = $request->session()->get('registration_data');
     
         $registration_data['payment_amount'] = $request['payment_amount'];
@@ -264,7 +265,7 @@ class RegistrationController extends Controller
      * name: step4.register.payment
      * Method: GET
      */
-    public function Step4RegisterPayment(Request $request)
+    public function Step4RegisterPayment(Request $request, StripeService $stripeService)
     {
         $registration_data = $request->session()->get('registration_data');
 
@@ -273,9 +274,14 @@ class RegistrationController extends Controller
         $course = Course::find($registration_data['course_id']);
         $parent = User::find($registration_data['parent_id']);
 
-        $payment = $registration_data['payment_amount'];
+        $payment_amount = $registration_data['payment_amount'];
 
-        return view('registrations.payment', compact('payment', 'child', 'level', 'course', 'parent'));
+        $client_secret = $stripeService->getPaymentIntent($payment_amount)->client_secret;
+        $public_key = $stripeService->getPublicKey();
+
+        return view('registrations.payment', compact(
+            'payment_amount', 'child', 'level', 'course', 'parent', 'client_secret', 'public_key'
+        ));
     }
 
     /**
@@ -284,7 +290,7 @@ class RegistrationController extends Controller
      * name: step4.register.means.payment
      * Method: POST
      */
-    public function Step4RegisterMeansOfPayment(Request $request)
+    public function Step4RegisterMeansOfPayment(Request $request, StripeService $stripeService)
     {
         $registration_data = $request->session()->get('registration_data');
 
@@ -323,6 +329,7 @@ class RegistrationController extends Controller
         $level = Level::find($registration_data['level_id']);
         $course = Course::find($registration_data['course_id']);
         $parent = User::find($registration_data['parent_id']);
+
         $total_amount = $registration_data['payment_amount'];
         $payment_method = $registration_data['payment_method'];
         $payment_date = $registration_data['payment_date'];
@@ -371,5 +378,24 @@ class RegistrationController extends Controller
         return view('registrations.fiche', compact(
             'child', 'level', 'course', 'total_amount', 'payment_method', 'payment_date', 'payment_status', 'parent'
         ));
+    }
+
+    /**
+     * Step 5: Register Payment Confirmation
+     * route: /register/payment/confimation
+     * name: step5.registration.payment.confirmation
+     * Method: GET
+     */
+    public function Step5RegisterPaymentConfirmation(Request $request)
+    {
+        $registration_data = $request->session()->get('registration_data');
+        $registration_data['payment_method'] = 'carte';
+        $registration_data['registration_status'] = 'registered';
+        $registration_data['payment_status'] = 'paid';
+        $registration_data['payment_date'] = date('Y-m-d');
+
+        $request->session()->put('registration_data', $registration_data);
+
+        return redirect()->route('step4.register.recap')->with('success', 'Votre paiement a été effectué avec succès');
     }
 }

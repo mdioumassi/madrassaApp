@@ -7,7 +7,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                <i class='w3-text-khaki fas fa-users' style='font-size:110px'></i>
+                                <i class='w3-text-khaki fas fa-users' style='font-size:47px'></i>
                             </div>
                             <div class="col">
                                 <span></span>
@@ -29,7 +29,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                <i class='w3-text-khaki fa-solid fa-user' style='font-size:110px'></i>
+                                <i class='w3-text-khaki fa-solid fa-user' style='font-size:47px'></i>
                             </div>
                             <div class="col">
                                 <span></span>
@@ -52,7 +52,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                <i class='w3-text-khaki fa-solid fa-user' style='font-size:110px'></i>
+                                <i class='w3-text-khaki fa-solid fa-user' style='font-size:47px'></i>
                             </div>
                             <div class="col">
                                 <span></span>
@@ -76,7 +76,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <i class='w3-text-khaki fa-solid fa-user' style='font-size:110px'></i>
+                                    <i class='w3-text-khaki fa-solid fa-user' style='font-size:47px'></i>
                                 </div>
                                 <div class="col">
                                     <span></span>

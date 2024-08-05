@@ -40,14 +40,15 @@ class Registration extends Model
     public function getRegistrationStatus(): string
     {
         if ($this->registration_status === 'registered') return '<span class="badge bg-success">Inscrit</span>';
-        if ($this->registration_status === 'unregistered') return '<span class="badge bg-danger">Non inscrit</span>';
+        if ($this->registration_status === 'unregistered') return '<span class="badge bg-danger">En attente</span>';
     }
 
     public function getPaymentMethod()
     {
-        if ($this->payment_method === 'espece') return '<span class="w3-tag w3-blue w3-round">Espèce</span>';
-        if ($this->payment_method === 'cheque') return '<span class="w3-tag w3-yellow w3-round">Chèque</span>';
-        if ($this->payment_method === 'virement') return '<span class="w3-tag w3-green w3-round">Virement</span>';
+        if ($this->payment_method === 'espece') return '<span class="badge bg-primary"><i class="fa fa-money"></i> Espèce</span>';
+        if ($this->payment_method === 'cheque') return '<span class="badge bg-primary"><i class="fa-solid fa-money-check-dollar"></i> Chèque</span>';
+        if ($this->payment_method === 'virement') return '<span class="badge bg-primary">Virement</span>';
+        if ($this->payment_method === 'carte') return '<span class="badge bg-primary"><i class="fa fa-credit-card"></i> Carte bancaire</span>';
     }
 
     /**

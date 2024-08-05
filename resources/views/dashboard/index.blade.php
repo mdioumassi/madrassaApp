@@ -18,7 +18,7 @@
                                             <div class="row">
                                                 <div class="col">
                                                     <i class="w3-text-light-green fa-solid fa-children"
-                                                        style='font-size:110px'></i>
+                                                        style='font-size:47px'></i>
                                                 </div>
                                                 <div class="col">
                                                     <button type="button" class="btn btn-primary">
@@ -42,7 +42,7 @@
                                             <div class="row">
                                                 <div class="col">
                                                     <i class="w3-text-light-green fa-solid fa-children"
-                                                        style='font-size:110px'></i>
+                                                        style='font-size:47px'></i>
                                                 </div>
                                                 <div class="col">
                                                     <button type="button" class="btn btn-primary">
@@ -102,8 +102,9 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <i class='fas fa-user-edit' style='font-size:110px'></i
-                                                    style='font-size:110px'></i>
+                                                {{-- <i class='fas fa-user-edit' style='font-size:47px'></i
+                                                    style='font-size:47px'></i> --}}
+                                                    <img class="w3-image w3-circle" style="width: 50%" src="{{ auth()->user()->getAvatarUrlAttribute() }}" alt="">
                                             </div>
                                             <div class="col">
                                                 <span class="badge w3-green">{{ auth()->user()->getFullNameAttribute() }}</span><br>
@@ -127,7 +128,7 @@
                                 <div class="col">
                                     <div class="card">
                                         <div class="card-body">
-                                            <i class="fa fa-unlock-alt" style="font-size:110px"></i>
+                                            <i class="fa fa-unlock-alt" style="font-size:47px"></i>
                                         </div>
 
                                         <div class="card-footer">
@@ -143,7 +144,7 @@
                                 <div class="col">
                                     <div class="card">
                                         <div class="card-body">
-                                            <i class="w3-text-teal fa-solid fa-book" style='font-size:110px'></i>
+                                            <i class="w3-text-teal fa-solid fa-book" style='font-size:47px'></i>
                                         </div>
 
                                         <div class="card-footer">
@@ -158,7 +159,7 @@
                             <div class="col">
                                 <div class="card">
                                     <div class="card-body">
-                                        <i class="w3-text-green fa-solid fa-address-card" style='font-size:110px'></i>
+                                        <i class="w3-text-green fa-solid fa-address-card" style='font-size:47px'></i>
                                     </div>
 
                                     <div class="card-footer">

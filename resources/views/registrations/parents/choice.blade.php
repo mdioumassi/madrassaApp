@@ -30,6 +30,7 @@
         </div>
         <a href="{{route("step0.register.parent.create")}}">
             <button class="w3-button w3-xlarge w3-circle w3-green w3-card-4 mb-3">+</button>
+            <span><b>Parent</b></span>
         </a>
         <div class="row">
             @foreach ($parents as $parent)
@@ -53,13 +54,13 @@
                                     <td>{{ $parent->email }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Phone</td>
+                                    <td>Téléphone</td>
                                     <td>{{ $parent->phone }}</td>
                                 </tr>
                             </table>
                         </div>
                         <footer class="w3-container w3-light-grey w3-padding">
-                            <a href="{{route('step1.register.child.choice', $parent->id)}}" class="w3-button w3-green">Inscrire un enfant</a>
+                            <a href="{{route('step1.register.child.choice', $parent->id)}}" class="w3-button w3-green">Les enfants</a>
                         </footer>
                     </div>
                 </div>
