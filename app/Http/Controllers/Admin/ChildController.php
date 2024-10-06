@@ -6,26 +6,36 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ChildStoreRequest;
 use App\Http\Requests\ChildUpdateRequest;
 use App\Models\Child;
+use App\Models\User;
+use Illuminate\Http\Request;
 
 class ChildController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+
+        $this->middleware('permission:child-list|child-create|child-edit|child-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:child-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:child-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:child-delete', ['only' => ['destroy']]);
     }
 
     /**
-     * Display a listing of the resource.
+     * route: /admin/children
+     * name: children.index
      */
     public function index()
     {
-        $childs = Child::latest()->paginate(10);
+        $children = Child::with('parent')->latest()->paginate(8);
 
-        return view('admin.children.index', compact('childs'));
+
+        return view('admin.children.index', compact('children'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * route: /admin/children/create
+     * name: children.create
      */
     public function create()
     {
@@ -33,17 +43,38 @@ class ChildController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * route: /admin/children/parent/{id}/child/store
+     * name: child.parent.store
+     */
+    public function storeChildByParent(ChildStoreRequest $request, $id)
+    {
+        $parent = User::where('id', $id)->first();
+
+        $parent->children()->create($request->validated());
+        $grille = $request['affichage-grille'];
+        if ($grille) {
+            return redirect()->route('parent.children.grille', $id)
+                ->with('success', 'Child created successfully.');
+        }
+
+        return redirect()->route('parent.children.list', $id)
+            ->with('success', 'Child created successfully.');
+    }
+
+    /**
+     * route: /admin/children/store
+     * name: children.store
      */
     public function store(ChildStoreRequest $request)
     {
         Child::create($request->validated());
         return redirect()->route('children.index')
-                         ->with('success', 'Child created successfully.');
+            ->with('success', 'Child created successfully.');
     }
 
     /**
-     * Display the specified resource.
+     * route: /admin/children/{child}
+     * name: children.show
      */
     public function show(Child $child)
     {
@@ -51,7 +82,8 @@ class ChildController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * route: /admin/children/{child}/edit
+     * name: children.edit
      */
     public function edit(Child $child)
     {
@@ -59,22 +91,36 @@ class ChildController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * route: /admin/children/{child}
+     * name: children.update
      */
     public function update(ChildUpdateRequest $request, Child $child)
     {
-        $child->update($request->validated());
+        $validatedData = $request->validated();
+        $photo = time().'.'.$request->photo->extension();  
+        $request->photo->move(public_path('photos'), $photo);
+        $validatedData['photo'] = $photo;
+
+        $userId = $request['user_id'];
+
+        $child->update($validatedData);
+
+        if ($userId) {
+            return redirect()->route('parent.children.grille', $userId)
+                ->with('success', 'Child updated successfully.');
+        }
         return redirect()->route('children.index')
-                         ->with('success', 'Child updated successfully.');
+            ->with('success', 'Child updated successfully.');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * route: /admin/children/{child}
+     * name: children.destroy
      */
     public function destroy(Child $child)
     {
         $child->delete();
         return redirect()->route('children.index')
-                         ->with('success', 'Child deleted successfully.');
+            ->with('success', 'Child deleted successfully.');
     }
 }

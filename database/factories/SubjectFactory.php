@@ -20,8 +20,7 @@ class SubjectFactory extends Factory
     {
         return [
             'label' => $this->faker->sentence(3),
-            'slug' => $this->faker->slug,
-            'comment' => $this->faker->paragraph,
+            'comment' => $this->faker->paragraph(1),
         ];
     }
 }

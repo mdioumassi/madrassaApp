@@ -2,56 +2,158 @@
 
 @section('content')
     <div class="container">
+
+        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
+            aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ _('Dashboard') }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ _('Utilisateurs') }}</li>
+            </ol>
+        </nav>
+
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">{{ __('Users') }}</div>
+                    <div class="card-header bg-success text-light"><b><i class='far fa-user-circle'></i>
+                            {{ __('Les utilisateurs') }}</b></div>
                     <div class="card-body">
-                        <a href="{{ route('admin.users.create') }}"><button class="btn btn-primary">Ajouter un utilisateur</button></a>
-                        <a href="{{ route('admin.parents.list') }}"><button class="btn btn-success">Liste des parents</button></a>
-                        <a href="{{ route('admin.students.list') }}"><button class="btn btn-success">Liste des etudiants</button></a>
-                    </div>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th class="bg-success text-light">#</th>
-                                <th class="bg-success text-light">Civilité</th>
-                                <th class="bg-success text-light">Nom</th>
-                                <th class="bg-success text-light">Prénom</th>
-                                <th class="bg-success text-light">Email</th>
-                                <th class="bg-success text-light">Téléphone</th>
-                                <th class="bg-success text-light">Type</th>
-                                <th class="bg-success text-light">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($users as $user)
+                        @can('user-create')
+                            <button type="button" class="w3-button w3-green mb-2" data-bs-toggle="modal"
+                                data-bs-target="#modal-create-users"><i class="fa fa-plus"></i>
+                                {{ _('Ajouter un utilisateur') }}</button>
+                        @endcan
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.users.index') }}" aria-current="page"
+                                    class="nav-link active">{{ _('Utulisateurs') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.parents.list') }}" aria-current="page"
+                                    class="nav-link">{{ _('Parents') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.students.list') }}">{{ _('Adultes') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.teachers.list') }}">{{ _('Professeurs') }}</a>
+                            </li>
+                        </ul>
+                        <table class="table table-bordered mt-2">
+                            <thead>
                                 <tr>
-                                    <th>{{ $user->id }}</th>
-                                    <td>{{ $user->civility }}</td>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->lastname }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td>{{ $user->phone }}</td>
-                                    <td>{{ $user->type }}</td>
-                                    <td>
-                                        <a href="{{ route('admin.users.show', $user->id) }}" class="btn btn-primary">{{ _('View') }}</a>
-                                        <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-warning">{{ _('Edit') }}</a>
-                                        <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST"
-                                            class="d-inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger"
-                                                onclick="return confirm('Are you sure?')">{{ _('Delete') }}</button>
-                                        </form>
-                                    </td>
+                                    <th class="w3-green text-light">Civilité</th>
+                                    <th class="w3-green text-light">Nom</th>
+                                    <th class="w3-green text-light">Prénom</th>
+                                    <th class="w3-green text-light">Email</th>
+                                    <th class="w3-green text-light">Téléphone</th>
+                                    <th class="w3-green text-light">Type</th>
+                                    <th class="w3-green text-light">Roles</th>
+                                    <th class="w3-green text-light">Enfants</th>
+                                    <th class="w3-green text-light">Classes</th>
+                                    <th class="w3-green text-light">Actions</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                    {!! $users->links() !!}
+                            </thead>
+                            <tbody>
+                                @foreach ($users as $user)
+                                    <tr>
+                                        <td>{{ $user->civility }}</td>
+                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->lastname }}</td>
+                                        <td>{{ $user->email }}</td>
+                                        <td>{{ $user->phone }}</td>
+                                        <td>{{ $user->type }}</td>
+                                        <td>
+                                            @if (!empty($user->getRoleNames()))
+                                                @foreach ($user->getRoleNames() as $v)
+                                                    <label class="badge bg-success">{{ $v }}</label>
+                                                @endforeach
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($user->getUserType() == 'parent' && $user->children->count() > 0)
+                                                <a href="{{ route('parent.children.list', $user->id) }}"> <span
+                                                        class="badge w3-black">{{ $user->children->count() }}
+                                                        enfant.s</span>
+                                                </a>
+                                            @endif
+                                            @if ($user->getUserType() == 'parent' && $user->children->count() == 0)
+                                                <span class="badge w3-black"> 0 enfant</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($user->getUserType() == 'professeur' && $user->levels()->count() > 0)
+                                                <a href="{{ route('admin.teachers.levels.list', $user->id) }}">
+                                                    <span class="badge w3-black">{{ $user->levels()->count() }}
+                                                        niveaux</span>
+                                                </a>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                                data-bs-target="#modal-show-users{{ $user->id }}"><i
+                                                    class="fa-solid fa-list"></i> {{ _('View') }}</button>
+                                            @can('user-edit')
+                                                <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-edit-users{{ $user->id }}">
+                                                    <i class="fa-solid fa-pen-to-square"></i> {{ _('Edit') }}
+                                                </button>
+                                            @endcan
+                                            @can('user-delete')
+                                                <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST"
+                                                    class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm"
+                                                        onclick="return confirm('Are you sure?')"><i
+                                                            class="fa-solid fa-trash"></i>
+                                                        {{ _('Delete') }}</button>
+                                                </form>
+                                            @endcan
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        {!! $users->links() !!}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    @include('admin.users._modal.create-users', ['roles' => $roles])
+    @foreach ($users as $user)
+        @include('admin.users._modal.show-users', ['user' => $user])
+        @include('admin.users._modal.edit-users', ['user' => $user])
+        @include('admin.children._modal.child-add-in-parent', ['user' => $user])
+    @endforeach
+@endsection
+@section('footer-scripts')
+    <script type="text/javascript">
+        $("#form-create-user").submit(function(e) {
+            e.preventDefault();
+            var url = $(this).attr('action');
+            var formData = new FormData(this);
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    $('#modal-create-users').modal('hide');
+                    $('#form-create-user').trigger('reset');
+                    location.reload();
+                },
+                error: function(response) {
+                    $('#form-create-user').find(".print-error-msg").find("ul").html('');
+                    $('#form-create-user').find(".print-error-msg").css('display', 'block');
+                    $.each(response.responseJSON.errors, function(key, value) {
+                        $('#form-create-user').find(".print-error-msg").find("ul").append(
+                            '<li>' + value + '</li>');
+                    });
+                }
+            });
+        });
+    </script>
 @endsection

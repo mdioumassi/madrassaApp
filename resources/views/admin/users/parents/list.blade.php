@@ -2,57 +2,126 @@
 
 @section('content')
     <div class="container">
+        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
+            aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ _('Dashboard') }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}">{{ _('Utilisateurs') }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ _('Parents') }}</li>
+            </ol>
+        </nav>
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">{{ __('Liste des parents') }}</div>
+                    <div class="card-header bg-success"><span class="text-light"><b><i class='far fa-user-circle'></i>
+                                Utilisateurs:</b> {{ __('Parents') }}</span></div>
                     <div class="card-body">
-                        <a href="{{ route('admin.users.index') }}"><button class="btn btn-primary mb-3">Tous les utilisateurs</button></a>
-                        <a href="{{ route('children.index') }}"><button class="btn btn-success mb-3">Liste des enfants</button></a>
-                        <table class="table">
+                        @can('user-create')
+                            <button type="button" class="w3-button w3-green mb-2" data-bs-toggle="modal"
+                                data-bs-target="#modal-create-users"><i class="fa fa-plus"></i>
+                                {{ _('Ajouter un utilisateur') }}</button>
+                        @endcan
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.users.index') }}" aria-current="page"
+                                    class="nav-link">{{ _('Utilisateurs') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.parents.list') }}" aria-current="page"
+                                    class="nav-link active">{{ _('Parents') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.students.list') }}">{{ _('Adultes') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.teachers.list') }}">{{ _('Professeurs') }}</a>
+                            </li>
+                        </ul>
+                        <table class="table table-bordered mt-2">
                             <thead>
                                 <tr>
-                                    <th class="bg-success text-light">Civilité</th>
-                                    <th class="bg-success text-light">Nom</th>
-                                    <th class="bg-success text-light">Prénom</th>
-                                    <th class="bg-success text-light">Email</th>
-                                    <th class="bg-success text-light">Téléphone</th>
-                                    <th class="bg-success text-light">Fonctions</th>
-                                    <th class="bg-success text-light">Enfants</th>
-                                    <th class="bg-success text-light">Actions</th>
+                                    <th class="w3-green text-light">ID</th>
+                                    <th class="w3-green text-light">Civilité</th>
+                                    <th class="w3-green text-light">Nom</th>
+                                    <th class="w3-green text-light">Prénom</th>
+                                    <th class="w3-green text-light">Email</th>
+                                    <th class="w3-green text-light">Téléphone</th>
+                                    <th class="w3-green text-light">Roles</th>
+                                    <th class="w3-green text-light">Enfants</th>
+                                    <th class="w3-green text-light">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($parents as $parent)
+                                @if ($users->count() == 0)
                                     <tr>
-                                        <td>{{ $parent->civility }}</td>
-                                        <td>{{ $parent->name }}</td>
-                                        <td>{{ $parent->lastname }}</td>
-                                        <td>{{ $parent->email }}</td>
-                                        <td>{{ $parent->phone }}</td>
-                                        <td>{{ $parent->function }}</td>
-                                        <td><a href="{{route('parent.children', $parent->id)}}">{{ $parent->children->count()}} enfant.s</a></td>
+                                        <td colspan="7" class="text-center">Aucun utilisateur trouvé</td>
+                                    </tr>
+                                @endif
+                                @foreach ($users as $user)
+                                    <tr>
+                                        <td>{{ $user->id }}</td>
+                                        <td>{{ $user->civility }}</td>
+                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->lastname }}</td>
+                                        <td>{{ $user->email }}</td>
+                                        <td>{{ $user->phone }}</td>
                                         <td>
-                                            <a href="{{ route('admin.users.show', $parent->id) }}"
-                                                class="btn btn-primary">{{ _('View') }}</a>
-                                            <a href="{{ route('admin.users.edit', $parent->id) }}"
-                                                class="btn btn-warning">{{ _('Edit') }}</a>
-                                            <form action="{{ route('admin.users.destroy', $parent->id) }}" method="POST"
-                                                class="d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger"
-                                                    onclick="return confirm('Are you sure?')">{{ _('Delete') }}</button>
-                                            </form>
+                                            @if (!empty($user->getRoleNames()))
+                                                @foreach ($user->getRoleNames() as $v)
+                                                    <label class="badge bg-success">{{ $v }}</label>
+                                                @endforeach
+                                            @else
+                                                <label class="badge bg-danger">Aucun rôle</label>
+                                            @endif
+                                        </td>
+                                        @if ($user->type->value == 'parent' && $user->children->count() > 0)
+                                            <td>
+                                                <a href="{{ route('parent.children.list', $user->id) }}"> <span
+                                                        class="badge w3-black">{{ $user->children->count() }}
+                                                        enfant.s</span>
+                                                </a>
+                                            </td>
+                                        @else
+                                            <td><span class="badge w3-black">0 enfant</span></td>
+                                        @endif
+                                        <td>
+                                            <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
+                                                data-bs-target="#modal-add-parent-child{{ $user->id }}"><i
+                                                    class="fa fa-plus"></i> {{ _('Add child') }}</button>
+                                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                                data-bs-target="#modal-show-users{{ $user->id }}"><i
+                                                    class="fa-solid fa-list"></i> {{ _('View') }}</button>
+                                            @can('user-edit')
+                                                <a class="btn btn-warning btn-sm"
+                                                    href="{{ route('admin.users.edit', $user->id) }}"><i
+                                                        class="fa-solid fa-pen-to-square"></i> {{ _('Edit') }}</a>
+                                            @endcan
+                                            @can('user-delete')
+                                                <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST"
+                                                    class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm"
+                                                        onclick="return confirm('Are you sure?')"><i
+                                                            class="fa-solid fa-trash"></i>
+                                                        {{ _('Delete') }}</button>
+                                                </form>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                        {!! $parents->links() !!}
+                        {!! $users->links() !!}
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    @include('admin.users._modal.create-users')
+    @foreach ($users as $user)
+        @include('admin.users._modal.show-users', ['user' => $user])
+        @include('admin.users._modal.edit-users', ['user' => $user])
+        @include('admin.children._modal.child-add-in-parent', ['user' => $user])
+    @endforeach
 @endsection

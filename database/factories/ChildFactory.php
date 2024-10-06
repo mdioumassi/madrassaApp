@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\GenreSelect;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -22,7 +23,7 @@ class ChildFactory extends Factory
             'firstname' => fake()->name(),
             'lastname' => fake()->name(),
             'birthdate' => fake()->date(),
-            'genre' => fake()->randomElement(['M', 'F']),
+            'genre' => fake()->randomElement(GenreSelect::cases())->value,
             'french_class' => fake()->randomElement(['CP', 'CE1', 'CE2', 'CM1', 'CM2']),
         ];
     }

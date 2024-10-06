@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CourseStoreRequest;
 use App\Http\Requests\CourseUpdateRequest;
 use App\Models\Course;
+use App\Models\User;
 use Illuminate\Support\Str;
 
 class CourseCrudController extends Controller
@@ -16,11 +17,12 @@ class CourseCrudController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * route: /admin/courses
+     * name: admin.courses.index
      */
     public function index()
     {
-        $courses = Course::latest()->paginate(5);
+        $courses = Course::latest()->paginate(8);
 
         if ($courses->isEmpty()) {
             return redirect()->route('admin.courses.create');
@@ -29,6 +31,10 @@ class CourseCrudController extends Controller
         return view('admin.courses.index', compact('courses'));
     }
 
+    /**
+     * route: /admin/courses/levels
+     * name: admin.courses.levels.index
+     */
     public function getLevelsByCourses()
     {
         $courses = Course::with('levels')->get();
@@ -37,26 +43,47 @@ class CourseCrudController extends Controller
         return view('admin.courses.levels.index', compact('levels'));
     }
 
-    public function SelectLevelsByCourse($id)
+    /**
+     * route: /admin/courses/key/{keyword}/levels
+     * name: admin.courses.select.levels.keyword
+     */
+    public function SelectLevelsByKeyword($keyword)
     {
-        $course = Course::where('id', $id)->with('levels')->first();
+        $course = Course::where('keywords', $keyword)->with('levels')->first();
         $levels = $course->levels;
-        $courses = Course::with('levels')->get();
-
-        if ($levels->isEmpty()) {
+        $teachers = User::where('type', 'professeur')->get();
+        if ($teachers->isEmpty()) {
             return redirect()->route('admin.courses.index')
-                             ->with('warning', 'No levels found for this course.');
+                             ->with('warning', 'No teachers found for this course.');
         }
 
-        return view('admin.levels.index', compact('levels', 'courses'));
+        return view('admin.courses.types.'.$keyword, compact('levels', 'teachers'));
     }
 
+    /**
+     * route: /admin/courses/{id}/level/create
+     * name: admin.courses.add.levels
+     */
     public function createLevelsByCourses($id)
     {
          $course = Course::where('id', $id)->with('levels')->first();
             return view('admin.courses.levels.create', compact('course'));
     }
 
+    /**
+     * route: /admin/courses/key/{keyword}/level/create
+     * name: admin.courses.levels.create
+     */
+    public function createLevelsByKeywords($keyword)
+    {
+         $course = Course::where('keywords', $keyword)->with('levels')->first();
+            return view('admin.courses.levels.create', compact('course'));
+    }
+
+    /**
+     * route: /admin/courses/{id}/level/list
+     * name: admin.courses.levels.list
+     */
     public function LevelsListByCourses($id)
     {
         $course = Course::where('id', $id)->with('levels')->first();
@@ -83,8 +110,6 @@ class CourseCrudController extends Controller
     public function store(CourseStoreRequest $request)
     {
         $validatedData = $request->validated();
-        $validatedData['slug'] = Str::slug($validatedData['slug'], '-');
-
         Course::create($validatedData);
         return redirect()->route('admin.courses.index')
                          ->with('success', 'Course created successfully.');
@@ -113,7 +138,6 @@ class CourseCrudController extends Controller
     public function update(CourseUpdateRequest $request, Course $course)
     {
         $validatedData = $request->validated();
-        $validatedData['slug'] = Str::slug($validatedData['slug'], '-');
 
         $course->update($validatedData);
         return redirect()->route('admin.courses.index')

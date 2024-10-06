@@ -7,6 +7,7 @@ use App\Http\Requests\LevelStoreRequest;
 use App\Http\Requests\LevelUpdateRequest;
 use App\Models\Course;
 use App\Models\Level;
+use App\Models\User;
 use Illuminate\Support\Str;
 
 class LevelCrudController extends Controller
@@ -14,32 +15,48 @@ class LevelCrudController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+
+        $this->middleware('permission:level-list|level-create|level-edit|level-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:level-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:level-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:level-delete', ['only' => ['destroy']]);
     }
 
     /**
-     * Display a listing of the resource.
+     * route: /admin/levels/list
+     * name: admin.levels.list
      */
-    public function index()
+    public function list()
     {
         $levels = Level::all();
 
         $courses = Course::all();
 
-        if ($courses->isEmpty()) {
-            return redirect()->route('admin.courses.create');
-        }
-
-        if ($levels->isEmpty()) {
-            return redirect()->route('admin.levels.create');
-        }
-
-        return view('admin.levels.index', compact('levels', 'courses'));
+        return view('admin.levels.list', compact('levels', 'courses'));
     }
 
+    /**
+     * route: /admin/levels/grille
+     * name: admin.levels.grille
+     */
+    public function grille()
+    {
+        $levels = Level::all();
+
+        $courses = Course::all();
+
+        return view('admin.levels.grille', compact('levels', 'courses'));
+    }
+
+    /**
+     * route: /admin/levels/course/{id}/list
+     * name: level.subjects
+     */
     public function subjectsList($id)
     {
         $level = Level::where('id', $id)->with('subjects')->first();
         $subjects = $level->subjects;
+
         if ($subjects->isEmpty()) {
             return redirect()->route('admin.levels.index')
                              ->with('warning', 'No subjects found for this level.');
@@ -57,30 +74,36 @@ class LevelCrudController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * route: /admin/levels/course/{id}/create
+     * name: admin.levels.create.course
      */
-    // public function store(LevelStoreRequest $request)
-    // {
-    //     $validatedData = $request->validated();
-    //     $validatedData['slug'] = Str::slug($validatedData['slug'], '-');
-
-    //     Level::create($validatedData);
-    //     return redirect()->route('admin.levels.index')
-    //                      ->with('success', 'Level created successfully.');
-    // }
-
     public function storeLevelCourse(LevelStoreRequest $request, $id)
     {
         $course = Course::where('id', $id)->first();
         $validatedData = $request->validated();
-        $validatedData['slug'] = Str::slug($validatedData['slug'], '-');
         $course->levels()->create($validatedData);
         
         return redirect()->route('admin.courses.levels.list', $course->id)
                          ->with('success', 'Level created successfully.');
     }
+
     /**
-     * Display the specified resource.
+     * route: /admin/courses/key/{keyword}/level/create
+     * name: admin.courses.levels.create
+     */
+    public function storeLevelByCourseKeywords(LevelStoreRequest $request, $keyword)
+    {
+        $course = Course::where('keywords', $keyword)->first();
+        $validatedData = $request->validated();
+        $course->levels()->create($validatedData);
+        
+        return redirect()->route('admin.courses.select.levels.keyword', $keyword)
+                         ->with('success', 'Level created successfully.');
+    }
+                
+    /**
+     * route: /admin/levels
+     * name: admin.levels.index
      */
     public function show(Level $level)
     {
@@ -96,15 +119,47 @@ class LevelCrudController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * route: /admin/levels/course/{keyword}/update
+     * name: admin.levels.update.keyword
+     */
+    // public function updateLevelByKeywords($keyword, LevelUpdateRequest $request)
+    // {
+    //     $course = Course::where('keywords', $keyword)->first();
+    //     $validatedData = $request->validated();
+    //     dd($validatedData);
+    //     $course->levels()->update($validatedData);
+        
+    //     return redirect()->route('admin.courses.select.levels.keyword', $keyword)
+    //                      ->with('success', 'Level updated successfully.');
+    // }
+
+    /**
+     * route: /admin/levels/{level}
+     * name: admin.levels.update
      */
     public function update(LevelUpdateRequest $request, Level $level)
     {
+        $userId = $request['userId'];
+        $keyword = $request['keyword'];
         $validatedData = $request->validated();
-        $validatedData['slug'] = Str::slug($validatedData['slug'], '-');
-
         $level->update($validatedData);
-        return redirect()->route('admin.levels.index')
+
+        if($userId) {
+            return redirect()->route('admin.teachers.levels.list', $userId)
+                             ->with('success', 'Level updated successfully.');
+        }
+
+        if($keyword) {
+            return redirect()->route('admin.courses.select.levels.keyword', $keyword)
+                             ->with('success', 'Level updated successfully.');
+        }
+
+        if ($request['grille'] == 'teacher') {
+            return redirect()->route('admin.levels.grille')
+                             ->with('success', 'Level updated successfully.');
+        }
+
+        return redirect()->route('admin.levels.list')
                          ->with('success', 'Level updated successfully.');
     }
 

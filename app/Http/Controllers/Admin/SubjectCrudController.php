@@ -23,6 +23,7 @@ class SubjectCrudController extends Controller
     {
         $level = Level::where('id', $id)->with('subjects')->first();
         $subjects = $level->subjects;
+  
         if ($subjects->isEmpty()) {
             return redirect()->route('admin.levels.index')
                              ->with('warning', 'No subjects found for this level.');
@@ -41,17 +42,33 @@ class SubjectCrudController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * route: /admin/levels/course/{id}/store
+     * name: admin.levels.subjects.store
+     * method: post
      */
     public function storeLevelSubject(Request $request, $id)
     {
+        $userId = $request['userId'];
+
+        $grille = $request['grilleTeacher'];
         $level = Level::where('id', $id)->first();
         $request->validate([
-            'label' => 'required|string|max:255'
+            'label' => 'required|string|max:255',
+            'description' => 'nullable|string',
         ]);
         $level->subjects()->create($request->all());
-        return redirect()->route('admin.levels.subjects.index', $level->id)
-                         ->with('success', 'Subject created successfully.');
+
+        if($userId && $grille) {
+            return redirect()->route('admin.teachers.levels.grille', $userId)
+                             ->with('success', 'Subject created successfully.');
+        } else if($userId){
+            return redirect()->route('admin.teachers.levels.list', $userId)
+                             ->with('success', 'Subject created successfully.');
+        } else {
+            return redirect()->route('admin.levels.subjects.index', $level->id)
+                             ->with('success', 'Subject created successfully.');
+        }
+        
     }
 
     /**

@@ -15,6 +15,11 @@ class Course extends Model
         return $this->hasMany(Level::class);
     }
 
+    public function registrations(): HasMany
+    {
+        return $this->hasMany(Registration::class);
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -22,9 +27,8 @@ class Course extends Model
      */
     protected $fillable = [
         'label',
-        'slug',
-        'comment',
-        // 'is_child',
-        // 'is_adult'
+        'description',
     ];
+
+
 }

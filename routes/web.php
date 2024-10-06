@@ -4,20 +4,61 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ChildController;
 use App\Http\Controllers\Admin\CourseCrudController;
 use App\Http\Controllers\Admin\LevelCrudController;
-use App\Http\Controllers\Admin\ParentController;
-use App\Http\Controllers\Admin\StudentController;
+use App\Http\Controllers\Admin\ParentCrudController;
+use App\Http\Controllers\Admin\AdultCrudController;
+use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SubjectCrudController;
+use App\Http\Controllers\Admin\TeacherCrudController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\StripePaymentController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+//Paypal
+require __DIR__.'/paypal.php';
+//Stripe
+require __DIR__.'/stripe.php';
+// Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
 Auth::routes();
+
+Route::group(['middleware' => ['auth']], function() {
+    Route::resource('admin/roles', RoleController::class);
+    Route::resource('admin/permissions', PermissionController::class);
+});
+
+Route::get('/registrations/children', [RegistrationController::class, 'listChildren'])->name('registrations.children');
+Route::get('/registrations/adults', [RegistrationController::class, 'listAdults'])->name('registrations.adults');
+
+
+Route::get('/registrations/create', [RegistrationController::class, 'create'])->name('registrations.create');
+Route::post('/registrations/store', [RegistrationController::class, 'store'])->name('registrations.store');
+Route::get('/registrations/{registration}', [RegistrationController::class, 'show'])->name('registrations.show');
+Route::get('/registrations/{registration}/edit', [RegistrationController::class, 'edit'])->name('registrations.edit');
+Route::put('/registrations/{registration}', [RegistrationController::class, 'update'])->name('registrations.update');
+Route::delete('/registrations/{registration}', [RegistrationController::class, 'destroy'])->name('registrations.destroy');
+
+
+//Registration
+require __DIR__.'/registration.php';
+
+
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/dashboard/course-and-levels', [DashboardController::class, 'CoursesAndLevels'])->name('dashboard.course-and-levels');
+
+Route::get('/profile', [ProfileController::class, 'index'])->name('user.profile');
+Route::post('/profile', [ProfileController::class, 'store'])->name('user.profile.store');
 
 Route::prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
@@ -29,11 +70,14 @@ Route::prefix('admin')->group(function () {
         Route::get('/{user}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
         Route::put('/{user}', [UserController::class, 'update'])->name('admin.users.update');
         Route::delete('/{user}', [UserController::class, 'destroy'])->name('admin.users.destroy');
+        Route::get('/{id}/levels', [UserController::class, 'getTeacherlevelsList'])->name('admin.teachers.levels.list');
+        Route::get('/{id}/levels/grille', [UserController::class, 'getTeacherlevelsGrille'])->name('admin.teachers.levels.grille');
     });
     Route::prefix('children')->group(function () {
         Route::get('/', [ChildController::class, 'index'])->name('children.index');
         Route::get('/create', [ChildController::class, 'create'])->name('children.create');
         Route::post('/store', [ChildController::class, 'store'])->name('children.store');
+        Route::post('/parent/{id}/child/store', [ChildController::class, 'storeChildByParent'])->name('child.parent.store');
         Route::get('/{child}', [ChildController::class, 'show'])->name('children.show');
         Route::get('/{child}/edit', [ChildController::class, 'edit'])->name('children.edit');
         Route::put('/{child}', [ChildController::class, 'update'])->name('children.update');
@@ -50,17 +94,19 @@ Route::prefix('admin')->group(function () {
         Route::delete('/{course}', [CourseCrudController::class, 'destroy'])->name('admin.courses.destroy');
         Route::get('/{id}/level/list', [CourseCrudController::class, 'LevelsListByCourses'])->name('admin.courses.levels.list');
         Route::get('/{id}/level/create', [CourseCrudController::class, 'createLevelsByCourses'])->name('admin.courses.add.levels');
-        
-        Route::get('/{id}/levels', [CourseCrudController::class, 'SelectLevelsByCourse'])->name('admin.courses.select.levels');
+        Route::get('/key/{keyword}/level/create', [CourseCrudController::class, 'createLevelsByKeywords'])->name('admin.courses.levels.create');
+        Route::get('/{keyword}/levels', [CourseCrudController::class, 'SelectLevelsByKeyword'])->name('admin.courses.select.levels.keyword');
     });
     Route::prefix('levels')->group(function () {
-        // Route::get('/adult', [LevelCrudController::class, 'AdultLevels'])->name('admin.levels.adult');
-        Route::get('/', [LevelCrudController::class, 'index'])->name('admin.levels.index');
+        Route::get('/list', [LevelCrudController::class, 'list'])->name('admin.levels.list');
+        Route::get('/grille', [LevelCrudController::class, 'grille'])->name('admin.levels.grille');
         Route::get('/create', [LevelCrudController::class, 'create'])->name('admin.levels.create');
         Route::post('/course/{id}/level/store', [LevelCrudController::class, 'storeLevelCourse'])->name('admin.courses.levels.store');
+        Route::post('/course/keyword/{keyword}/level/store', [LevelCrudController::class, 'storeLevelByCourseKeywords'])->name('admin.courses.keywords.levels.store');
         Route::get('/{level}', [LevelCrudController::class, 'show'])->name('admin.levels.show');
         Route::get('/{level}/edit', [LevelCrudController::class, 'edit'])->name('admin.levels.edit');
         Route::put('/{level}', [LevelCrudController::class, 'update'])->name('admin.levels.update');
+        Route::put('/course/{keyword}/update', [LevelCrudController::class, 'updateLevelByKeywords'])->name('admin.levels.update.keyword');
         Route::delete('/{level}', [LevelCrudController::class, 'destroy'])->name('admin.levels.destroy');
     });
     Route::prefix('subjects')->group(function () {
@@ -74,9 +120,9 @@ Route::prefix('admin')->group(function () {
     });
 
     Route::get('/levels/{id}/subjects', [LevelCrudController::class, 'subjectsList'])->name('level.subjects');
-    Route::get('/parents', [ParentController::class, 'list'])->name('admin.parents.list');
-    Route::get('/parents/{id}/children', [ParentController::class, 'childsList'])->name('parent.children');
-    Route::get('/students', [StudentController::class, 'list'])->name('admin.students.list');
-  //  Route::resource('children', ChildController::class);
-    //Route::get('/children/create/{parent_id}', [ChildController::class, 'create'])->name('parent.children.create');
+    Route::get('/parents', [ParentCrudController::class, 'list'])->name('admin.parents.list');
+    Route::get('/parents/{id}/children/list', [ParentCrudController::class, 'childsList'])->name('parent.children.list');
+    Route::get('/parents/{id}/children/grille', [ParentCrudController::class, 'childsGrille'])->name('parent.children.grille');
+    Route::get('/adults', [AdultCrudController::class, 'list'])->name('admin.students.list');
+    Route::get('/teachers', [TeacherCrudController::class, 'list'])->name('admin.teachers.list');
 });

@@ -52,11 +52,12 @@ class LevelController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * route: /admin/levels/{level}
+     * name: admin.levels.update
      */
     public function update(Request $request, Level $level)
     {
-        //
+        
     }
 
     /**

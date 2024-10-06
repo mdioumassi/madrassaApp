@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\CivilityList;
+use App\TypeUserSelect;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Enum;
 
@@ -31,8 +32,9 @@ class UserStoreRequest extends FormRequest
             'function' => ['required', 'string', 'max:255'],
             'type' => ['required', 'string', 'max:255'],
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'password' => ['required', 'string', 'min:6', 'same:confirm-password'],
+            'roles' => ['required'],
         ];
     }
 }

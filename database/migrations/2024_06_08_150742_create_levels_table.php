@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('levels', function (Blueprint $table) {
             $table->id();
             $table->string('label');
-            $table->string('slug');
             $table->string('tarif');
             $table->string('registration_fees');
             $table->string('hours');
-            $table->text('comment')->nullable();
+            $table->text('description')->nullable();
+            $table->string('status')->default('active');
             $table->foreignIdFor(\App\Models\Course::class)->nullable();
             $table->timestamps();
         });

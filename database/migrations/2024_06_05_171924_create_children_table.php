@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('french_class');
             $table->bigInteger('parent_id')->unsigned();
             $table->foreign('parent_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('status')->default('active');
+            $table->string('photo')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('childs');
+        Schema::dropIfExists('children');
     }
 };

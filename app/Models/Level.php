@@ -23,6 +23,16 @@ class Level extends Model
         return $this->hasMany(Subject::class);
     }
 
+    public function teacher(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function registrations(): HasMany
+    {
+        return $this->hasMany(Registration::class);
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -30,10 +40,10 @@ class Level extends Model
      */
     protected $fillable = [
         'label',
-        'comment',
-        'slug',
+        'description',
         'tarif',
         'registration_fees',
         'hours',
+        'teacher_id',
     ];
 }
